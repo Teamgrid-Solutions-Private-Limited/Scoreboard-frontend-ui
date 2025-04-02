@@ -4,6 +4,7 @@
 // import './App.css'
 import { CssBaseline, Container,Box } from '@mui/material';
 import Scorecard from "./components/Scorecard.jsx";
+import SenateScorecard from './components/Senate.jsx';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Scorecard />}/>
+      <Route path="/senate" element={<SenateScorecard />}/>
     </Routes>
     </BrowserRouter>
      
