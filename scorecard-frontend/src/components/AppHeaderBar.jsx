@@ -1,6 +1,7 @@
 import React from 'react'
-import { Box,Toolbar,AppBar,Button } from '@mui/material'
+import { Box,Toolbar,AppBar,Button, IconButton } from '@mui/material'
 import FavoriteIcon from "@mui/icons-material/Favorite"
+import SearchIcon from "@mui/icons-material/Search"
 const AppHeaderBar = () => {
   return (
     <AppBar
@@ -9,14 +10,15 @@ const AppHeaderBar = () => {
       bgcolor: "white",
       color: "black",
       // boxShadow: 1,
-      top: "52px", // Push below TopBar
+      top: "61px", // Push below TopBar
       left: 0,
       width: "100%",
       zIndex: 1000,
-      height:{xs:"auto",md:"15%"}
+      paddingTop:"16px",
+      height:{xs:"auto",md:"14%"}
     }}
   >
-    <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: {xs:2,md:5}, py:3}}>
+    <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: {xs:2,md:5},}}>
       
       {/* Left - Logo */}
       <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -37,14 +39,16 @@ const AppHeaderBar = () => {
       </Box>
 
       {/* Right - Icons & Donate */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>   
+        <IconButton>
+          <SearchIcon/>
+        </IconButton>
         <Button
           variant="contained"
          
           sx={{
-            px: 5,
-            py: 2,
+            // px: 5,
+            // py: 2,
             minWidth: "100px",
             height: "48px",
             color:" #fff",

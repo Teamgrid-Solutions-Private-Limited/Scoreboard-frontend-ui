@@ -5,13 +5,20 @@
 import { CssBaseline, Container,Box } from '@mui/material';
 import Scorecard from "./components/Scorecard.jsx";
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
+import CustomizedGrid from "./components/CustomizedGrid.jsx";
+import TopBar from "./components/TopBar.jsx"
 function App() {
 
   return (
     <>
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Scorecard />}/>
+      {/* <Route path="/" element={<Scorecard />}/> */}
+      <Route path="/" element={<CustomizedGrid />}/>
+      {/* <Route path="/" element={<TopBar />}/> */}
+
+
+
     </Routes>
     </BrowserRouter>
      
