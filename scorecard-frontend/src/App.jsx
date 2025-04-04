@@ -13,8 +13,8 @@ function App() {
     <>
     <BrowserRouter>
     <Routes>
-      {/* <Route path="/" element={<Scorecard />}/> */}
-      <Route path="/" element={<CustomizedGrid />}/>
+      <Route path="/" element={<Scorecard />}/>
+      {/* <Route path="/" element={<CustomizedGrid />}/> */}
       {/* <Route path="/" element={<TopBar />}/> */}
 
 

@@ -6,16 +6,17 @@ const AppHeaderBar = () => {
   return (
     <AppBar
     position="fixed"
+    elevation={0}
     sx={{
       bgcolor: "white",
-      color: "black",
-      // boxShadow: 1,
       top: "61px", // Push below TopBar
       left: 0,
       width: "100%",
       zIndex: 1000,
       paddingTop:"16px",
-      height:{xs:"auto",md:"14%"}
+      height:{xs:"auto",md:"100px"},
+      boxShadow: "0px 4px 12px rgba(2, 2, 2, 0.15)", // 👈 light shadow
+
     }}
   >
     <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: {xs:2,md:5},}}>
@@ -30,12 +31,12 @@ const AppHeaderBar = () => {
       </Box>
 
       {/* Center - Navigation Links */}
-      <Box sx={{ display: "flex", gap:2}}>
-        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" }}>PREGNANT?</Button>
-        <Button sx={{ color: "#d4a73e" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" }}>SCORECARD</Button>
-        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" }}>NEWS</Button>
-        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" }}>ELECTIONS</Button>
-        <Button sx={{ color: "#666",fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400"  }}>TAKE ACTION</Button>
+      <Box sx={{ gap:1, display:{xs:"none",md:"flex"},flexWrap:"wrap",justifyContent:{xs:"center",md:"space-between"}}}>
+        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,  "&:hover": { color: "#d4a73e" },}}>PREGNANT?</Button>
+        <Button sx={{ color: "#d4a73e" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"} }}>SCORECARD</Button>
+        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"}}}>NEWS</Button>
+        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400","&:hover":{color:"#d4a73e"} }}>ELECTIONS</Button>
+        <Button sx={{ color: "#666",fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400","&:hover":{color:"#d4a73e"}  }}>TAKE ACTION</Button>
       </Box>
 
       {/* Right - Icons & Donate */}

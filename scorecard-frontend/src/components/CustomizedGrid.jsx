@@ -22,8 +22,6 @@ const CustomizedGrid = ({ children }) => {
             >
              <TopBar/>
              <AppHeaderBar/>
-             
-            
             </Box>
             <Container
                 component="main"

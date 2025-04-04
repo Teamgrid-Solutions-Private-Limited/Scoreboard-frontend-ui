@@ -96,21 +96,22 @@ const TopBar = () => {
                     </Menu>
                 </Box>
                 <Typography sx={{color:"white"}}>
-                    Employeement
+                    Employement
                 </Typography>
-
-                <IconButton sx={{ color: "white" }}>
-                    <FacebookIcon />
+<Box>
+                <IconButton sx={{ color: "white", }}>
+                    <FacebookIcon sx={{fontSize:"20px"}} />
                 </IconButton >
                 <IconButton sx={{ color: "white" }}>
-                <XIcon/>
+                <XIcon sx={{fontSize:"20px"}}/>
                 </IconButton>
                 <IconButton sx={{ color: "white" }}>
-                    <InstagramIcon />
+                    <InstagramIcon sx={{fontSize:"20px"}} />
                 </IconButton >
                 <IconButton sx={{ color: "white" }}>
-                    <YouTubeIcon />
+                    <YouTubeIcon  sx={{fontSize:"20px"}}/>
                 </IconButton>
+                </Box>
                
             </Box>
         </Box>
