@@ -1,10 +1,59 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, FormControl, InputLabel, Select, Menu, MenuItem, TextField, Typography, Stack, Grid } from "@mui/material";
+import { Box, FormControl, InputLabel, Select, Menu, MenuItem, TextField, Typography, Stack, Grid, Button } from "@mui/material";
 import { useState } from "react";
 import TopBar from "./TopBar";
 import AppHeaderBar from "./AppHeaderBar";
 import SenatorTopImg from "./SenatorTopImg";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Footer from "./Footer";
+
+//house column n rows
+const houseColumns = [
+  {
+    field: "representative",
+    headerName: "Representative",
+    width: 410,
+    renderCell: (params) => (
+      <span style={{
+        color: params.row.party === "Republican" ? "red" :
+          params.row.party === "Democrat" ? "blue" : "gray",
+        fontWeight: params.row.party === "Republican" ? "bold" : "normal",
+        textDecoration: params.row.party === "Independent" ? "line-through" : "none"
+      }}>
+        {params.value}
+      </span>
+    )
+  },
+  { field: "district", headerName: "District", width: 300 },
+  {
+    field: "party",
+    headerName: "Party",
+    width: 150,
+    renderCell: (params) => (
+      <span style={{
+        color: params.value === "Republican" ? "red" :
+          params.value === "Democrat" ? "blue" : "gray",
+        fontWeight: params.value === "Republican" ? "bold" : "normal",
+        textDecoration: params.value === "Independent" ? "line-through" : "none"
+      }}>
+        {params.value}
+      </span>
+    )
+  },
+  { field: "rating", headerName: "Rating", width: 130 },
+];
+
+const houseRows = [
+  { id: 1, representative: "Nancy Pelosi", district: "CA-12", party: "Democrat", rating: "F" },
+  { id: 2, representative: "Kevin McCarthy", district: "CA-20", party: "Republican", rating: "A+" },
+  { id: 3, representative: "Alex Mooney", district: "WV-2", party: "Republican", rating: "A+" },
+  { id: 4, representative: "Cori Bush", district: "MO-1", party: "Democrat", rating: "F" },
+  { id: 5, representative: "Bernie Smith", district: "TX-15", party: "Independent", rating: "C" },
+];
+
+
+//senator column n rows
 const columns = [
   {
     field: "senator", headerName: "Senator", width: 410, renderCell: (params) => (
@@ -37,21 +86,32 @@ const rows = [
 const Scorecard = () => {
   const [pageSize, setPageSize] = useState(5);
   const [search, setSearch] = useState("");
+  const [houseSearch, setHouseSearch] = useState("")
+  const [senatePage, setSenatePage] = useState(0);
+  const [housePage, setHousePage] = useState(0);
+
+
   const filteredRows = rows.filter((row) =>
     row.senator.toLowerCase().includes(search.toLowerCase())
   );
+  const houseFilteredRows = houseRows.filter((row) =>
+    row.representative.toLowerCase().toLowerCase().includes(houseSearch.toLowerCase()))
+  const paginatedSenateRows = filteredRows.slice(senatePage * pageSize, (senatePage + 1) * pageSize);
+  const paginatedHouseRows = houseFilteredRows.slice(housePage * pageSize, (housePage + 1) * pageSize);
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex"}}>
 
         <TopBar />
         <AppHeaderBar />
         <Box
           component="main"
           sx={() => ({
-            flexGrow: 1,
-            overflow: "auto",
-            backgroundColor: "#F5F9FA",
+            // flexGrow: 1,
+            // flexGrow: 1,
+            overflowX: "hidden",
+            // overflowY: "auto",
+            // backgroundColor: "#F5F9FA",
             // optional, to visualize the area
             // backgroundColor: "#d6d7e2 ", // optional, to visualize the area
           })}
@@ -68,131 +128,204 @@ const Scorecard = () => {
           <Stack
             spacing={3}
             sx={{
-              alignItems: "center",
-              mx: 2.5,
+              // alignItems: "start",
+              mx: 31.7,
               justifyContent: "center",
-              paddingX: "237px",
-              width: "100%",
-              // pb: 5,
+              paddingX: "4px",
+              width: "66%",
+              overflowX:"hidden",
+              pb: 5,
               mt: { xs: 8, md: -2 },
             }}
           >
 
-            <Box sx={{ width: "100%" }}>
-              <Typography component="h2" variant="h6" sx={{ mb: 2, fontSize: "54px", fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: "#66625c" }}>
-                Senate
-              </Typography>
-              <Box sx={{ display: "flex", justifyContent: "left", marginBottom: 2, flexWrap: "wrap" }}>
-                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                  <Typography sx={{ fontSize: "14px" }}>Show</Typography>
-                  <FormControl size="small">
-                    <Select value={pageSize} onChange={(e) => setPageSize(e.target.value)} size="small" sx={{ boxSizing: "border-box", borderRadius: "2px", fontSize: "14px", p: "1px", m: "1px" }}>
-                      {[5, 10, 25, 100].map((size) => (
-                        <MenuItem key={size} value={size}>
-                          {size}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <Typography sx={{ fontSize: "14px", paddingLeft: "4px" }}>entries</Typography>
-                </Box>
-                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <Typography sx={{ fontSize: "14px", paddingRight: "4px", paddingLeft: "612px" }}>Search:</Typography>
-                  <TextField
-                    variant="outlined"
-                    // size="small"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: "2px",
-                        height: "46px",
-                        width: "200px",
-                      }
-                    }}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                </Box>
+            {/* <Box sx={{ width: "80%" }}> */}
+            <Typography component="h2" variant="h6" sx={{ fontSize: "54px", fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: "#66625c", mx:"1px !important" }}>
+              Senate
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", mt: "0  !important" }}>
+              <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <Typography sx={{ fontSize: "14px" }}>Show</Typography>
+                <FormControl size="small">
+                  <Select value={pageSize} onChange={(e) => setPageSize(e.target.value)} size="small" sx={{ boxSizing: "border-box", borderRadius: "2px", fontSize: "14px", p: "1px", m: "1px" }}>
+                    {[5, 10, 25, 100].map((size) => (
+                      <MenuItem key={size} value={size}>
+                        {size}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <Typography sx={{ fontSize: "14px", paddingLeft: "4px" }}>entries</Typography>
               </Box>
-              <Grid container spacing={2} columns={12} >
-                <Grid item xs={12} lg={12}>
-                  <DataGrid
-                    rows={filteredRows}
-                    columns={columns}
-                    pageSize={pageSize}
-                    rowsPerPageOptions={[5, 10, 25, 100]}
-                    disableSelectionOnClick
-                    sx={{
-                      width: "100%",
-                      overflowX: "auto",
-                      "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: "rgba(28, 144, 44, 0.9)", // Transparent Blue
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                      },
-                      "& .MuiDataGrid-columnHeaderTitle": {
-                        color: "#0056b3", // Darker blue text for contrast
-                      },
-                      "& .MuiDataGrid-root": {
-                        border: "1px solid #ddd", // Optional border
-                      },
-                    }}
-                  />
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography sx={{ fontSize: "14px", paddingRight: "4px", }}>Search:</Typography>
+                <TextField
+                  variant="outlined"
+                  // size="small"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "2px",
+                      height: "45px",
+                      width: "200px",
+                    }
+                  }}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </Box>
+            </Box>
+            <Grid container spacing={2} columns={12} >
+              <Grid item xs={12} lg={12}>
+                <DataGrid
+                  rows={paginatedSenateRows}
+                  columns={columns}
+                  pageSize={pageSize}
+                  rowsPerPageOptions={[10, 25, 100]}
+                  disableSelectionOnClick
+                  hideFooter
+                  sx={{
+                    minWidth: "67%",
+                    boxSizing: "border-box",
 
-                </Grid>
+                    "& .MuiDataGrid-columnHeaders": {
+                      backgroundColor: "rgba(144, 74, 28, 0.9)", // Transparent Blue
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                    },
+                    "& .MuiDataGrid-columnHeaderTitle": {
+                      color: "#0056b3", // Darker blue text for contrast
+                    },
+                    "& .MuiDataGrid-root": {
+                      border: "1px solid #ddd", // Optional border
+                    },
+                  }}
+                />
               </Grid>
+            </Grid>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", my: "55px !important" }}>
+              <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", color: "#333" }}>
+                Showing {senatePage * pageSize + 1} to {Math.min((senatePage + 1) * pageSize, filteredRows.length)} of {filteredRows.length} entries
+              </Typography>
+              <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+                <button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))} disabled={senatePage === 0}>Previous</button>
+                {[...Array(Math.ceil(filteredRows.length / pageSize))].map((_, i) => (
+                  <button key={i} onClick={() => setSenatePage(i)} style={{ backgroundColor: senatePage === i ? "#1976d2" : "white", color: senatePage === i ? "white" : "black" }}>
+                    {i + 1}
+                  </button>
+                ))}
+                <button onClick={() => setSenatePage((prev) => Math.min(prev + 1, Math.ceil(filteredRows.length / pageSize) - 1))} disabled={senatePage >= Math.ceil(filteredRows.length / pageSize) - 1}>Next</button>
+              </Box>
+            </Box>
+
+            {/* </Box> */}
+            {/* //House Dartagrid */}
+            <Typography component="h2" variant="h5" sx={{ fontSize: "54px", fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: "#66625c" }}>
+              House
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", mt: "0  !important" }}>
+              <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <Typography sx={{ fontSize: "14px" }}>Show</Typography>
+                <FormControl size="small">
+                  <Select value={pageSize} onChange={(e) => setPageSize(e.target.value)} size="small" sx={{ boxSizing: "border-box", borderRadius: "2px", fontSize: "14px", p: "1px", m: "1px" }}>
+                    {[5, 10, 25, 100].map((size) => (
+                      <MenuItem key={size} value={size}>
+                        {size}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <Typography sx={{ fontSize: "14px", paddingLeft: "4px" }}>entries</Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography sx={{ fontSize: "14px", paddingRight: "4px", }}>Search:</Typography>
+                <TextField
+                  variant="outlined"
+                  // size="small"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "2px",
+                      height: "45px",
+                      width: "200px",
+                    }
+                  }}
+                  onChange={(e) => setHouseSearch(e.target.value)}
+                />
+              </Box>
+            </Box>
+            <Grid container spacing={2} columns={12} >
+              <Grid item xs={12} lg={12}>
+                <DataGrid
+                  rows={paginatedHouseRows}
+                  columns={houseColumns}
+                  pageSize={pageSize}
+                  rowsPerPageOptions={[10, 25, 100]}
+                  disableSelectionOnClick
+                  hideFooter
+                  sx={{
+                    minWidth: "20%",
+                    boxSizing: "border-box",
+                    "& .MuiDataGrid-columnHeaders": {
+                      backgroundColor: "rgba(144, 74, 28, 0.9)", // Transparent Blue
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                    },
+                    "& .MuiDataGrid-columnHeaderTitle": {
+                      color: "#0056b3", // Darker blue text for contrast
+                    },
+                    "& .MuiDataGrid-root": {
+                      border: "1px solid #ddd", // Optional border
+                    },
+                  }}
+                />
+              </Grid>
+            </Grid>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: "55px !important" }}>
+              <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", color: "#333" }}>
+                Showing {housePage * pageSize + 1} to {Math.min((housePage + 1) * pageSize, houseFilteredRows.length)} of {houseFilteredRows.length} entries
+              </Typography>
+              <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+                <button onClick={() => setHousePage((prev) => Math.max(prev - 1, 0))} disabled={housePage === 0}>Previous</button>
+                {[...Array(Math.ceil(houseFilteredRows.length / pageSize))].map((_, i) => (
+                  <button key={i} onClick={() => setHousePage(i)} style={{ backgroundColor: housePage === i ? "#1976d2" : "white", color: housePage === i ? "white" : "black" }}>
+                    {i + 1}
+                  </button>
+                ))}
+                <button onClick={() => setHousePage((prev) => Math.min(prev + 1, Math.ceil(houseFilteredRows.length / pageSize) - 1))} disabled={housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1}>Next</button>
+              </Box>
+            </Box>
+
+            <Box sx={{ display: "flex", }} >
+              <Button 
+                endIcon={<span style={{ fontSize: "16px" }}>{">>"}</span>}
+              sx={{
+                bgcolor: "#337ab7",
+                border: "1px solid #ccc",
+                color: " #fff",
+                fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                fontSize: "14px",
+                lineHeight: " 1.22857143",
+                textTransform: "none",
+              }}>  View Scorecards for Former Members</Button>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "center", width: "100%",mb:"30px !important" }}>
+              <Button
+              variant="outlined"
+              endIcon={<ArrowForwardIcon/>}
+              sx={{
+                textTransform: "none", padding: "17px 24px",
+                fontSize: " 16px",
+                color: "#8aae6b",
+                backgroundColor: "transparent",
+                borderRadius: "2em",
+                border: " 2px solid #8aae6b",
+                lineHeight: " 16px"
+              }}>Give Now </Button>
 
             </Box>
-            {/* //</Box> */}
-            {/* <Stack >
-
-    </Stack>
-    <Box  sx={{ display: "flex", justifyContent: "space-between", marginBottom: 2 ,paddingLeft:"227px", width:"106%"}}>
-         <Typography sx={{fontSize:"54px", fontFamily:'"Helvetica Neue", Helvetica, Arial, sans-serif', color:"#66625c"}}>  Senate </Typography> 
-         </Box> */}
-            {/* <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: 2 ,paddingLeft:"227px", width:"106%",}}>
-   <Box sx={{display:"flex", flexDirection:"row", alignItems:"center"}}>
-   <Typography sx={{ fontSize:"14px"}}>Show</Typography>
-   <FormControl >
-      <Select value={pageSize} onChange={(e) => setPageSize(e.target.value)} size="small" sx={{boxSizing:"border-box", borderRadius:"2px",fontSize:"14px", p:"1px", m:"1px"}}>
-       {[5, 10, 25, 100].map((size) => (
-         <MenuItem key={size} value={size}>
-            {size}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-    <Typography sx={{ fontSize:"14px", paddingLeft:"4px"}}>entries</Typography>
-
-    </Box>
-    <Box sx={{ display:"flex", justifyContent:"end" , alignItems:"center"}}>
-    <Typography sx={{ fontSize:"14px",paddingRight:"8px"}}>Search:</Typography>
-    <TextField
-      variant="outlined"
-       // size="small"
-    
-      sx={{
-        "& .MuiOutlinedInput-root":{
-         borderRadius:"2px",
-          height:"46px",
-          width:"200px",
-               }
-       }}
-     onChange={(e) => setSearch(e.target.value)}
-     />
-   </Box>
-   </Box>
-
-     <Box sx={{ height: 400, width: "106%" ,display:"flex", justifyContent:"center", paddingLeft:"225px" }}>
-      <DataGrid
-       rows={filteredRows}
-        columns={columns}
-         pageSize={pageSize}
-       rowsPerPageOptions={[5, 10, 25, 100]}
-        disableSelectionOnClick
-      />
-     </Box> */}
           </Stack>
         </Box>
       </Box>
+      <Footer/>
+
     </>
   );
 };

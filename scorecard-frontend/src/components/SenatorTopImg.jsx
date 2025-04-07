@@ -69,7 +69,7 @@ const SenatorTopImg = () => {
                 fontWeight: "700",
               }}
             >
-              SCOREBOARD HOME
+              SCORECARD HOME
             </Typography>
       
             {/* Dropdown */}

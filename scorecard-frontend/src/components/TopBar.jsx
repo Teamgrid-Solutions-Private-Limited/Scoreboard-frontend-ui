@@ -36,7 +36,7 @@ const TopBar = () => {
                 justifyContent: { xs: "center", md: "space-between" },
                 alignItems: "center",
                 maxWidth:"inherit",
-                px: "50px",
+                px: "25px",
                 boxSizing:"border-box",
                 overflow: "hidden", //
             }}

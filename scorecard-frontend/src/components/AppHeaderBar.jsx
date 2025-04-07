@@ -15,7 +15,7 @@ const AppHeaderBar = () => {
       zIndex: 1000,
       paddingTop:"16px",
       height:{xs:"auto",md:"100px"},
-      boxShadow: "0px 4px 12px rgba(2, 2, 2, 0.15)", // 👈 light shadow
+      boxShadow: "0px 4px 12px rgba(2, 2, 2, 0.11)", // 👈 light shadow
 
     }}
   >
