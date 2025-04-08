@@ -7,6 +7,7 @@ import AppHeaderBar from "./AppHeaderBar";
 import SenatorTopImg from "./SenatorTopImg";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Footer from "./Footer";
+import RightStickyTab from "./RightStickyTab";
 
 //house column n rows
 const houseColumns = [
@@ -95,15 +96,17 @@ const Scorecard = () => {
     row.senator.toLowerCase().includes(search.toLowerCase())
   );
   const houseFilteredRows = houseRows.filter((row) =>
-    row.representative.toLowerCase().toLowerCase().includes(houseSearch.toLowerCase()))
+    row.representative.toLowerCase().includes(houseSearch.toLowerCase()))
   const paginatedSenateRows = filteredRows.slice(senatePage * pageSize, (senatePage + 1) * pageSize);
   const paginatedHouseRows = houseFilteredRows.slice(housePage * pageSize, (housePage + 1) * pageSize);
   return (
     <>
-      <Box sx={{ display: "flex"}}>
+      <Box sx={{ display: "flex" }}>
 
         <TopBar />
         <AppHeaderBar />
+        <RightStickyTab/>
+        
         <Box
           component="main"
           sx={() => ({
@@ -118,7 +121,7 @@ const Scorecard = () => {
         >
 
           <Box sx={{
-            pt: { xs: "10px", md: '183px' }, // <-- Adds space below the fixed header (adjust height as needed)
+            pt: { xs: "10px", md: '180px' }, // <-- Adds space below the fixed header (adjust height as needed)
             // mx: 4,
             // pb: 8,
             // width: "100%"
@@ -133,14 +136,14 @@ const Scorecard = () => {
               justifyContent: "center",
               paddingX: "4px",
               width: "66%",
-              overflowX:"hidden",
+              overflowX: "hidden",
               pb: 5,
               mt: { xs: 8, md: -2 },
             }}
           >
 
             {/* <Box sx={{ width: "80%" }}> */}
-            <Typography component="h2" variant="h6" sx={{ fontSize: "54px", fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: "#66625c", mx:"1px !important" }}>
+            <Typography component="h2" variant="h6" sx={{ fontSize: "54px", fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: "#66625c", mx: "1px !important" }}>
               Senate
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", mt: "0  !important" }}>
@@ -179,40 +182,58 @@ const Scorecard = () => {
                   rows={paginatedSenateRows}
                   columns={columns}
                   pageSize={pageSize}
-                  rowsPerPageOptions={[10, 25, 100]}
+                  rowsPerPageOptions={[5, 10, 25, 100]}
                   disableSelectionOnClick
                   hideFooter
+                  rowHeight={38}
+                  headerHeight={40}
                   sx={{
-                    minWidth: "67%",
-                    boxSizing: "border-box",
-
+                    // Custom header row height and background color
                     "& .MuiDataGrid-columnHeaders": {
-                      backgroundColor: "rgba(144, 74, 28, 0.9)", // Transparent Blue
-                      fontSize: "16px",
-                      fontWeight: "bold",
+
+                      backgroundColor: "grey !important",
+                      color: "red",
                     },
-                    "& .MuiDataGrid-columnHeaderTitle": {
-                      color: "#0056b3", // Darker blue text for contrast
-                    },
-                    "& .MuiDataGrid-root": {
-                      border: "1px solid #ddd", // Optional border
+                    "& .MuiDataGrid-row": {
+                      // minHeight: "70px !important",
+                      // height: "90px !important",
+                      // alignItems: "center",
+                      //  bgcolor:"grey"
                     },
                   }}
                 />
               </Grid>
             </Grid>
-            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", my: "55px !important" }}>
-              <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", color: "#333" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", my: "35px !important" }}>
+              <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", }}>
                 Showing {senatePage * pageSize + 1} to {Math.min((senatePage + 1) * pageSize, filteredRows.length)} of {filteredRows.length} entries
               </Typography>
-              <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-                <button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))} disabled={senatePage === 0}>Previous</button>
+              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", }}>
+                <button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))} disabled={senatePage === 0}
+                  style={{
+                    color: senatePage === 0 ? "#ccc" : "#337ab7",
+                    backgroundColor: "white",
+                    borderRight: "1px solid #ddd",
+                    cursor: senatePage === 0 ? "not-allowed" : "pointer",
+                    fontWeight: "bold"
+                  }}>
+                  Previous</button>
                 {[...Array(Math.ceil(filteredRows.length / pageSize))].map((_, i) => (
-                  <button key={i} onClick={() => setSenatePage(i)} style={{ backgroundColor: senatePage === i ? "#1976d2" : "white", color: senatePage === i ? "white" : "black" }}>
+                  <button key={i} onClick={() => setSenatePage(i)} style={{
+                    backgroundColor: senatePage === i ? "#337ab7" : "white", color: senatePage === i ? "white" : "#337ab7",
+                    borderRight: "1px solid rgb(224, 230, 236)",
+                    fontWeight: "bold",
+
+                  }}>
                     {i + 1}
                   </button>
                 ))}
-                <button onClick={() => setSenatePage((prev) => Math.min(prev + 1, Math.ceil(filteredRows.length / pageSize) - 1))} disabled={senatePage >= Math.ceil(filteredRows.length / pageSize) - 1}>Next</button>
+                <button onClick={() => setSenatePage((prev) => Math.min(prev + 1, Math.ceil(filteredRows.length / pageSize) - 1))} disabled={senatePage >= Math.ceil(filteredRows.length / pageSize) - 1} style={{
+                  color: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "#ccc" : "#337ab7",
+                  backgroundColor: "white",
+                  cursor: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "not-allowed" : "pointer",
+                  fontWeight: "bold"
+                }}>Next</button>
               </Box>
             </Box>
 
@@ -260,6 +281,7 @@ const Scorecard = () => {
                   rowsPerPageOptions={[10, 25, 100]}
                   disableSelectionOnClick
                   hideFooter
+                  rowHeight={38}
                   sx={{
                     minWidth: "20%",
                     boxSizing: "border-box",
@@ -278,53 +300,70 @@ const Scorecard = () => {
                 />
               </Grid>
             </Grid>
-            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: "55px !important" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: "40px !important" }}>
               <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", color: "#333" }}>
                 Showing {housePage * pageSize + 1} to {Math.min((housePage + 1) * pageSize, houseFilteredRows.length)} of {houseFilteredRows.length} entries
               </Typography>
-              <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-                <button onClick={() => setHousePage((prev) => Math.max(prev - 1, 0))} disabled={housePage === 0}>Previous</button>
+              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", }}>
+                <button onClick={() => setHousePage((prev) => Math.max(prev - 1, 0))} disabled={housePage === 0}
+                  style={{
+                    color: housePage === 0 ? "#ccc" : "#337ab7",
+                    backgroundColor: "white",
+                    borderRight: "1px solid #ddd",
+                    cursor: housePage === 0 ? "not-allowed" : "pointer",
+                    fontWeight: "bold"
+                  }}>Previous</button>
                 {[...Array(Math.ceil(houseFilteredRows.length / pageSize))].map((_, i) => (
-                  <button key={i} onClick={() => setHousePage(i)} style={{ backgroundColor: housePage === i ? "#1976d2" : "white", color: housePage === i ? "white" : "black" }}>
+                  <button key={i} onClick={() => setHousePage(i)} style={{
+                    backgroundColor: housePage === i ? "#337ab7" : "white", color: housePage === i ? "white" : "#337ab7",
+                    borderRight: "1px solid rgb(224, 230, 236)",
+                    fontWeight: "bold",
+                  }}>
                     {i + 1}
                   </button>
                 ))}
-                <button onClick={() => setHousePage((prev) => Math.min(prev + 1, Math.ceil(houseFilteredRows.length / pageSize) - 1))} disabled={housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1}>Next</button>
+                <button onClick={() => setHousePage((prev) => Math.min(prev + 1, Math.ceil(houseFilteredRows.length / pageSize) - 1))} disabled={housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1}
+                  sx={{
+                    color: senatePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "#ccc" : "#337ab7",
+                    backgroundColor: "white",
+                    cursor: senatePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "not-allowed" : "pointer",
+                    fontWeight: "bold"
+                  }}>Next</button>
               </Box>
             </Box>
 
             <Box sx={{ display: "flex", }} >
-              <Button 
-                endIcon={<span style={{ fontSize: "16px" }}>{">>"}</span>}
-              sx={{
-                bgcolor: "#337ab7",
-                border: "1px solid #ccc",
-                color: " #fff",
-                fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                fontSize: "14px",
-                lineHeight: " 1.22857143",
-                textTransform: "none",
-              }}>  View Scorecards for Former Members</Button>
-            </Box>
-            <Box sx={{ display: "flex", justifyContent: "center", width: "100%",mb:"30px !important" }}>
               <Button
-              variant="outlined"
-              endIcon={<ArrowForwardIcon/>}
-              sx={{
-                textTransform: "none", padding: "17px 24px",
-                fontSize: " 16px",
-                color: "#8aae6b",
-                backgroundColor: "transparent",
-                borderRadius: "2em",
-                border: " 2px solid #8aae6b",
-                lineHeight: " 16px"
-              }}>Give Now </Button>
+                endIcon={<span style={{ fontSize: "16px" }}>{">>"}</span>}
+                sx={{
+                  bgcolor: "#337ab7",
+                  border: "1px solid #ccc",
+                  color: " #fff",
+                  fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                  fontSize: "14px",
+                  lineHeight: " 1.22857143",
+                  textTransform: "none",
+                }}>  View Scorecards for Former Members</Button>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "center", width: "100%", mb: "30px !important" }}>
+              <Button
+                variant="outlined"
+                endIcon={<ArrowForwardIcon />}
+                sx={{
+                  textTransform: "none", padding: "17px 24px",
+                  fontSize: " 16px",
+                  color: "#8aae6b",
+                  backgroundColor: "transparent",
+                  borderRadius: "2em",
+                  border: " 2px solid #8aae6b",
+                  lineHeight: " 16px"
+                }}>Give Now </Button>
 
             </Box>
           </Stack>
         </Box>
       </Box>
-      <Footer/>
+      <Footer />
 
     </>
   );

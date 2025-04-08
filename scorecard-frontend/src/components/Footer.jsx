@@ -65,7 +65,7 @@ const Footer = () => {
                         fontWeight: 400,
                         minWidth: "auto",
                         textTransform: "none",
-                        marginLeft: "1px",
+                        marginLeft: "10px",
                       }}
                     >
                       {item}

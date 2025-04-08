@@ -29,7 +29,7 @@ const SenatorTopImg = () => {
         {/* Inner content box (max 1000px wide) */}
         <Box
           sx={{
-            width: "100%",
+            width: "98%",
             maxWidth: "1000px",
             display: "flex",
             flexDirection: "column",
@@ -55,18 +55,29 @@ const SenatorTopImg = () => {
               justifyContent: "flex-start",
               gap: 2,
               height: "58px",
-              px: 2,
+              // px: 2,
               mt: "-6px",
               mb: 3,
               width: "100%",
               boxSizing: "border-box",
+              
             }}
           >
             <Typography
               sx={{
-                fontFamily: "proxima-nova, sans-serif",
-                fontSize: "15px",
-                fontWeight: "700",
+                display: "block",
+            fontFamily: "Verdana, Geneva, sans-serif",
+            fontSize: "13px",
+            fontWeight: 700,
+            letterSpacing: "inherit",
+            color: "#fff",
+            px: "12px",
+            py: "20px",
+            textTransform: "uppercase",
+            transition: "all 0.6s",
+            "&:hover": {
+              backgroundColor: "#b70000",
+            },
               }}
             >
               SCORECARD HOME
@@ -80,9 +91,19 @@ const SenatorTopImg = () => {
             >
               <Typography
                 sx={{
-                  fontFamily: "proxima-nova, sans-serif",
-                  fontSize: "15px",
-                  fontWeight: "700",
+                  display: "block",
+            fontFamily: "Verdana, Geneva, sans-serif",
+            fontSize: "13px",
+            fontWeight: 700,
+            letterSpacing: "inherit",
+            color: "#fff",
+            // px: "15px",
+            py: "19px",
+            textTransform: "uppercase",
+            transition: "all 0.6s",
+            "&:hover": {
+              backgroundColor: "#b70000",
+            },
                 }}
               >
                 VOTES WE TRACK ▼
@@ -104,7 +125,7 @@ const SenatorTopImg = () => {
                   onClick={handleMouseLeave}
                   sx={{
                     bgcolor: "#d90000",
-                    "&:hover": { backgroundColor: "#7f0000" },
+                    "&:hover": { backgroundColor: "#9f0000" },
                   }}
                 >
                   House
@@ -123,9 +144,19 @@ const SenatorTopImg = () => {
       
             <Typography
               sx={{
-                fontFamily: "proxima-nova, sans-serif",
-                fontSize: "15px",
-                fontWeight: "700",
+                display: "block",
+                fontFamily: "Verdana, Geneva, sans-serif",
+                fontSize: "13px",
+                fontWeight: 700,
+                letterSpacing: "inherit",
+                color: "#fff",
+                px: "15px",
+                py: "20px",
+                textTransform: "uppercase",
+                transition: "all 0.6s",
+                "&:hover": {
+                  backgroundColor: "#b70000",
+                },
               }}
             >
               ACTIVITY WE TRACK
