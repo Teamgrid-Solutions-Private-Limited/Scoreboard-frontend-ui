@@ -182,29 +182,30 @@ const Scorecard = () => {
                   hideFooter
                   rowHeight={38}
                   sx={{
+                    overflow: "hidden",
                     // Custom header row height and background color
                     "& .MuiDataGrid-columnHeaders": {
                       color: "black",
                       overflow:"hidden",
+                      "& .MuiDataGrid-scrollbar MuiDataGrid-scrollbar--horizontal":{
+                        overflowX:"none",
+                        
+                      }
+
+                      ,
 
                       "& .MuiDataGrid-row--borderBottom":{
                         backgroundColor: '#d2e5f7',
-                        height:"39px",
+                        // height:"39px",
                         alignItems:"center",
                         display:"flex",
                         justifyContent:"center",
                         textAlign:"center",
                         overflow:"hidden",
-
                       }
                     },
                     "& .MuiDataGrid-row": {
-                      // minHeightb: "70px !important",
-                      // height: "90px !important",
-                      // alignItems: "center",
-                      //  bgcolor:"grey"
                       overflow:"hidden",
-
                     },
                   }}
                 />
@@ -219,7 +220,7 @@ const Scorecard = () => {
                   style={{
                     color: senatePage === 0 ? "#777" : "#337ab7",
                     borderRight: "1px solid #ddd",
-                    cursor: senatePage === 0 ? "not-allowed" : "pointer",
+                    cursor: "pointer",
                     fontWeight: "400",
                     fontSize: "18px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
@@ -237,7 +238,7 @@ const Scorecard = () => {
                   <button key={i} onClick={() => setSenatePage(i)} style={{
                     backgroundColor: senatePage === i ? "#337ab7" : "white", color: senatePage === i ? "white" : "#337ab7",
                     borderRight: "1px solid #ddd",
-                    cursor: senatePage === 0 ? "not-allowed" : "pointer",
+                    cursor: "pointer",
                     fontWeight: "400",
                     fontSize: "18px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
@@ -249,7 +250,6 @@ const Scorecard = () => {
                     border: " 1px solid #ddd",
                     marginLeft: " -1px",
                     
-
                   }}>
                     {i + 1}
                   </button>
@@ -257,7 +257,7 @@ const Scorecard = () => {
                 <button onClick={() => setSenatePage((prev) => Math.min(prev + 1, Math.ceil(filteredRows.length / pageSize) - 1))} disabled={senatePage >= Math.ceil(filteredRows.length / pageSize) - 1} style={{
                   color: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "#ccc" : "#337ab7",
                   backgroundColor: "white",
-                  cursor: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "not-allowed" : "pointer",
+                  cursor:  "pointer",
                   fontWeight: "400",
                   borderRight: "1px solid #ddd",
                   fontSize: "18px",
@@ -327,7 +327,7 @@ const Scorecard = () => {
                       overflow:"hidden",
                       "& .MuiDataGrid-row--borderBottom":{
                         backgroundColor: '#d2e5f7',
-                        height:"39px",
+                        // height:"39px",
                         alignItems:"center",
                         display:"flex",
                         justifyContent:"center",
@@ -361,7 +361,7 @@ const Scorecard = () => {
                     color: housePage === 0 ? "#ccc" : "#337ab7",
                     backgroundColor: "white",
                     borderRight: "1px solid #ddd",
-                    cursor: housePage === 0 ? "not-allowed" : "pointer",
+                    cursor: "pointer",
                     fontWeight: "400",
                     fontSize: "20px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
@@ -377,7 +377,7 @@ const Scorecard = () => {
                   <button key={i} onClick={() => setHousePage(i)} style={{
                     backgroundColor: housePage === i ? "#337ab7" : "white", color: housePage === i ? "white" : "#337ab7",
                     borderRight: "1px solid rgb(224, 230, 236)",
-                    cursor: housePage === 0 ? "not-allowed" : "pointer",
+                    cursor: "pointer",
                     fontWeight: "400",
                     fontSize: "20px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",

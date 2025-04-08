@@ -8,14 +8,10 @@ const Senator = () => {
                 <TopBar />
                 <AppHeaderBar />
                 <RightStickyTab />
-
                 <Box
                     component="main"
                     sx={() => ({
-                        // flexGrow: 1,
-                        // flexGrow: 1,
                         overflowX: "hidden",
-                     
                     })}
                 >
 
