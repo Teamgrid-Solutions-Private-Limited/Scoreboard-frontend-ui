@@ -1,4 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { Box,Typography,Stack } from '@mui/material';
+import TopBar from './TopBar';
+import AppHeaderBar from './AppHeaderBar';
+import SenatorTopImg from './SenatorTopImg';
+import RightStickyTab from './RightStickyTab';
 
 const Senator = () => {
     return (
@@ -16,7 +21,7 @@ const Senator = () => {
                 >
 
                     <Box sx={{
-                        pt: { xs: "10px", md: '180px' }, // <-- Adds space below the fixed header (adjust height as needed)
+                        mt: { xs: "10px", md: '0px' }, // <-- Adds space below the fixed header (adjust height as needed)
                         // mx: 4,
                         // pb: 8,
                         // width: "100%"
