@@ -20,14 +20,15 @@ import AppHeaderBar from "./AppHeaderBar";
 const Scorecard = () => {
   return (
     <>
-    <Box display={"flex"}
-    flexDirection={"row"}
-    //  sx={{p:"2px",m:"5px", marginBottom:"2px"}}
-     >
-      {/* Top Notification Bar */}
-      <TopBar />
+      <Box
+        display={"flex"}
+        flexDirection={"row"}
+        //  sx={{p:"2px",m:"5px", marginBottom:"2px"}}
+      >
+        {/* Top Notification Bar */}
+        <TopBar />
 
-      {/* <Stack
+        {/* <Stack
 					spacing={2}
 					sx={{
 						alignItems: "center",
@@ -36,27 +37,33 @@ const Scorecard = () => {
 						mt: { xs: 8, md: 5 },
 					}}
 				> */}
-      {/* Main Navigation Bar */}
-    
-<AppHeaderBar/>
-      {/* Push Main Content Down */}
-      {/* <Box sx={{ marginTop: "2px" }} /> */}
-      <Box sx={{display:"flex", justifyContent:"right", alignItems:"right", mt:"0px", px:45}}>
-        <img src="../../public/scorecard-header-1.jpg" alt="scroreboard" 
-        width={"850px"}
-        height={"300px"}
-        />
-      </Box>
-      <Box>
-        {/* <Senate/> */}
-      </Box>
+        {/* Main Navigation Bar */}
 
-      <Stack display={"flex"} direction={"row"}>
-        gfhgfhfhfhutuit
-      </Stack>
-      {/* </Stack> */}
-      
+        <AppHeaderBar />
+        {/* Push Main Content Down */}
+        {/* <Box sx={{ marginTop: "2px" }} /> */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "right",
+            alignItems: "right",
+            mt: "0px",
+            px: 45,
+          }}
+        >
+          <img
+            src="../../public/scorecard-header-1.jpg"
+            alt="scroreboard"
+            width={"850px"}
+            height={"300px"}
+          />
+        </Box>
+        <Box>{/* <Senate/> */}</Box>
 
+        <Stack display={"flex"} direction={"row"}>
+          gfhgfhfhfhutuit
+        </Stack>
+        {/* </Stack> */}
       </Box>
     </>
   );
