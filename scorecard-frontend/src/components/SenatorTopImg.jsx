@@ -23,7 +23,10 @@ const SenatorTopImg = () => {
           justifyContent: "center", // centers the content block
           width: "100%",
           boxSizing: "border-box",
-          px: 32,
+          alignItems:"center",
+          // mx:"265px",
+          // mt:"-2px"
+          // px: 32,
         }}
       >
         {/* Inner content box (max 1000px wide) */}
