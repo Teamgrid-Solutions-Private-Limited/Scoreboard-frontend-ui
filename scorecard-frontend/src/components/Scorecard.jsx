@@ -8,6 +8,7 @@ import SenatorTopImg from "./SenatorTopImg";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Footer from "./Footer";
 import RightStickyTab from "./RightStickyTab";
+import { BorderBottom } from "@mui/icons-material";
 
 //house column n rows
 const houseColumns = [
@@ -105,21 +106,16 @@ const Scorecard = () => {
 
         <TopBar />
         <AppHeaderBar />
-        <RightStickyTab/>
-        
+        <RightStickyTab />
+
         <Box
           component="main"
           sx={() => ({
             // flexGrow: 1,
             // flexGrow: 1,
             overflowX: "hidden",
-            // overflowY: "auto",
-            // backgroundColor: "#F5F9FA",
-            // optional, to visualize the area
-            // backgroundColor: "#d6d7e2 ", // optional, to visualize the area
           })}
         >
-
           <Box sx={{
             pt: { xs: "10px", md: '180px' }, // <-- Adds space below the fixed header (adjust height as needed)
             // mx: 4,
@@ -141,7 +137,6 @@ const Scorecard = () => {
               mt: { xs: 8, md: -2 },
             }}
           >
-
             {/* <Box sx={{ width: "80%" }}> */}
             <Typography component="h2" variant="h6" sx={{ fontSize: "54px", fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: "#66625c", mx: "1px !important" }}>
               Senate
@@ -186,19 +181,30 @@ const Scorecard = () => {
                   disableSelectionOnClick
                   hideFooter
                   rowHeight={38}
-                  headerHeight={40}
                   sx={{
                     // Custom header row height and background color
                     "& .MuiDataGrid-columnHeaders": {
+                      color: "black",
+                      overflow:"hidden",
 
-                      backgroundColor: "grey !important",
-                      color: "red",
+                      "& .MuiDataGrid-row--borderBottom":{
+                        backgroundColor: '#d2e5f7',
+                        height:"39px",
+                        alignItems:"center",
+                        display:"flex",
+                        justifyContent:"center",
+                        textAlign:"center",
+                        overflow:"hidden",
+
+                      }
                     },
                     "& .MuiDataGrid-row": {
-                      // minHeight: "70px !important",
+                      // minHeightb: "70px !important",
                       // height: "90px !important",
                       // alignItems: "center",
                       //  bgcolor:"grey"
+                      overflow:"hidden",
+
                     },
                   }}
                 />
@@ -208,21 +214,41 @@ const Scorecard = () => {
               <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", }}>
                 Showing {senatePage * pageSize + 1} to {Math.min((senatePage + 1) * pageSize, filteredRows.length)} of {filteredRows.length} entries
               </Typography>
-              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", }}>
+              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", margin: "20px 0px" }}>
                 <button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))} disabled={senatePage === 0}
                   style={{
-                    color: senatePage === 0 ? "#ccc" : "#337ab7",
-                    backgroundColor: "white",
+                    color: senatePage === 0 ? "#777" : "#337ab7",
                     borderRight: "1px solid #ddd",
                     cursor: senatePage === 0 ? "not-allowed" : "pointer",
-                    fontWeight: "bold"
+                    fontWeight: "400",
+                    fontSize: "18px",
+                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    // position: "relative",
+                    // float: "left",
+                    padding: "6px 12px",
+                    lineHeight: "1.52857143",
+                    textDecoration: 'none',
+                    backgroundColor: " #fff",
+                    border: " 1px solid #ddd",
+                    marginLeft: " -1px",
                   }}>
                   Previous</button>
                 {[...Array(Math.ceil(filteredRows.length / pageSize))].map((_, i) => (
                   <button key={i} onClick={() => setSenatePage(i)} style={{
                     backgroundColor: senatePage === i ? "#337ab7" : "white", color: senatePage === i ? "white" : "#337ab7",
-                    borderRight: "1px solid rgb(224, 230, 236)",
-                    fontWeight: "bold",
+                    borderRight: "1px solid #ddd",
+                    cursor: senatePage === 0 ? "not-allowed" : "pointer",
+                    fontWeight: "400",
+                    fontSize: "18px",
+                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    // position: "relative",
+                    // float: "left",
+                    padding: "6px 12px",
+                    lineHeight: "1.52857143",
+                    textDecoration: 'none',
+                    border: " 1px solid #ddd",
+                    marginLeft: " -1px",
+                    
 
                   }}>
                     {i + 1}
@@ -232,7 +258,17 @@ const Scorecard = () => {
                   color: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "#ccc" : "#337ab7",
                   backgroundColor: "white",
                   cursor: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "not-allowed" : "pointer",
-                  fontWeight: "bold"
+                  fontWeight: "400",
+                  borderRight: "1px solid #ddd",
+                  fontSize: "18px",
+                  fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                  // position: "relative",
+                  // float: "left",
+                  padding: "6px 12px",
+                  lineHeight: "1.52857143",
+                  textDecoration: 'none',
+                  border: " 1px solid #ddd",
+                  marginLeft: " -1px",
                 }}>Next</button>
               </Box>
             </Box>
@@ -285,17 +321,32 @@ const Scorecard = () => {
                   sx={{
                     minWidth: "20%",
                     boxSizing: "border-box",
+                    
                     "& .MuiDataGrid-columnHeaders": {
-                      backgroundColor: "rgba(144, 74, 28, 0.9)", // Transparent Blue
-                      fontSize: "16px",
-                      fontWeight: "bold",
-                    },
-                    "& .MuiDataGrid-columnHeaderTitle": {
-                      color: "#0056b3", // Darker blue text for contrast
-                    },
-                    "& .MuiDataGrid-root": {
-                      border: "1px solid #ddd", // Optional border
-                    },
+                      color: "black",
+                      overflow:"hidden",
+                      "& .MuiDataGrid-row--borderBottom":{
+                        backgroundColor: '#d2e5f7',
+                        height:"39px",
+                        alignItems:"center",
+                        display:"flex",
+                        justifyContent:"center",
+                        textAlign:"center",
+                        overflow:"hidden"
+                      }
+                    ,
+                    // "& .MuiDataGrid-columnHeaders": {
+                    //   backgroundColor: "rgba(144, 74, 28, 0.9)", // Transparent Blue
+                    //   fontSize: "16px",
+                    //   fontWeight: "bold",
+                    // },
+                    // "& .MuiDataGrid-columnHeaderTitle": {
+                    //   color: "#0056b3", // Darker blue text for contrast
+                    // },
+                    // "& .MuiDataGrid-root": {
+                    //   border: "1px solid #ddd", // Optional border
+                    // },
+                    }
                   }}
                 />
               </Grid>
@@ -311,13 +362,32 @@ const Scorecard = () => {
                     backgroundColor: "white",
                     borderRight: "1px solid #ddd",
                     cursor: housePage === 0 ? "not-allowed" : "pointer",
-                    fontWeight: "bold"
+                    fontWeight: "400",
+                    fontSize: "20px",
+                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    // position: "relative",
+                    // float: "left",
+                    padding: "6px 12px",
+                    lineHeight: "1.52857143",
+                    textDecoration: 'none',
+                    border: " 1px solid #ddd",
+                    marginLeft: " -1px",
                   }}>Previous</button>
                 {[...Array(Math.ceil(houseFilteredRows.length / pageSize))].map((_, i) => (
                   <button key={i} onClick={() => setHousePage(i)} style={{
                     backgroundColor: housePage === i ? "#337ab7" : "white", color: housePage === i ? "white" : "#337ab7",
                     borderRight: "1px solid rgb(224, 230, 236)",
-                    fontWeight: "bold",
+                    cursor: housePage === 0 ? "not-allowed" : "pointer",
+                    fontWeight: "400",
+                    fontSize: "20px",
+                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    // position: "relative",
+                    // float: "left",
+                    padding: "6px 12px",
+                    lineHeight: "1.52857143",
+                    textDecoration: 'none',
+                    border: " 1px solid #ddd",
+                    marginLeft: " -1px",
                   }}>
                     {i + 1}
                   </button>
@@ -327,7 +397,16 @@ const Scorecard = () => {
                     color: senatePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "#ccc" : "#337ab7",
                     backgroundColor: "white",
                     cursor: senatePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "not-allowed" : "pointer",
-                    fontWeight: "bold"
+                    fontWeight: "400",
+                    fontSize: "20px",
+                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    // position: "relative",
+                    // float: "left",
+                    padding: "6px 12px",
+                    lineHeight: "1.52857143",
+                    textDecoration: 'none',
+                    border: " 1px solid #ddd",
+                    marginLeft: " -1px",
                   }}>Next</button>
               </Box>
             </Box>
