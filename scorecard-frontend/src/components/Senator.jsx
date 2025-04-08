@@ -1,127 +1,150 @@
-import React from 'react';
-import { Box, Typography, Stack,Card,Tab,Tabs, Avatar, CardContent  } from '@mui/material';
+import React, { useState } from 'react';
+import {
+    Box, Typography, Stack, Card, Tab, Tabs, Avatar,
+    Divider
+} from '@mui/material';
 import TopBar from './TopBar';
 import AppHeaderBar from './AppHeaderBar';
 import SenatorTopImg from './SenatorTopImg';
 import RightStickyTab from './RightStickyTab';
-import { useState } from 'react';
 
 const Senator = () => {
-
-    const [tab, setTab] = useState(0);
+    const [tab, setTab] = useState("2023-2029");
 
     const handleTabChange = (_, newValue) => {
         setTab(newValue);
     };
+
+    const senatorData = {
+        "2023-2029": {
+            name: "Sen. Alex Padilla",
+            state: "California",
+            party: "Democrat",
+            imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Sen._Alex_Padilla_official_portrait%2C_117th_Congress.jpg",
+            sbaRating: "F",
+            term: "2023–2029",
+            isCurrent: true,
+        },
+        "2021-2023": {
+            name: "Sen. Alex Padilla",
+            state: "California",
+            party: "Democrat",
+            imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Sen._Alex_Padilla_official_portrait%2C_117th_Congress.jpg",
+            sbaRating: "F",
+            term: "2021–2023",
+            isCurrent: false,
+        }
+    };
+
+    const selectedSenator = senatorData[tab];
+
     return (
         <>
-            <Box sx={{
-                mx: 31.7,
-            }}>
-
+            <Box sx={{ mx: 31.7 }}>
                 <TopBar />
                 <AppHeaderBar />
                 <RightStickyTab />
 
-                <Box
-                    component="main"
-                    sx={() => ({
-                        // flexGrow: 1,
-                        // flexGrow: 1,
-                        overflowX: "hidden",
-                    })}
-                >
+                <Box component="main" sx={{ overflowX: "hidden" }}>
                     <Box sx={{
-                        pt: { xs: "10px", md: '180px' }, // <-- Adds space below the fixed header (adjust height as needed)
-                        // pb: 8,
+                        pt: { xs: "10px", md: '180px' },
                         display: "flex",
                         width: "100%",
                     }}>
                         <SenatorTopImg />
                     </Box>
-                    <Stack
-                        spacing={2}
-                        sx={{
-                            // alignItems: "start",
-                            // mx: 31.7,
-                            justifyContent: "center",
-                            // paddingX: "4px",
-                            width: "99%",
-                            overflowX: "hidden",
-                            pb: 5,
-                            mt: { xs: 8, md: -2 },
-                        }}
-                    >
-                        {/* <Box sx={{ width: "80%" }}> */}
-                        {/* <Typography component="h2" variant="h6" sx={{ fontSize: "54px", fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: "#66625c", }}>
-                            Senate
-                        </Typography> */}
+
+                    <Stack spacing={2} sx={{
+                        justifyContent: "center",
+                        width: "99%",
+                        overflowX: "hidden",
+                        pb: 5,
+                        mt: { xs: 8, md: -2 },
+                    }}>
                         <Box p={1}>
                             {/* Tabs */}
-                            <Tabs value={tab} onChange={handleTabChange} aria-label="term tabs">
-                                <Tab label="2023–2029" />
-                                <Tab label="2021–2023" />
+                            <Tabs
+                                value={tab}
+                                onChange={handleTabChange}
+                                TabIndicatorProps={{ style: { display: 'none' } }}
+                                sx={{
+                                    backgroundColor: "#fff",
+                                    color:"black"
+                                }}
+                            >
+                                {Object.entries(senatorData).map(([term]) => (
+                                    <Tab key={term} label={term} value={term} sx={{
+                                        bgcolor: tab===term? "#90CAF9": "#fff",
+                                        color:  tab===term? "black":"black", // Keep text black
+                                        fontWeight: tab === term ? "bold" : "normal", // Bold for selected
+                                        borderRadius: 0, // Remove rounded corners
+                                        minWidth: 100,
+                                        margin: 0, // Remove spacing between tabs
+                                        padding: "12px 16px", // Standard padding
+                                        "&.Mui-selected": {
+                                          backgroundColor: "#90CAF9",
+                                          fontWeight: "bold",
+                                        },
+                                        "&:not(:last-child)": {
+                                          borderRight: "none", // Remove right border between tabs
+                                        },
+                                    }}/>
+                                ))}
                             </Tabs>
+                            <Divider sx={{borderBottomWidth:"2",color:"black"}} />
 
                             {/* Term Header */}
                             <Box mt={3} display="flex" alignItems="center">
                                 <Typography variant="h3" fontWeight="bold" mr={1}>
-                                    2023–2029
+                                    {selectedSenator.term}
                                 </Typography>
-                                <Typography variant="h6" color="text.secondary">
-                                    (Current term)
-                                </Typography>
+                                {selectedSenator.isCurrent && (
+                                    <Typography variant="h6" color="text.secondary">
+                                        (Current term)
+                                    </Typography>
+                                )}
                             </Box>
 
-                            {/* Senator Profile Section */}
+                            {/* Senator Profile */}
                             <Box mt={4} display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
-                                {/* Left: Image + Name + State */}
                                 <Box display="flex" alignItems="center">
                                     <Avatar
-                                        src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Sen._Alex_Padilla_official_portrait%2C_117th_Congress.jpg"
-                                        alt="Senator"
+                                        src={selectedSenator.imageUrl}
+                                        alt={selectedSenator.name}
                                         sx={{ width: 120, height: 120, border: '4px solid #1976d2', mr: 3 }}
                                     />
                                     <Box>
                                         <Typography variant="h5" fontWeight="bold">
-                                            Sen. Alex Padilla
+                                            {selectedSenator.name}
                                         </Typography>
                                         <Typography variant="subtitle1" color="text.secondary">
-                                            California (Democrat)
+                                            {selectedSenator.state} ({selectedSenator.party})
                                         </Typography>
                                     </Box>
                                 </Box>
 
-                                {/* Right: SBA Rating */}
-                                <Card variant="outlined" sx={{ width: 120, height: 120, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                <Card variant="outlined" sx={{
+                                    width: 120,
+                                    height: 120,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
                                     <Typography variant="body2" color="text.secondary">
                                         SBA Rating:
                                     </Typography>
                                     <Typography variant="h3" fontWeight="bold">
-                                        F
+                                        {selectedSenator.sbaRating}
                                     </Typography>
                                 </Card>
                             </Box>
-
-                            {/* Summary Section */}
-                            <Box mt={6}>
-                                <Typography variant="h4" fontWeight="bold">
-                                    Summary
-                                </Typography>
-                                {/* Add more summary content here */}
-                            </Box>
                         </Box>
-
-
-
-
-
                     </Stack>
                 </Box>
             </Box>
-
         </>
-    )
-}
+    );
+};
 
-export default Senator
+export default Senator;
