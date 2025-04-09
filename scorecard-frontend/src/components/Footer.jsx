@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import {
   Box,
@@ -10,7 +12,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Facebook, Twitter, Instagram, YouTube } from "@mui/icons-material";
- 
+
 const Footer = () => {
   return (
     <>
@@ -42,7 +44,7 @@ const Footer = () => {
                 style={{ height: "55px" }}
               />
             </Grid>
- 
+
             {/* Navigation Links Column */}
             <Grid item xs={12} md={4}>
               <Box
@@ -74,7 +76,7 @@ const Footer = () => {
                 )}
               </Box>
             </Grid>
- 
+
             {/* Social Icons Column */}
             <Grid
               item
@@ -126,7 +128,7 @@ const Footer = () => {
             <Link href="#" color="inherit" underline="hover">
               Privacy Notice
             </Link>
- 
+
             <Link href="#" color="inherit" underline="hover" sx={{ ml: 50 }}>
               MADE BY DIGITAL ALCHEMY
             </Link>
@@ -136,5 +138,5 @@ const Footer = () => {
     </>
   );
 };
- 
+
 export default Footer;

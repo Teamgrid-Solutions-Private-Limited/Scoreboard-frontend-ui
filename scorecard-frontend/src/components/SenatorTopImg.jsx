@@ -8,18 +8,16 @@ const SenatorTopImg = () => {
     const handleMouseEnter = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleMouseLeave = (event) => {
         if (anchorEl && !anchorEl.contains(event.relatedTarget)) {
             setAnchorEl(null);
         }
     };
-
     return (
         <Box
         sx={{
           display: "flex",
-          flexDirection: "row", // 👈 row layout
+          flexDirection: "row", //  row layout
           justifyContent: "center", // centers the content block
           width: "100%",
           boxSizing: "border-box",
@@ -59,7 +57,7 @@ const SenatorTopImg = () => {
               gap: 2,
               height: "58px",
               // px: 2,
-              mt: "-6px",
+              mt: "-7px",
               mb: 3,
               width: "100%",
               boxSizing: "border-box",

@@ -7,17 +7,17 @@ import Scorecard from "./components/Scorecard.jsx";
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import CustomizedGrid from "./components/CustomizedGrid.jsx";
 import TopBar from "./components/TopBar.jsx"
-import Senator from './components/Senator.jsx';
+import ShowSenatorById from './components/ShowSenatorById.jsx';
 function App() {
 
   return (
     <>
     <BrowserRouter>
     <Routes>
-      {/* <Route path="/" element={<Scorecard />}/> */}
+      <Route path="/" element={<Scorecard />}/>
       {/* <Route path="/" element={<CustomizedGrid />}/> */}
       {/* <Route path="/" element={<TopBar />}/> */}
-      <Route path="/" element={<Senator />}/>
+      <Route path="/senator/:id" element={<ShowSenatorById />}/>
 
 
 

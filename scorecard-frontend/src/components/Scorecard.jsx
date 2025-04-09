@@ -9,6 +9,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Footer from "./Footer";
 import RightStickyTab from "./RightStickyTab";
 import { BorderBottom } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 //house column n rows
 const houseColumns = [
@@ -54,11 +55,12 @@ const houseRows = [
   { id: 5, representative: "Bernie Smith", district: "TX-15", party: "Independent", rating: "C" },
 ];
 
-
 //senator column n rows
 const columns = [
   {
     field: "senator", headerName: "Senator", width: 410, renderCell: (params) => (
+      <Link
+      to={`/senator/${params.row.senator}`}> 
       <span style={{
         color: params.row.party === "Republican" ? "red" :
           params.row.party === "Democrat" ? "blue" : "gray",
@@ -67,6 +69,7 @@ const columns = [
       }}>
         {params.value}
       </span>
+      </Link>
     )
   },
   { field: "state", headerName: "State", width: 300 },
@@ -189,11 +192,8 @@ const Scorecard = () => {
                       overflow:"hidden",
                       "& .MuiDataGrid-scrollbar MuiDataGrid-scrollbar--horizontal":{
                         overflowX:"none",
-                        
                       }
-
                       ,
-
                       "& .MuiDataGrid-row--borderBottom":{
                         backgroundColor: '#d2e5f7',
                         // height:"39px",
@@ -215,29 +215,29 @@ const Scorecard = () => {
               <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", }}>
                 Showing {senatePage * pageSize + 1} to {Math.min((senatePage + 1) * pageSize, filteredRows.length)} of {filteredRows.length} entries
               </Typography>
-              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", margin: "20px 0px" }}>
+              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", margin: "20px 0px", }}>
                 <button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))} disabled={senatePage === 0}
                   style={{
                     color: senatePage === 0 ? "#777" : "#337ab7",
-                    borderRight: "1px solid #ddd",
+                    // borderRight: "1px solid #ddd",
                     cursor: "pointer",
                     fontWeight: "400",
                     fontSize: "18px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
                     // position: "relative",
                     // float: "left",
-                    padding: "6px 12px",
+                    padding: "6px 10px",
                     lineHeight: "1.52857143",
                     textDecoration: 'none',
                     backgroundColor: " #fff",
-                    border: " 1px solid #ddd",
-                    marginLeft: " -1px",
+                    // border: " 1px solid #ddd",
+                    // marginLeft: " -1px",
                   }}>
                   Previous</button>
                 {[...Array(Math.ceil(filteredRows.length / pageSize))].map((_, i) => (
                   <button key={i} onClick={() => setSenatePage(i)} style={{
                     backgroundColor: senatePage === i ? "#337ab7" : "white", color: senatePage === i ? "white" : "#337ab7",
-                    borderRight: "1px solid #ddd",
+                    // borderRight: "1px solid #ddd",
                     cursor: "pointer",
                     fontWeight: "400",
                     fontSize: "18px",
@@ -247,8 +247,8 @@ const Scorecard = () => {
                     padding: "6px 12px",
                     lineHeight: "1.52857143",
                     textDecoration: 'none',
-                    border: " 1px solid #ddd",
-                    marginLeft: " -1px",
+                    border: "none",
+                    // marginLeft: " -1px",
                     
                   }}>
                     {i + 1}
