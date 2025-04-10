@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import {
   Box,
@@ -12,32 +10,26 @@ import {
   IconButton,
 } from "@mui/material";
 import { Facebook, Twitter, Instagram, YouTube } from "@mui/icons-material";
+import logo from "../assets/image.png";
 
 const Footer = () => {
   return (
     <>
+      {/* Main Footer Section */}
       <Box
         component="footer"
         sx={{
           backgroundColor: "#143050",
           color: "white",
-          width: "1515px",
           py: 4,
           mt: "auto",
-          ml: "0px",
-          height: "auto",
+          width: "1520px",
         }}
       >
-        <Container maxWidth="lg" sx={{ width: "100%" }}>
-          {/* Rest of your footer content remains the same */}
+        <Container maxWidth="lg">
           <Grid container spacing={4}>
             {/* Logo Column */}
-            <Grid
-              item
-              xs={12}
-              md={4}
-              sx={{ textAlign: { xs: "center", md: "left" } }}
-            >
+            <Grid item xs={12} md={4} sx={{ textAlign: { xs: "center", md: "left" } }}>
               <img
                 src="/sba-logo.webp"
                 alt="Susan B. Anthony Logo"
@@ -45,7 +37,7 @@ const Footer = () => {
               />
             </Grid>
 
-            {/* Navigation Links Column */}
+            {/* Navigation Links */}
             <Grid item xs={12} md={4}>
               <Box
                 sx={{
@@ -53,43 +45,33 @@ const Footer = () => {
                   flexWrap: "wrap",
                   justifyContent: "center",
                   gap: 2,
-                  ml: { xs: 0, md: 12 },
                 }}
               >
-                {["ELECTION", "ABOUT", "SCORECARD", "NEWS", "CAREERS"].map(
-                  (item) => (
-                    <Button
-                      key={item}
-                      sx={{
-                        color: "white",
-                        fontFamily: "Verdana, Geneva, sans-serif",
-                        fontSize: "16px",
-                        fontWeight: 400,
-                        minWidth: "auto",
-                        textTransform: "none",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      {item}
-                    </Button>
-                  )
-                )}
+                {["ELECTION", "ABOUT", "SCORECARD", "NEWS", "CAREERS"].map((item) => (
+                  <Button
+                    key={item}
+                    sx={{
+                      color: "white",
+                      fontFamily: "Verdana, Geneva, sans-serif",
+                      fontSize: "16px",
+                      fontWeight: 400,
+                      minWidth: "auto",
+                      textTransform: "none",
+                    }}
+                  >
+                    {item}
+                  </Button>
+                ))}
               </Box>
             </Grid>
 
-            {/* Social Icons Column */}
-            <Grid
-              item
-              xs={12}
-              md={4}
-              sx={{ textAlign: { xs: "center", md: "right" } }}
-            >
+            {/* Social Icons */}
+            <Grid item xs={12} md={4} sx={{ textAlign: { xs: "center", md: "right" } }}>
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: { xs: "center", md: "flex-end" },
                   gap: 1,
-                  ml: { xs: 0, md: 5 },
                 }}
               >
                 <IconButton sx={{ color: "white" }} aria-label="Facebook">
@@ -109,31 +91,65 @@ const Footer = () => {
           </Grid>
         </Container>
       </Box>
-      <Box sx={{ mt: 0, backgroundColor: "black" , height: "50px" , color: "white"}}>
-        <Grid container spacing={2} sx={{ ml: 2 }}>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2" sx={{ textAlign: { xs: "left", sm: "left" } , mt: 2 , color: "#638FC6" , ml: 21}}>
-              © Copyright Susan B. Anthony Pro-life America 2005
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            sx={{ textAlign: { xs: "left", sm: "right" } , mt: 1.5, color: "#638FC6"}}
-          >
-            <Link href="#" color="inherit" underline="hover" sx={{ mr: 4 , ml: 4}}>
-              Terms of Use
-            </Link>
-            <Link href="#" color="inherit" underline="hover">
-              Privacy Notice
-            </Link>
 
-            <Link href="#" color="inherit" underline="hover" sx={{ ml: 50 }}>
-              MADE BY DIGITAL ALCHEMY
-            </Link>
+      {/* Bottom Strip */}
+      <Box sx={{ backgroundColor: "black", color: "#638FC6", py: 2 }}>
+        <Container maxWidth="lg">
+          <Grid container alignItems="center" justifyContent="space-between">
+            {/* Left Text */}
+            <Grid item xs={12} md={6} sx={{ mb: { xs: 1, md: 0 } }}>
+              <Typography variant="body2" sx={{ textAlign: { xs: "center", md: "left" } }}>
+                © Copyright Susan B. Anthony Pro-life America 2005
+              </Typography>
+            </Grid>
+
+            {/* Right Links and Credit */}
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{
+                display: "flex",
+                justifyContent: { xs: "center", md: "flex-end" },
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 2,
+              }}
+            >
+              <Link href="#" underline="hover" color="inherit">
+                Terms of Use
+              </Link>
+              <Link href="#" underline="hover" color="inherit">
+                Privacy Notice
+              </Link>
+              <Link
+                href="#"
+                color="inherit"
+                underline="hover"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  textDecoration: "none",
+                }}
+              >
+                <img
+                  src={logo}
+                  alt="Logo"
+                  style={{
+                    height: 20,
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    border: "1px solid black",
+                  }}
+                />
+                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                  MADE BY DIGITAL ALCHEMY
+                </Typography>
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
+        </Container>
       </Box>
     </>
   );

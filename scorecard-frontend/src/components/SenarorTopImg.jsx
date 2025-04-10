@@ -73,6 +73,8 @@ const SenatorTopImg = () => {
             fontWeight: "550",
             ml: "10px",
           }}
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer" }}
         >
           SCORECARD HOME
         </Typography>

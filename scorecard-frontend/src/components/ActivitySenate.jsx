@@ -12,6 +12,7 @@ import TopBar from "./TopBar";
 import AppHeaderBar from "./AppHeaderBar";
 import Footer from "./Footer";
 import SenatorTopImg from "./SenarorTopImg";
+import RightStickyTab from "./RightStickyTab";
 
 const AcitivitySenate = () => {
   const [activeTab, setActiveTab] = useState("2023-2024");
@@ -158,11 +159,12 @@ const AcitivitySenate = () => {
       <AppHeaderBar />
       {/* <Scorecard /> */}
       <SenatorTopImg />
+      <RightStickyTab/>
       <Box
         width={1000}
         sx={{ pl: 32, alignItems: "center", justifyContent: "center",color :"#66625C" }}
       >
-        <Paper sx={{ mb: 3, mt: 1, boxShadow: "none" }}>
+        <Paper sx={{ mb: 3, mt: 1, boxShadow: "none" , borderBottom: "1px solid #ccc"}}>
           {" "}
           {/* Remove Paper shadow if any */}
           <Tabs
@@ -173,6 +175,10 @@ const AcitivitySenate = () => {
             sx={{
               backgroundColor: "#fff", // White background
               borderBottom: "none", // Remove default bottom border of Tabs
+              outline: "none", // remove outline
+              "& .MuiTabs-indicator": {
+                display: "none", // remove active tab underline
+              },
             }}
           >
             {Object.keys(sessions).map((session) => (
@@ -213,9 +219,9 @@ const AcitivitySenate = () => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2" color="#66625C">{vote.title}</Typography>
+              <Typography variant="h2" color="#66625C" fontSize={54}>{vote.title}</Typography>
             </Box>
-            <Typography variant="subtitle2" color="#66625C">
+            <Typography variant="subtitle2" color="#66625C" fontSize={14}>
               {vote.date}  {vote.voteType}
             </Typography>
 
@@ -228,7 +234,7 @@ const AcitivitySenate = () => {
             {/* <Typography variant="subtitle1" gutterBottom>
               Vote Details
             </Typography> */}
-            <Typography>{vote.description}</Typography>
+            <Typography fontSize={14}>{vote.description}</Typography>
           </Box>
         ))}
       </Box>

@@ -4,6 +4,7 @@ import TopBar from "./TopBar";
 import AppHeaderBar from "./AppHeaderBar";
 import Footer from "./Footer";
 import SenatorTopImg from "./SenarorTopImg";
+import RightStickyTab from "./RightStickyTab";
 
 const House = () => {
   const [activeTab, setActiveTab] = useState("2023-2024");
@@ -200,7 +201,8 @@ const House = () => {
       },
       {
         id: 16,
-        title: "H.R. 2119, the Family Violence Prevention and Services Improvement Act",
+        title:
+          "H.R. 2119, the Family Violence Prevention and Services Improvement Act",
         description:
           "This bill changes the current Family Violence Prevention and Services Act to allow funding for abortion services. Current statute provides funding for shelter, supportive services, and referrals for appropriate health care services. This bill expands the categories to include health care services without Hyde protections, despite attempts to amend the bill to include such protections.",
       },
@@ -212,7 +214,8 @@ const House = () => {
       },
       {
         id: 18,
-        title: "Procedural Vote on H.R. 8296, the Women’s Health Protection Act of 2022 (Born-Alive MTR)",
+        title:
+          "Procedural Vote on H.R. 8296, the Women’s Health Protection Act of 2022 (Born-Alive MTR)",
         description:
           "This procedural vote offered by Republicans sought to amend the so-called Women’s Health Protection Act by including protections for babies born alive after botched abortions. The medical care required for these infants would be the same as for any other infant born prematurely at the same gestational age.",
       },
@@ -224,19 +227,22 @@ const House = () => {
       },
       {
         id: 20,
-        title: "Procedural Vote on H.R. 8297, the Ensuring Women’s Right to Reproductive Freedom Act (Parental Involvement MTR)",
+        title:
+          "Procedural Vote on H.R. 8297, the Ensuring Women’s Right to Reproductive Freedom Act (Parental Involvement MTR)",
         description:
           "This procedural vote offered by Republicans sought to amend the so-called Ensuring Women’s Right to Reproductive Freedom Act by attaching to it the Child Interstate Abortion Notification Act (CIANA). CIANA would protect minors from being transported across state lines for abortion without parental consent or notification and would require parental notice for abortions when the minor resides in another state.",
       },
       {
         id: 21,
-        title: "H.R. 8297, the Ensuring Women’s Right to Reproductive Freedom Act",
+        title:
+          "H.R. 8297, the Ensuring Women’s Right to Reproductive Freedom Act",
         description:
           "This bill creates loopholes that would endanger women and their unborn children. The bill would enable rogue late-term abortionists who could initiate abortions in states where such abortions are illegal, so long as the abortions are completed elsewhere. It would protect traffickers and predators while undermining parental rights by blocking law enforcement action against any person who assists someone traveling across state lines for abortion, giving the victim no recourse against coercion. It would also facilitate dangerous mail order abortions even in states where such abortions are illegal.",
       },
       {
         id: 22,
-        title: "H.R. 8294, Transportation, Housing and Urban Development, and Related Agencies Appropriations Act, 2023",
+        title:
+          "H.R. 8294, Transportation, Housing and Urban Development, and Related Agencies Appropriations Act, 2023",
         description:
           "This spending bill removes two major longstanding pro-life protections in the Financial Services and General Government appropriations bill. It removes the Dornan Amendment, also known as the Washington D.C. Hyde Amendment, and the Smith Amendment, which prohibits elective abortion coverage in federal employee health benefits.",
       },
@@ -276,8 +282,7 @@ const House = () => {
       },
       {
         id: 3,
-        title:
-          "H.R. 5, the Equality Act",
+        title: "H.R. 5, the Equality Act",
         description:
           "The Equality Act’s redefinition of sex and sex discrimination would put abortion on equal standing as pregnancy, while stipulating that any attempt to withhold abortion services constitutes discrimination. The bill’s definition of sex discrimination has already been interpreted by courts to put abortion in the same category as pregnancy and childbirth. The Equality Act could roll back decades of pro-life policy on the state and federal level, and force health care workers and entities to participate in abortion. Efforts to make this bill abortion-neutral were rejected. SBA Pro-Life America strongly opposed this attempt to massively expand so-called abortion rights. A vote against this bill is a pro-life vote.",
       },
@@ -331,8 +336,7 @@ const House = () => {
       },
       {
         id: 11,
-        title:
-          "Vote to amend H.R. 535, the PFAS Action Act ",
+        title: "Vote to amend H.R. 535, the PFAS Action Act ",
         description:
           "This vote to amend by offering a motion to recommit with instructions (MTR) offered by Republicans sought to amend a bill that regulates chemicals that may be toxic, to recognize the unborn as a class of potentially vulnerable populations. SBA Pro-Life America strongly supports the effort to include the unborn as a protected class. A vote in favor of this motion is a pro-life vote.",
       },
@@ -352,28 +356,26 @@ const House = () => {
       },
       {
         id: 14,
-        title:
-          "H.R. 6800, the Heroes Act",
+        title: "H.R. 6800, the Heroes Act",
         description:
           "This bill spends trillions of dollars exploiting a national emergency while foisting a radical abortion agenda on the American people. The bill includes funding for abortion and health insurance plans that cover elective abortion, offers subsidies for the abortion industry, and provides hazard pay for abortion providers during the pandemic. Though previous pandemic-related relief bills had applied the Hyde Amendment, this bill pushes funding for abortion in direct violation to the Hyde Amendment.",
       },
       {
         id: 15,
-        title:
-          "H.R. 51, the Washington, DC Admission Act",
+        title: "H.R. 51, the Washington, DC Admission Act",
         description:
           "A constitutionally suspect issue of turning the seat of the federal government of the United States into a state and removing it from federal jurisdiction, D.C. statehood would also lead to an increase in funding for abortion through Medicaid. It would remove the ability for the federal government to limit funding for elective abortion in Washington, D.C. through the Dornan Amendment (also known as the D.C. Hyde amendment). Additionally, the admission of D.C. as a state would add two Democratic senators to the Senate who would stand in the way of pro-life legislation designed to defend our most basic rights, and would vote in lockstep against originalist judicial nominations or any nominees who would not conform fully to Roe v. Wade jurisprudence.",
       },
       {
         id: 16,
-        title:
-          "H.R. 1425, the State Health Care Premium Reduction Act",
+        title: "H.R. 1425, the State Health Care Premium Reduction Act",
         description:
           "This bill would increase federal funding of abortion coverage by amending and expanding the Patient Protection and Affordable Care Act (Obamacare), pouring millions more dollars into health plans that include elective abortion. To date, Obamacare is the largest single deviation from the Hyde amendment, and this bill would only increase the amount of money going to insurance plans that cover abortion in direct violation of Hyde.",
       },
       {
         id: 17,
-        title: "H.R. 7608, the State and Foreign Operations, and Military Construction and Veterans Affairs Appropriations Act, 2021",
+        title:
+          "H.R. 7608, the State and Foreign Operations, and Military Construction and Veterans Affairs Appropriations Act, 2021",
         description:
           "In violation of the Bipartisan Budget Agreement for Fiscal Years 2020 and 2021, this appropriations package eliminates President Trump’s Protecting Life in Global Health Assistance, the modernized Mexico City Policy, and prevent its future implementation. It would dramatically increase funding for international family planning that without the PLGHA can flow to both foreign and domestic groups who perform or promote abortion overseas. It also funds the UNFPA, an organization with a long history of being complicit in coercive abortion practices overseas, while weakening the Kemp-Kasten amendment that prohibits funding for organizations that support or participate in the management of programs involving coercive abortion or involuntary sterilization. Additionally, the bill includes expansive language on assisted reproductive technologies for veterans without any pro-life protections, leaving no limit to the number of embryos potentially destroyed. ",
       },
@@ -397,7 +399,7 @@ const House = () => {
           "H. Res. 1153, Condemning unwanted, unnecessary medical procedures on individuals without their full, informed consent",
         description:
           "While this resolution rightly condemns forced sterilization for women, it makes the sweeping statement that Congress “recognizes that everyone deserves to control their own reproductive choices and make informed choices about their bodies,” language often used as a euphemism for abortion. When – as is the case here – the phrase is offered by Members of Congress who use parallel language when presuming abortion rights, it follows that the clause is intended as an affirmation of unfettered abortion on demand. Such overreaching language would be exploited as Congressional endorsement for women’s unfettered access to abortion on demand.",
-      }
+      },
     ],
   };
 
@@ -407,6 +409,7 @@ const House = () => {
       <AppHeaderBar />
       {/* <Scorecard /> */}
       <SenatorTopImg />
+      <RightStickyTab/>
       <Box
         width={1000}
         sx={{
@@ -422,6 +425,15 @@ const House = () => {
             onChange={handleTabChange}
             variant="scrollable"
             scrollButtons="auto"
+            sx={{
+              backgroundColor: "transparent", // fully transparent
+              borderBottom: "none", // remove any border
+              boxShadow: "none", // remove any shadow
+              outline: "none", // remove outline
+              "& .MuiTabs-indicator": {
+                display: "none", // remove active tab underline
+              },
+            }}
           >
             {Object.keys(sessions).map((session) => (
               <Tab
@@ -460,7 +472,9 @@ const House = () => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">{vote.title}</Typography>
+              <Typography variant="h2" fontSize={54}>
+                {vote.title}
+              </Typography>
             </Box>
             {/* <Typography variant="subtitle2" color="text.secondary">
               {vote.date} | {vote.voteType} | Position: {vote.position}
@@ -475,7 +489,9 @@ const House = () => {
             {/* <Typography variant="subtitle1" gutterBottom>
               Vote Details
             </Typography> */}
-            <Typography>{vote.description}</Typography>
+            <Typography sx={{ fontSize: "14px" }}>
+              {vote.description}
+            </Typography>
           </Box>
         ))}
       </Box>

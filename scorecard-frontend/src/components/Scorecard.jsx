@@ -4,11 +4,12 @@ import { Box, FormControl, InputLabel, Select, Menu, MenuItem, TextField, Typogr
 import { useState } from "react";
 import TopBar from "./TopBar";
 import AppHeaderBar from "./AppHeaderBar";
-import SenatorTopImg from "./SenatorTopImg";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Footer from "./Footer";
 import RightStickyTab from "./RightStickyTab";
 import { BorderBottom } from "@mui/icons-material";
+import SenatorTopImg from "./SenarorTopImg";
+import { useNavigate } from "react-router-dom";
 
 //house column n rows
 const houseColumns = [
@@ -47,7 +48,7 @@ const houseColumns = [
 ];
 
 const houseRows = [
-  { id: 1, representative: "Nancy Pelosi", district: "CA-12", party: "Democrat", rating: "F" },
+  { id: 1, representative: "Adam Schiff", district: "CA-28", party: "Democrat", rating: "F" },
   { id: 2, representative: "Kevin McCarthy", district: "CA-20", party: "Republican", rating: "A+" },
   { id: 3, representative: "Alex Mooney", district: "WV-2", party: "Republican", rating: "A+" },
   { id: 4, representative: "Cori Bush", district: "MO-1", party: "Democrat", rating: "F" },
@@ -100,6 +101,13 @@ const Scorecard = () => {
     row.representative.toLowerCase().includes(houseSearch.toLowerCase()))
   const paginatedSenateRows = filteredRows.slice(senatePage * pageSize, (senatePage + 1) * pageSize);
   const paginatedHouseRows = houseFilteredRows.slice(housePage * pageSize, (housePage + 1) * pageSize);
+
+  const navigate = useNavigate();
+  const handleHouseRowClick = (params) => {
+    console.log(params.row); 
+    navigate("/representative");
+  };
+             
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -117,7 +125,7 @@ const Scorecard = () => {
           })}
         >
           <Box sx={{
-            pt: { xs: "10px", md: '180px' }, // <-- Adds space below the fixed header (adjust height as needed)
+            pt: { xs: "0 px", md: '0px' }, // <-- Adds space below the fixed header (adjust height as needed)
             // mx: 4,
             // pb: 8,
             // width: "100%"
@@ -318,6 +326,7 @@ const Scorecard = () => {
                   disableSelectionOnClick
                   hideFooter
                   rowHeight={38}
+                  onRowClick={(params) => handleHouseRowClick(params)}
                   sx={{
                     minWidth: "20%",
                     boxSizing: "border-box",
@@ -327,26 +336,16 @@ const Scorecard = () => {
                       overflow:"hidden",
                       "& .MuiDataGrid-row--borderBottom":{
                         backgroundColor: '#d2e5f7',
-                        // height:"39px",
                         alignItems:"center",
                         display:"flex",
                         justifyContent:"center",
                         textAlign:"center",
                         overflow:"hidden"
                       }
-                    ,
-                    // "& .MuiDataGrid-columnHeaders": {
-                    //   backgroundColor: "rgba(144, 74, 28, 0.9)", // Transparent Blue
-                    //   fontSize: "16px",
-                    //   fontWeight: "bold",
-                    // },
-                    // "& .MuiDataGrid-columnHeaderTitle": {
-                    //   color: "#0056b3", // Darker blue text for contrast
-                    // },
-                    // "& .MuiDataGrid-root": {
-                    //   border: "1px solid #ddd", // Optional border
-                    // },
-                    }
+                    },
+                    "& .MuiDataGrid-row": {
+                      cursor: "pointer",
+                    },
                   }}
                 />
               </Grid>
