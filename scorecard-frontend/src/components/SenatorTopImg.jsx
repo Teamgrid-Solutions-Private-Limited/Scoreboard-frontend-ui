@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
 import { Box, Typography, Menu, MenuItem } from '@mui/material'
+import { useNavigate } from 'react-router-dom';
 
 const SenatorTopImg = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const navigate=useNavigate();
 
     const handleMouseEnter = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleMouseLeave = (event) => {
         if (anchorEl && !anchorEl.contains(event.relatedTarget)) {
             setAnchorEl(null);
         }
     };
+    
     return (
         <Box
         sx={{
@@ -65,6 +69,7 @@ const SenatorTopImg = () => {
             }}
           >
             <Typography
+             onClick={()=>navigate("/")}
               sx={{
                 display: "block",
             fontFamily: "Verdana, Geneva, sans-serif",

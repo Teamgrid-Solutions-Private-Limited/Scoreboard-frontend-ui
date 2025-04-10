@@ -8,7 +8,6 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import XIcon from '@mui/icons-material/X';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-
 const TopBar = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -67,7 +66,7 @@ const TopBar = () => {
                         },
                     }}
                 >
-                    🚨 Hundreds of activists flood Congress to Defund Big Abortion
+                    📢 Hundreds of activists flood Congress to Defund Big Abortion
                 </Typography>
             </Box>
             {/* Right Section */}

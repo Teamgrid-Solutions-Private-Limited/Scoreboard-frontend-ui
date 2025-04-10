@@ -2,7 +2,12 @@ import React from 'react'
 import { Box,Toolbar,AppBar,Button, IconButton } from '@mui/material'
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import SearchIcon from "@mui/icons-material/Search"
+import { useNavigate } from 'react-router-dom'
 const AppHeaderBar = () => {
+  const navigate =useNavigate();
+  const handleScorecard=()=>{
+    navigate("/")
+  }
   return (
     <AppBar
     position="fixed"
@@ -16,7 +21,6 @@ const AppHeaderBar = () => {
       paddingTop:"16px",
       height:{xs:"auto",md:"100px"},
       boxShadow: "0px 4px 12px rgba(2, 2, 2, 0.11)", // 👈 light shadow
-
     }}
   >
     <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: {xs:2,md:5},}}>
@@ -32,8 +36,8 @@ const AppHeaderBar = () => {
 
       {/* Center - Navigation Links */}
       <Box sx={{ gap:1, display:{xs:"none",md:"flex"},flexWrap:"wrap",justifyContent:{xs:"center",md:"space-between"}}}>
-        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,  "&:hover": { color: "#d4a73e" },}}>PREGNANT?</Button>
-        <Button sx={{ color: "#d4a73e" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"} }}>SCORECARD</Button>
+        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,  "&:hover": { color: "#d4a73e" },}} >PREGNANT?</Button>
+        <Button sx={{ color: "#d4a73e" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"} }} onClick={handleScorecard}>SCORECARD</Button>
         <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"}}}>NEWS</Button>
         <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400","&:hover":{color:"#d4a73e"} }}>ELECTIONS</Button>
         <Button sx={{ color: "#666",fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400","&:hover":{color:"#d4a73e"}  }}>TAKE ACTION</Button>

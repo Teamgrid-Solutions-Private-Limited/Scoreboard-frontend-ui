@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, FormControl, InputLabel, Select, Menu, MenuItem, TextField, Typography, Stack, Grid, Button } from "@mui/material";
 import { useState } from "react";
@@ -9,7 +9,9 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Footer from "./Footer";
 import RightStickyTab from "./RightStickyTab";
 import { BorderBottom } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, } from "react-router-dom";
+import { getAllSenators } from "../../redux/slice/SenatorSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 //house column n rows
 const houseColumns = [
@@ -58,17 +60,17 @@ const houseRows = [
 //senator column n rows
 const columns = [
   {
-    field: "senator", headerName: "Senator", width: 410, renderCell: (params) => (
+    field: "name", headerName: "Senator", width: 410, renderCell: (params) => (
       <Link
-      to={`/senator/${params.row.senator}`}> 
-      <span style={{
-        color: params.row.party === "Republican" ? "red" :
-          params.row.party === "Democrat" ? "blue" : "gray",
-        fontWeight: params.row.party === "Republican" ? "bold" : "normal",
-        textDecoration: params.row.party === "Independent" ? "line-through" : "none"
-      }}>
-        {params.value}
-      </span>
+        to={`/senator/${params.row._id}`}>
+        <span sx={{
+          color: params.row.party === "Republican" ? "red" :
+            params.row.party === "Democrat" ? "blue" : "gray",
+          fontWeight: params.row.party === "Republican" ? "bold" : "normal",
+          textDecoration: params.row.party === "Independent" ? "line-through" : "none"
+        }}>
+          {params.value}
+        </span>
       </Link>
     )
   },
@@ -76,29 +78,26 @@ const columns = [
   { field: "party", headerName: "Party", width: 150 },
   { field: "rating", headerName: "Rating", width: 130 },
 ];
-const rows = [
-  { id: 1, senator: "Alex Padilla", state: "California", party: "Democrat", rating: "F" },
-  { id: 2, senator: "Amy Klobuchar", state: "Minnesota", party: "Democrat", rating: "F" },
-  { id: 3, senator: "Angus King", state: "Maine", party: "Independent", rating: "F" },
-  { id: 4, senator: "Ben Cardin", state: "Maryland", party: "Democrat", rating: "F" },
-  { id: 5, senator: "Ben Ray Lujan", state: "New Mexico", party: "Democrat", rating: "F" },
-  { id: 6, senator: "Bernie Sanders", state: "Vermont", party: "Independent", rating: "F" },
-  { id: 7, senator: "Bill Cassidy", state: "Louisiana", party: "Republican", rating: "A+" },
-  { id: 8, senator: "Bill Hagerty", state: "Tennessee", party: "Republican", rating: "A+" },
-  { id: 9, senator: "Bob Casey", state: "Pennsylvania", party: "Democrat", rating: "F" },
-  { id: 10, senator: "Bob Menendez", state: "New Jersey", party: "Democrat", rating: "F" },
-];
+
 const Scorecard = () => {
   const [pageSize, setPageSize] = useState(5);
   const [search, setSearch] = useState("");
   const [houseSearch, setHouseSearch] = useState("")
   const [senatePage, setSenatePage] = useState(0);
   const [housePage, setHousePage] = useState(0);
+  const dispatch=useDispatch();
+  const {senators,loading}=useSelector((state)=>state.senator)
 
+  useEffect(()=>{
+    dispatch(getAllSenators())
+console.log("dispatch Senator",dispatch(getAllSenators())
+)
+  },[dispatch])
 
-  const filteredRows = rows.filter((row) =>
-    row.senator.toLowerCase().includes(search.toLowerCase())
+  const filteredRows = senators.filter((senator) =>
+    senator.name.toLowerCase().includes(search.toLowerCase())
   );
+
   const houseFilteredRows = houseRows.filter((row) =>
     row.representative.toLowerCase().includes(houseSearch.toLowerCase()))
   const paginatedSenateRows = filteredRows.slice(senatePage * pageSize, (senatePage + 1) * pageSize);
@@ -106,11 +105,9 @@ const Scorecard = () => {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-
         <TopBar />
         <AppHeaderBar />
         <RightStickyTab />
-
         <Box
           component="main"
           sx={() => ({
@@ -181,6 +178,7 @@ const Scorecard = () => {
                   columns={columns}
                   pageSize={pageSize}
                   rowsPerPageOptions={[5, 10, 25, 100]}
+                  getRowId={(row) => row._id}
                   disableSelectionOnClick
                   hideFooter
                   rowHeight={38}
@@ -189,23 +187,23 @@ const Scorecard = () => {
                     // Custom header row height and background color
                     "& .MuiDataGrid-columnHeaders": {
                       color: "black",
-                      overflow:"hidden",
-                      "& .MuiDataGrid-scrollbar MuiDataGrid-scrollbar--horizontal":{
-                        overflowX:"none",
+                      overflow: "hidden",
+                      "& .MuiDataGrid-scrollbar MuiDataGrid-scrollbar--horizontal": {
+                        overflowX: "none",
                       }
                       ,
-                      "& .MuiDataGrid-row--borderBottom":{
+                      "& .MuiDataGrid-row--borderBottom": {
                         backgroundColor: '#d2e5f7',
                         // height:"39px",
-                        alignItems:"center",
-                        display:"flex",
-                        justifyContent:"center",
-                        textAlign:"center",
-                        overflow:"hidden",
+                        alignItems: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        overflow: "hidden",
                       }
                     },
                     "& .MuiDataGrid-row": {
-                      overflow:"hidden",
+                      overflow: "hidden",
                     },
                   }}
                 />
@@ -215,61 +213,94 @@ const Scorecard = () => {
               <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", }}>
                 Showing {senatePage * pageSize + 1} to {Math.min((senatePage + 1) * pageSize, filteredRows.length)} of {filteredRows.length} entries
               </Typography>
-              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", margin: "20px 0px", }}>
-                <button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))} disabled={senatePage === 0}
-                  style={{
-                    color: senatePage === 0 ? "#777" : "#337ab7",
-                    // borderRight: "1px solid #ddd",
-                    cursor: "pointer",
+              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", margin: "20px 0px", borderRadius: "2px" }}>
+                <Button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))} 
+                  sx={{
+                    color: senatePage === 0 ? "#777777" : "#337ab7",
+                    cursor: senatePage === 0 ? "not-allowed" : "pointer",
                     fontWeight: "400",
                     fontSize: "18px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    // position: "relative",
-                    // float: "left",
-                    padding: "6px 10px",
+                    borderRadius: 0,
+                    paddingX: "13px",
+                    // py:"6px",
                     lineHeight: "1.52857143",
                     textDecoration: 'none',
                     backgroundColor: " #fff",
-                    // border: " 1px solid #ddd",
-                    // marginLeft: " -1px",
+                    textTransform: "none",
+                    borderRight: "1px solid #ddd",
+                    "&:hover": {
+                      borderRadius: 0, // Keep it flat on hover too,
+                      backgroundColor: "#f5f5f5",
+                      borderRight: "1px solid #ddd"
+                      // optional: change bg color on hover
+                    },
+                    "&:focus": {
+                      outline: "none", // remove focus outline if needed
+                      borderRadius: 0,
+                    },
+
                   }}>
-                  Previous</button>
+                  Previous</Button>
                 {[...Array(Math.ceil(filteredRows.length / pageSize))].map((_, i) => (
-                  <button key={i} onClick={() => setSenatePage(i)} style={{
-                    backgroundColor: senatePage === i ? "#337ab7" : "white", color: senatePage === i ? "white" : "#337ab7",
-                    // borderRight: "1px solid #ddd",
-                    cursor: "pointer",
+                  <Button key={i} onClick={() => setSenatePage(i)}
+                    sx={{
+                      minWidth: "35px", //  Make them smaller
+                      padding: "6px 10px",
+                      borderRadius: 0,
+                      backgroundColor: senatePage === i ? "#33a2e3" : "white",
+                      color: senatePage === i ? "white" : "#33a2e3",
+                      borderRight: "1px solid #ddd",
+                      cursor: "pointer",
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                      lineHeight: "1.5",
+                      textDecoration: 'none',
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor: senatePage === i ? "#337ab7" : "#f5f5f5", // same as previous
+                        borderRadius: 0,
+                        borderRight: "1px solid #ddd"
+
+                      },
+                      "&:focus": {
+                        outline: "none",
+                        borderRadius: 0,
+                        boxShadow: "none", // remove blue glow
+                      },
+                    }}
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+                <Button onClick={() => setSenatePage((prev) => Math.min(prev + 1, Math.ceil(filteredRows.length / pageSize) - 1))} 
+                // disabled={senatePage >= Math.ceil(filteredRows.length / pageSize) - 1}
+                  sx={{
+                    color: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "#777777" : "#337ab7",
+                    backgroundColor: "white",
+                    cursor: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "not-allowed" : "pointer",
                     fontWeight: "400",
                     fontSize: "18px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    // position: "relative",
-                    // float: "left",
-                    padding: "6px 12px",
+                    borderRadius: 0,
+                    paddingX: "13px",
+                    // py:"6px",
                     lineHeight: "1.52857143",
                     textDecoration: 'none',
-                    border: "none",
-                    // marginLeft: " -1px",
-                    
-                  }}>
-                    {i + 1}
-                  </button>
-                ))}
-                <button onClick={() => setSenatePage((prev) => Math.min(prev + 1, Math.ceil(filteredRows.length / pageSize) - 1))} disabled={senatePage >= Math.ceil(filteredRows.length / pageSize) - 1} style={{
-                  color: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "#ccc" : "#337ab7",
-                  backgroundColor: "white",
-                  cursor:  "pointer",
-                  fontWeight: "400",
-                  borderRight: "1px solid #ddd",
-                  fontSize: "18px",
-                  fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                  // position: "relative",
-                  // float: "left",
-                  padding: "6px 12px",
-                  lineHeight: "1.52857143",
-                  textDecoration: 'none',
-                  border: " 1px solid #ddd",
-                  marginLeft: " -1px",
-                }}>Next</button>
+                    textTransform: "none",
+                    borderRight: "1px solid #ddd",
+                    "&:hover": {
+                      borderRadius: 0, // Keep it flat on hover too,
+                      backgroundColor: "#f5f5f5",
+                      borderRight: "1px solid #ddd"
+                      // optional: change bg color on hover
+                    },
+                    "&:focus": {
+                      outline: "none", // remove focus outline if needed
+                      borderRadius: 0,
+                    },
+                  }}>Next</Button>
               </Box>
             </Box>
 
@@ -321,31 +352,21 @@ const Scorecard = () => {
                   sx={{
                     minWidth: "20%",
                     boxSizing: "border-box",
-                    
+
                     "& .MuiDataGrid-columnHeaders": {
                       color: "black",
-                      overflow:"hidden",
-                      "& .MuiDataGrid-row--borderBottom":{
+                      overflow: "hidden",
+                      "& .MuiDataGrid-row--borderBottom": {
                         backgroundColor: '#d2e5f7',
                         // height:"39px",
-                        alignItems:"center",
-                        display:"flex",
-                        justifyContent:"center",
-                        textAlign:"center",
-                        overflow:"hidden"
+                        alignItems: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        overflow: "hidden"
                       }
-                    ,
-                    // "& .MuiDataGrid-columnHeaders": {
-                    //   backgroundColor: "rgba(144, 74, 28, 0.9)", // Transparent Blue
-                    //   fontSize: "16px",
-                    //   fontWeight: "bold",
-                    // },
-                    // "& .MuiDataGrid-columnHeaderTitle": {
-                    //   color: "#0056b3", // Darker blue text for contrast
-                    // },
-                    // "& .MuiDataGrid-root": {
-                    //   border: "1px solid #ddd", // Optional border
-                    // },
+                      ,
+                   
                     }
                   }}
                 />
@@ -355,59 +376,90 @@ const Scorecard = () => {
               <Typography sx={{ fontSize: "14px", mt: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", color: "#333" }}>
                 Showing {housePage * pageSize + 1} to {Math.min((housePage + 1) * pageSize, houseFilteredRows.length)} of {houseFilteredRows.length} entries
               </Typography>
-              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", }}>
-                <button onClick={() => setHousePage((prev) => Math.max(prev - 1, 0))} disabled={housePage === 0}
-                  style={{
-                    color: housePage === 0 ? "#ccc" : "#337ab7",
+              <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", margin: "20px 0px", borderRadius: "2px" }}>
+                <Button onClick={() => setHousePage((prev) => Math.max(prev - 1, 0))} 
+                // disabled={housePage === 0}
+                  sx={{
+                    color: housePage === 0 ? "#777" : "#337ab7",
                     backgroundColor: "white",
+                    borderRight: "1px solid #ddd",
+                    cursor: housePage === 0 ? "not-allowed" : "pointer",
+                    fontWeight: "400",
+                    fontSize: "18px",
+                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    borderRadius: 0,
+                    paddingX: "13px",
+                    //  py:"6px",
+                    lineHeight: "1.52857143",
+                    textDecoration: 'none',
+                    textTransform: "none",
+                    "&:hover": {
+                      borderRadius: 0, // Keep it flat on hover too,
+                      backgroundColor: "#f5f5f5",
+                      borderRight: "1px solid #ddd"
+                      // optional: change bg color on hover
+                    },
+                    "&:focus": {
+                      outline: "none", // remove focus outline if needed
+                      borderRadius: 0,
+                    },
+
+                  }}>Previous</Button>
+                {[...Array(Math.ceil(houseFilteredRows.length / pageSize))].map((_, i) => (
+                  <Button key={i} onClick={() => setHousePage(i)}
+                   sx={{
+                    backgroundColor: housePage === i ? "#33a2e3" : "white", color: housePage === i ? "white" : "#33a2e3",
+                    minWidth: "35px", //  Make them smaller
+                    padding: "6px 10px",
+                    borderRadius: 0,
                     borderRight: "1px solid #ddd",
                     cursor: "pointer",
                     fontWeight: "400",
-                    fontSize: "20px",
+                    fontSize: "16px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    // position: "relative",
-                    // float: "left",
-                    padding: "6px 12px",
-                    lineHeight: "1.52857143",
+                    lineHeight: "1.5",
                     textDecoration: 'none',
-                    border: " 1px solid #ddd",
-                    marginLeft: " -1px",
-                  }}>Previous</button>
-                {[...Array(Math.ceil(houseFilteredRows.length / pageSize))].map((_, i) => (
-                  <button key={i} onClick={() => setHousePage(i)} style={{
-                    backgroundColor: housePage === i ? "#337ab7" : "white", color: housePage === i ? "white" : "#337ab7",
-                    borderRight: "1px solid rgb(224, 230, 236)",
-                    cursor: "pointer",
-                    fontWeight: "400",
-                    fontSize: "20px",
-                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    // position: "relative",
-                    // float: "left",
-                    padding: "6px 12px",
-                    lineHeight: "1.52857143",
-                    textDecoration: 'none',
-                    border: " 1px solid #ddd",
-                    marginLeft: " -1px",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: housePage === i ? "#337ab7" : "#f5f5f5", // same as previous
+                      borderRadius: 0,
+                      borderRight: "1px solid #ddd"
+                    },
+                    "&:focus": {
+                      outline: "none",
+                      borderRadius: 0,
+                      boxShadow: "none", // remove blue glow
+                    },
+                    
                   }}>
                     {i + 1}
-                  </button>
+                  </Button>
                 ))}
-                <button onClick={() => setHousePage((prev) => Math.min(prev + 1, Math.ceil(houseFilteredRows.length / pageSize) - 1))} disabled={housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1}
+                <Button onClick={() => setHousePage((prev) => Math.min(prev + 1, Math.ceil(houseFilteredRows.length / pageSize) - 1))} 
+                // disabled={housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1}
                   sx={{
-                    color: senatePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "#ccc" : "#337ab7",
+                    color: housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "#777" : "#337ab7",
                     backgroundColor: "white",
-                    cursor: senatePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "not-allowed" : "pointer",
+                    cursor: housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "not-allowed" : "pointer",
                     fontWeight: "400",
-                    fontSize: "20px",
+                    fontSize: "18px",
                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    // position: "relative",
-                    // float: "left",
-                    padding: "6px 12px",
+                    borderRadius: 0,
+                    // paddingX: "13px",
+                    //  py:"6px",
                     lineHeight: "1.52857143",
                     textDecoration: 'none',
-                    border: " 1px solid #ddd",
-                    marginLeft: " -1px",
-                  }}>Next</button>
+                    textTransform: "none",
+                    "&:hover": {
+                      borderRadius: 0, // Keep it flat on hover too,
+                      backgroundColor: "#f5f5f5",
+                      // optional: change bg color on hover
+                    },
+                    "&:focus": {
+                      outline: "none", // remove focus outline if needed
+                      borderRadius: 0,
+                    },
+                  }}>Next</Button>
               </Box>
             </Box>
 

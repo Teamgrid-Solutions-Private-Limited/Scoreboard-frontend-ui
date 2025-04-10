@@ -234,7 +234,6 @@ const ShowSenatorById = () => {
 
                                 </Box>
                             </Box>
-
                             <Box sx={{ mt: "48px" }}>
                                 <Typography variant='h2' sx={{
                                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", color: " #66625c", fontSize: "54px",
@@ -409,7 +408,7 @@ const ShowSenatorById = () => {
                                                     borderRight: "1px solid #ccc",
                                                     padding: "4px 8px", // control padding to reduce height
                                                     fontSize: "14px",
-                                                                                                        width:"75px"
+                                                     width:"75px"
 
                                                 }}
                                             >
@@ -451,16 +450,16 @@ const ShowSenatorById = () => {
                                                 <TableCell
                                                     sx={{
                                                         border: "1px solid #ccc",
-                                                        padding: "6px 1px",
+                                                        padding: "7px 4px",
                                                         fontSize: 14,
                                                         fontWeight:"700",
                                                         color:"#333",
-                                                        width:"75px",
+                                                        width:"20px",
                                                         textAlign:"center"
                                                     }}
                                                 >
                                                     {/* {formatDate(vote.date)} */}
-                                                    <Typography sx={{fontSize:".7rem",fontWeight:"400",color:"#333" ,p:"40px  5px "}}>
+                                                    <Typography sx={{fontSize:".6rem",fontWeight:"400",color:"#333" ,p:"40px  9px "}}>
                                                       188<sup>th</sup> Congress
                                                       </Typography>
                                                 </TableCell>
