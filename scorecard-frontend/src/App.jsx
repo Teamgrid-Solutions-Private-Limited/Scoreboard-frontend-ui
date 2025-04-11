@@ -10,6 +10,7 @@ import House from "./components/House.jsx";
 import AcitivitySenate from "./components/ActivitySenate.jsx";
 import ActivityHouse from "./components/ActivityHouse.jsx";
 import Representative from "./components/Representative.jsx";
+import Pregnancy from "./components/PregnancyHelp.jsx";
 function App() {
   return (
     <>
@@ -21,6 +22,7 @@ function App() {
       <Route path="/activity-senate" element={<AcitivitySenate />}/>
       <Route path="/activity-house" element={<ActivityHouse />}/>  
       <Route path="/representative" element={<Representative />}/>
+      <Route path="/pregnancy-help" element={<Pregnancy />}/>
     </Routes>
     </BrowserRouter>
      
