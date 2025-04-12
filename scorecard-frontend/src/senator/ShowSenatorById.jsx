@@ -3,13 +3,12 @@ import {
     Box, Typography, Stack, Card, Tab, Tabs, Avatar,
     Divider, Table, TableCell, TableHead, TableRow, TableBody, Button
 } from '@mui/material';
-import TopBar from './TopBar';
-import AppHeaderBar from './AppHeaderBar';
-import SenatorTopImg from './SenatorTopImg';
-import RightStickyTab from './RightStickyTab';
+import TopBar from '../reusableComponents/TopBar';
+import AppHeaderBar from '../reusableComponents/AppHeaderBar';
+import SenatorTopImg from '../reusableComponents/SenatorTopImg';
+import RightStickyTab from '../reusableComponents/RightStickyTab';
 import CloseIcon from '@mui/icons-material/Close';
-import Footer from './Footer';
-
+import Footer from '../reusableComponents/Footer';
 
 const ShowSenatorById = () => {
     const [tab, setTab] = useState("2023-2029");

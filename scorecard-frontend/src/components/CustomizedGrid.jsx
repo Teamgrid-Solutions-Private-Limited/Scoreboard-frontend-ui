@@ -1,9 +1,6 @@
 import React from "react";
 import { Box, CssBaseline, Container, Stack } from "@mui/material";
-import   TopBar from "./TopBar";
-import AppHeaderBar from "./AppHeaderBar";
-import Scorecard from "./Scorecard";
-import SenatorTopImg from "./SenatorTopImg"
+
 const CustomizedGrid = ({ children }) => {
     return (
         <>

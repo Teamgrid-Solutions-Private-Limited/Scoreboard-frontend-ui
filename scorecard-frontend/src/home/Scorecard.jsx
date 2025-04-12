@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, FormControl, InputLabel, Select, Menu, MenuItem, TextField, Typography, Stack, Grid, Button } from "@mui/material";
 import { useState } from "react";
-import TopBar from "./TopBar";
-import AppHeaderBar from "./AppHeaderBar";
-import SenatorTopImg from "./SenatorTopImg";
+import TopBar from "../reusableComponents/TopBar";
+import AppHeaderBar from "../reusableComponents/AppHeaderBar";
+import SenatorTopImg from "../reusableComponents/SenatorTopImg";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Footer from "./Footer";
-import RightStickyTab from "./RightStickyTab";
+import Footer from "../reusableComponents/Footer";
+import RightStickyTab from "../reusableComponents/RightStickyTab";
 import { BorderBottom } from "@mui/icons-material";
 import { Link, } from "react-router-dom";
-import { getAllSenators } from "../../redux/slice/SenatorSlice";
+import { getAllSenators } from "../redux/action-reducer/senatorSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import { getAllSenatorData } from "../redux/action-reducer/senatorTermSlice";
 //house column n rows
 const houseColumns = [
   {
@@ -57,44 +57,146 @@ const houseRows = [
   { id: 5, representative: "Bernie Smith", district: "TX-15", party: "Independent", rating: "C" },
 ];
 
-//senator column n rows
-const columns = [
-  {
-    field: "name", headerName: "Senator", width: 410, renderCell: (params) => (
-      <Link
-        to={`/senator/${params.row._id}`}>
-        <span sx={{
-          color: params.row.party === "Republican" ? "red" :
-            params.row.party === "Democrat" ? "blue" : "gray",
-          fontWeight: params.row.party === "Republican" ? "bold" : "normal",
-          textDecoration: params.row.party === "Independent" ? "line-through" : "none"
-        }}>
-          {params.value}
-        </span>
-      </Link>
-    )
-  },
-  { field: "state", headerName: "State", width: 300 },
-  { field: "party", headerName: "Party", width: 150 },
-  { field: "rating", headerName: "Rating", width: 130 },
-];
-
 const Scorecard = () => {
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState("");
   const [houseSearch, setHouseSearch] = useState("")
   const [senatePage, setSenatePage] = useState(0);
   const [housePage, setHousePage] = useState(0);
-  const dispatch=useDispatch();
-  const {senators,loading}=useSelector((state)=>state.senator)
+  const dispatch = useDispatch();
+  const { senators, loading } = useSelector((state) => state.senator)
+  const {senatorData} =useSelector((state)=>state.senatorData)
+  const [mergedSenators, setMergedSenators] = useState([]);
 
-  useEffect(()=>{
+  //Pagination 
+  const getPaginationItems = (currentPage, totalPages) => {
+    const items = [];
+    // Always show first page
+    items.push(1);
+    if (totalPages <= 7) {
+      // Show all pages if total pages is 7 or less
+      for (let i = 2; i <= totalPages; i++) {
+        items.push(i);
+      }
+    } else {
+      // Show first 3 pages
+      if (currentPage <= 4) {
+        for (let i = 2; i <= 5; i++) {
+          items.push(i);
+        }
+        items.push('...');
+      }
+      // Show middle pages
+      else if (currentPage > 4 && currentPage < totalPages - 3) {
+        items.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          items.push(i);
+        }
+        items.push('...');
+      }
+      // Show last pages
+      else {
+        items.push('...');
+        for (let i = totalPages - 4; i <= totalPages; i++) {
+          items.push(i);
+        }
+      }
+      // Always show last page if not already included
+      if (!items.includes(totalPages)) {
+        items.push(totalPages);
+      }
+    }
+    return items;
+  };
+  //get colour effect 
+  const getBorderColor = (party) => {
+    if (!party) return "gray";
+    const lowerParty = party.toLowerCase();
+    if (lowerParty === "republican") return "#dd3333";
+    if (lowerParty === "democrat") return "#1e73be";
+    return "gray"; // Default for independent or unknown
+  };
+
+  //senator column n rows
+  const columns = [
+    {
+      field: "name", headerName: "Senator", minWidth: 400, minHeight: 200, renderCell: (params) => (
+        <Link
+          to={`/senator/${params.row._id}`}>
+          <Typography sx={{
+            color: getBorderColor(params.row.party),
+            fontWeight: "600",
+            boxSizing: "border-box",
+            fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+            fontSize: "14px",
+            py: "8px",
+            // lineHeight:"1.5rem"
+            // textDecoration: params.row.party === "Independent" ? "line-through" : "none"
+            "&:hover": {
+              opacity: .6
+            },
+
+          }}>
+            {params.row.name}
+          </Typography>
+        </Link>
+      )
+    },
+    { field: "state", headerName: "State", minWidth: 300 },
+    {
+      field: "party", headerName: "Party", minWidth: 150,
+      valueGetter: (params) => {
+        if (!params) {
+          return "N/A";
+        }
+        return (params.charAt(0).toUpperCase() + params.slice(1).toLowerCase()
+        )
+      }
+    },
+    {
+      field: "rating",
+      headerName: "Rating",
+      minWidth: 130,
+      renderCell: (params) => {
+       return params.row.rating || "N/A";
+      },
+    }
+  ];
+
+  useEffect(() => {
     dispatch(getAllSenators())
-console.log("dispatch Senator",dispatch(getAllSenators())
-)
-  },[dispatch])
+dispatch(getAllSenatorData())
+  }, [dispatch])
 
-  const filteredRows = senators.filter((senator) =>
+  useEffect(() => {
+    if (senatorData && senators) {
+      console.log("senators",senators);
+      console.log("senatorData",senatorData)
+      console.log("Matching senators with senatorData...");
+      const merged = senators.map((senator) => {
+        const match = senatorData.find(
+          (data) => {
+            const isMatch = data.senateId === senator._id;
+            console.log(
+              `Checking match:`,
+            );
+              `Match? ${isMatch}`
+            return isMatch;
+          }
+        );
+        
+        return {
+          ...senator,
+          rating: match ? match.rating : "N/A",
+        };
+      });
+  
+      console.log("Merged Senators:", merged);
+      setMergedSenators(merged);
+    }
+  }, [senators, senatorData]);
+  
+  const filteredRows = mergedSenators.filter((senator) =>
     senator.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -176,18 +278,50 @@ console.log("dispatch Senator",dispatch(getAllSenators())
                 <DataGrid
                   rows={paginatedSenateRows}
                   columns={columns}
-                  pageSize={pageSize}
-                  rowsPerPageOptions={[5, 10, 25, 100]}
                   getRowId={(row) => row._id}
+                  pageSize={pageSize}
+                  onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                  rowsPerPageOptions={[10, 20, 50]}
+                  pagination
                   disableSelectionOnClick
+                  disableColumnFilter
+                  disableColumnSelector
+                  disableDensitySelector
+                  disableColumnResize
+                  disableRowSelectionOnClick
                   hideFooter
                   rowHeight={38}
                   sx={{
                     overflow: "hidden",
+                    "& .MuiDataGrid-cell[data-field='name']": {
+                      borderRight: "1px solid #e0e0e0",
+                    },
+                    "& .MuiDataGrid-cell[data-field='state']": {
+                      borderRight: "1px solid #e0e0e0",
+                    },
+                    "& .MuiDataGrid-cell[data-field='party']": {
+                      borderRight: "1px solid #e0e0e0",
+                    },
+                    "& .MuiDataGrid-columnHeader[data-field='name']": {
+                      borderRight: "1px solid #e0e0e0",
+                    },
+                    "& .MuiDataGrid-columnHeader[data-field='state']": {
+                      borderRight: "1px solid #e0e0e0",
+                    },
+                    "& .MuiDataGrid-columnHeader[data-field='party']": {
+                      borderRight: "1px solid #e0e0e0",
+                    },
                     // Custom header row height and background color
                     "& .MuiDataGrid-columnHeaders": {
                       color: "black",
                       overflow: "hidden",
+                      "& .MuiDataGrid-columnHeaderTitle": {  // Fixed selector
+                        fontWeight: "700 !important",
+                        fontSize: "14px",
+                        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                      },
+
+
                       "& .MuiDataGrid-scrollbar MuiDataGrid-scrollbar--horizontal": {
                         overflowX: "none",
                       }
@@ -205,6 +339,7 @@ console.log("dispatch Senator",dispatch(getAllSenators())
                     "& .MuiDataGrid-row": {
                       overflow: "hidden",
                     },
+
                   }}
                 />
               </Grid>
@@ -214,7 +349,7 @@ console.log("dispatch Senator",dispatch(getAllSenators())
                 Showing {senatePage * pageSize + 1} to {Math.min((senatePage + 1) * pageSize, filteredRows.length)} of {filteredRows.length} entries
               </Typography>
               <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", margin: "20px 0px", borderRadius: "2px" }}>
-                <Button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))} 
+                <Button onClick={() => setSenatePage((prev) => Math.max(prev - 1, 0))}
                   sx={{
                     color: senatePage === 0 ? "#777777" : "#337ab7",
                     cursor: senatePage === 0 ? "not-allowed" : "pointer",
@@ -242,40 +377,64 @@ console.log("dispatch Senator",dispatch(getAllSenators())
 
                   }}>
                   Previous</Button>
-                {[...Array(Math.ceil(filteredRows.length / pageSize))].map((_, i) => (
-                  <Button key={i} onClick={() => setSenatePage(i)}
-                    sx={{
-                      minWidth: "35px", //  Make them smaller
-                      padding: "6px 10px",
-                      borderRadius: 0,
-                      backgroundColor: senatePage === i ? "#33a2e3" : "white",
-                      color: senatePage === i ? "white" : "#33a2e3",
-                      borderRight: "1px solid #ddd",
-                      cursor: "pointer",
-                      fontWeight: "400",
-                      fontSize: "16px",
-                      fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                      lineHeight: "1.5",
-                      textDecoration: 'none',
-                      textTransform: "none",
-                      "&:hover": {
-                        backgroundColor: senatePage === i ? "#337ab7" : "#f5f5f5", // same as previous
+                {getPaginationItems(senatePage + 1, Math.ceil(filteredRows.length / pageSize)).map((item, i) => (
+                  item === '...' ? (
+                    <Button
+                      key={`ellipsis-${i}`}
+                      disabled
+                      sx={{
+                        minWidth: "35px",
+                        padding: "6px 10px",
                         borderRadius: 0,
-                        borderRight: "1px solid #ddd"
-
-                      },
-                      "&:focus": {
-                        outline: "none",
+                        borderRight: "1px solid #ddd",
+                        cursor: "default",
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                        lineHeight: "1.5",
+                        textDecoration: 'none',
+                        textTransform: "none",
+                      }}
+                    >
+                      ...
+                    </Button>
+                  ) : (
+                    <Button
+                      key={item}
+                      onClick={() => setSenatePage(item - 1)}
+                      sx={{
+                        minWidth: "35px",
+                        padding: "6px 10px",
                         borderRadius: 0,
-                        boxShadow: "none", // remove blue glow
-                      },
-                    }}
-                  >
-                    {i + 1}
-                  </Button>
+                        backgroundColor: senatePage === item - 1 ? "#33a2e3" : "white",
+                        color: senatePage === item - 1 ? "white" : "#33a2e3",
+                        borderRight: "1px solid #ddd",
+                        cursor: "pointer",
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                        lineHeight: "1.5",
+                        textDecoration: 'none',
+                        textTransform: "none",
+                        "&:hover": {
+                          backgroundColor: senatePage === item - 1 ? "#337ab7" : "#f5f5f5",
+                          borderRadius: 0,
+                          borderRight: "1px solid #ddd"
+                        },
+                        "&:focus": {
+                          outline: "none",
+                          borderRadius: 0,
+                          boxShadow: "none",
+                        },
+                      }}
+                    >
+                      {item}
+                    </Button>
+                  )
                 ))}
-                <Button onClick={() => setSenatePage((prev) => Math.min(prev + 1, Math.ceil(filteredRows.length / pageSize) - 1))} 
-                // disabled={senatePage >= Math.ceil(filteredRows.length / pageSize) - 1}
+
+                <Button onClick={() => setSenatePage((prev) => Math.min(prev + 1, Math.ceil(filteredRows.length / pageSize) - 1))}
+                  // disabled={senatePage >= Math.ceil(filteredRows.length / pageSize) - 1}
                   sx={{
                     color: senatePage >= Math.ceil(filteredRows.length / pageSize) - 1 ? "#777777" : "#337ab7",
                     backgroundColor: "white",
@@ -366,7 +525,7 @@ console.log("dispatch Senator",dispatch(getAllSenators())
                         overflow: "hidden"
                       }
                       ,
-                   
+
                     }
                   }}
                 />
@@ -377,8 +536,8 @@ console.log("dispatch Senator",dispatch(getAllSenators())
                 Showing {housePage * pageSize + 1} to {Math.min((housePage + 1) * pageSize, houseFilteredRows.length)} of {houseFilteredRows.length} entries
               </Typography>
               <Box sx={{ display: "flex", mt: 1, border: "1px solid #ddd", margin: "20px 0px", borderRadius: "2px" }}>
-                <Button onClick={() => setHousePage((prev) => Math.max(prev - 1, 0))} 
-                // disabled={housePage === 0}
+                <Button onClick={() => setHousePage((prev) => Math.max(prev - 1, 0))}
+                  // disabled={housePage === 0}
                   sx={{
                     color: housePage === 0 ? "#777" : "#337ab7",
                     backgroundColor: "white",
@@ -405,38 +564,65 @@ console.log("dispatch Senator",dispatch(getAllSenators())
                     },
 
                   }}>Previous</Button>
-                {[...Array(Math.ceil(houseFilteredRows.length / pageSize))].map((_, i) => (
-                  <Button key={i} onClick={() => setHousePage(i)}
-                   sx={{
-                    backgroundColor: housePage === i ? "#33a2e3" : "white", color: housePage === i ? "white" : "#33a2e3",
-                    minWidth: "35px", //  Make them smaller
-                    padding: "6px 10px",
-                    borderRadius: 0,
-                    borderRight: "1px solid #ddd",
-                    cursor: "pointer",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    lineHeight: "1.5",
-                    textDecoration: 'none',
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: housePage === i ? "#337ab7" : "#f5f5f5", // same as previous
-                      borderRadius: 0,
-                      borderRight: "1px solid #ddd"
-                    },
-                    "&:focus": {
-                      outline: "none",
-                      borderRadius: 0,
-                      boxShadow: "none", // remove blue glow
-                    },
-                    
-                  }}>
-                    {i + 1}
-                  </Button>
+
+                {getPaginationItems(housePage + 1, Math.ceil(houseFilteredRows.length / pageSize)).map((item, i) => (
+                  item === '...' ? (
+                    <Button
+                      key={`ellipsis-${i}`}
+                      disabled
+                      sx={{
+                        minWidth: "35px",
+                        padding: "6px 10px",
+                        borderRadius: 0,
+                        borderRight: "1px solid #ddd",
+                        cursor: "default",
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                        lineHeight: "1.5",
+                        textDecoration: 'none',
+                        textTransform: "none",
+                      }}
+                    >
+                      ...
+                    </Button>
+                  ) : (
+                    <Button
+                      key={item}
+                      onClick={() => setHousePage(item - 1)}
+                      sx={{
+                        minWidth: "35px",
+                        padding: "6px 10px",
+                        borderRadius: 0,
+                        backgroundColor: housePage === item - 1 ? "#33a2e3" : "white",
+                        color: housePage === item - 1 ? "white" : "#33a2e3",
+                        borderRight: "1px solid #ddd",
+                        cursor: "pointer",
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                        lineHeight: "1.5",
+                        textDecoration: 'none',
+                        textTransform: "none",
+                        "&:hover": {
+                          backgroundColor: housePage === item - 1 ? "#337ab7" : "#f5f5f5",
+                          borderRadius: 0,
+                          borderRight: "1px solid #ddd"
+                        },
+                        "&:focus": {
+                          outline: "none",
+                          borderRadius: 0,
+                          boxShadow: "none",
+                        },
+                      }}
+                    >
+                      {item}
+                    </Button>
+                  )
                 ))}
-                <Button onClick={() => setHousePage((prev) => Math.min(prev + 1, Math.ceil(houseFilteredRows.length / pageSize) - 1))} 
-                // disabled={housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1}
+
+                <Button onClick={() => setHousePage((prev) => Math.min(prev + 1, Math.ceil(houseFilteredRows.length / pageSize) - 1))}
+                  // disabled={housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1}
                   sx={{
                     color: housePage >= Math.ceil(houseFilteredRows.length / pageSize) - 1 ? "#777" : "#337ab7",
                     backgroundColor: "white",
