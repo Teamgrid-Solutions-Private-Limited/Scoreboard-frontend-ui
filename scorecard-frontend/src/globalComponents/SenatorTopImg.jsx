@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Typography, Menu, MenuItem } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
+import ScorecardImg from "../assets/scorecard-header-1.jpg"
 
 const SenatorTopImg = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -43,7 +44,7 @@ const SenatorTopImg = () => {
           {/* Image */}
           <Box>
             <img
-              src="../../public/scorecard-header-1.jpg"
+              src={ScorecardImg}
               alt="scoreboard"
               style={{ width: "100%", height: "auto" }}
             />
@@ -128,7 +129,11 @@ const SenatorTopImg = () => {
                 MenuListProps={{ onMouseLeave: handleMouseLeave }}
               >
                 <MenuItem
-                  onClick={handleMouseLeave}
+                  onClick={()=>{
+                    console.log("Navigate to House")
+                    handleMouseLeave
+                    navigate("/house");
+                  } }
                   sx={{
                     bgcolor: "#d90000",
                     "&:hover": { backgroundColor: "#9f0000" },

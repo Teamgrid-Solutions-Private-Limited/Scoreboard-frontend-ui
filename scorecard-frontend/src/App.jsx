@@ -5,8 +5,8 @@
 import { CssBaseline, Container,Box } from '@mui/material';
 import Scorecard from "./home/Scorecard.jsx"
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
-import CustomizedGrid from "./components/CustomizedGrid.jsx";
 import ShowSenatorById from './senator/ShowSenatorById.jsx';
+import House from './components/House.jsx';
 
 function App() {
   return (
@@ -17,8 +17,7 @@ function App() {
       {/* <Route path="/" element={<CustomizedGrid />}/> */}
       {/* <Route path="/" element={<TopBar />}/> */}
       <Route path="/senator/:id" element={<ShowSenatorById />}/>
-
-
+      <Route path="/house" element={<House />}/>
 
     </Routes>
     </BrowserRouter>

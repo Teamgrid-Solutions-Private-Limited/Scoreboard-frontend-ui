@@ -3,6 +3,7 @@ import { Box,Toolbar,AppBar,Button, IconButton } from '@mui/material'
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import SearchIcon from "@mui/icons-material/Search"
 import { useNavigate } from 'react-router-dom'
+import appLogo from "../assets/sba-logo.webp"
 const AppHeaderBar = () => {
   const navigate =useNavigate();
   const handleScorecard=()=>{
@@ -28,7 +29,7 @@ const AppHeaderBar = () => {
       {/* Left - Logo */}
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <img
-          src="../../public/sba-logo.webp" // 
+          src={appLogo} // 
           alt="Logo"
           style={{ height: "55px" }}
         />
