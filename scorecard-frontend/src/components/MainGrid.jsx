@@ -2,14 +2,14 @@ import React from "react";
 import { Box, Grid } from "@mui/material";
 import CustomizedDataGrid from "./CustomizedDataGrid";
 
-const getGridTitle = (type) => {
-  const titles = {
-    bills: "All Bills",
-    senator: "All Senators",
-    representative: "All Representatives"
-  };
-  return titles[type] || "All Items";
-};
+// const getGridTitle = (type) => {
+//   const titles = {
+//     bills: "All Bills",
+//     senator: "All Senators",
+//     representative: "All Representatives"
+//   };
+//   return titles[type] || "All Items";
+// };
 
 export default function MainGrid({ 
   type, 
