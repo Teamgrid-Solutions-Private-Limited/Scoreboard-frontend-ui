@@ -132,23 +132,28 @@ const SenatorTopImg = () => {
                   onClick={()=>{
                     console.log("Navigate to House")
                     handleMouseLeave
-                    navigate("/house");
+                    navigate("/senate");
                   } }
                   sx={{
                     bgcolor: "#d90000",
                     "&:hover": { backgroundColor: "#9f0000" },
                   }}
                 >
-                  House
+                  Senate
+                  
                 </MenuItem>
                 <MenuItem
-                  onClick={handleMouseLeave}
+                  onClick={()=>{
+                    console.log("Navigate to House")
+                    handleMouseLeave
+                    navigate("/house");
+                  } }
                   sx={{
                     bgcolor: "#d90000",
                     "&:hover": { backgroundColor: "#7f0000" },
                   }}
                 >
-                  Senate
+                  House
                 </MenuItem>
               </Menu>
             </Box>

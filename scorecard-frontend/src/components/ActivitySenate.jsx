@@ -8,11 +8,11 @@ import {
   Table,
   Divider,
 } from "@mui/material";
-import TopBar from "./TopBar";
-import AppHeaderBar from "./AppHeaderBar";
-import Footer from "./Footer";
-import SenatorTopImg from "./SenarorTopImg";
-import RightStickyTab from "./RightStickyTab";
+import TopBar from "../globalComponents/TopBar";
+import AppHeaderBar from "../globalComponents/AppHeaderBar";
+import Footer from "../globalComponents/Footer";
+import SenatorTopImg from "../globalComponents/SenatorTopImg";
+import RightStickyTab from "../globalComponents/RightStickyTab";
 
 const AcitivitySenate = () => {
   const [activeTab, setActiveTab] = useState("2023-2024");

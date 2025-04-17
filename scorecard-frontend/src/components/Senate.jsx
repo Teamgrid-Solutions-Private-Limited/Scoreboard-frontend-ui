@@ -9,13 +9,13 @@ import {
   Chip,
   Stack,
 } from "@mui/material";
-import TopBar from "./TopBar";
-import AppHeaderBar from "./AppHeaderBar";
-import Footer from "./Footer";
-import SenatorTopImg from "./SenarorTopImg";
-import RightStickyTab from "./RightStickyTab";
+import TopBar from "../globalComponents/TopBar";
+import Footer from "../globalComponents/Footer";
+import SenatorTopImg from "../globalComponents/SenatorTopImg";
+import RightStickyTab from "../globalComponents/RightStickyTab";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVotes } from "../redux/Reducer/voteSlice";
+import AppHeaderBar from "../globalComponents/AppHeaderBar";
 
 const SenateScorecard = () => {
   const dispatch = useDispatch();
@@ -75,8 +75,14 @@ const SenateScorecard = () => {
     <Box>
       <TopBar />
       <AppHeaderBar />
-      <SenatorTopImg/>
       <RightStickyTab />
+      <Box
+        sx={{
+          pt: { xs: "10px", md: "180px" }, // <-- Adds space below the fixed header (adjust height as needed)
+        }}
+      >
+        <SenatorTopImg />
+      </Box>
 
       <Box
         width={1000}
@@ -131,9 +137,9 @@ const SenateScorecard = () => {
                     "&:not(:last-child)": {
                       borderRight: "none", // Remove right border between tabs
                     },
-                    "&:focus":{
-                      outline:"none"
-                    }
+                    "&:focus": {
+                      outline: "none",
+                    },
                   }}
                 />
               ))}
@@ -141,7 +147,11 @@ const SenateScorecard = () => {
           </Paper>
         )}
 
-        <Typography variant="h4" gutterBottom sx={{ color: "#33567c" , fontSize:"36px"}}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ color: "#33567c", fontSize: "36px" }}
+        >
           Senate: Votes We Score
         </Typography>
 
@@ -155,7 +165,7 @@ const SenateScorecard = () => {
                 mb: 3,
                 p: 3,
                 backgroundColor: "#ffffff",
-                borderRadius: 2
+                borderRadius: 2,
               }}
             >
               <Box
@@ -170,7 +180,7 @@ const SenateScorecard = () => {
                   variant="h2"
                   sx={{
                     color: "#66625C",
-                    fontSize:"54",
+                    fontSize: "54",
                     lineHeight: 1.2,
                   }}
                 >
@@ -237,7 +247,6 @@ const SenateScorecard = () => {
                   </Typography>
                 </>
               )}
-
             </Box>
           ))
         ) : (

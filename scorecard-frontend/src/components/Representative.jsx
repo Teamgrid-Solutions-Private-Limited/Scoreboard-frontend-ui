@@ -13,13 +13,13 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import TopBar from "./TopBar";
-import AppHeaderBar from "./AppHeaderBar";
-import SenatorTopImg from "./SenarorTopImg";
-import Footer from "./Footer";
+import TopBar from "../globalComponents/TopBar";
+import AppHeaderBar from "../globalComponents/AppHeaderBar";
+import SenatorTopImg from "../globalComponents/SenatorTopImg";
+import Footer from "../globalComponents/Footer";
 import CloseIcon from "@mui/icons-material/Close";
 import img from "../assets/Schiff_Adam_119th_Congress.jpg";
-import RightStickyTab from "./RightStickyTab";
+import RightStickyTab from "../globalComponents/RightStickyTab";
 
 function Representative() {
   const [activeTab, setActiveTab] = useState("2023");

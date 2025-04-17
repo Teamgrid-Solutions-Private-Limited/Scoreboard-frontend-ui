@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import TopBar from "./TopBar";
-import AppHeaderBar from "./AppHeaderBar";
-import RightStickyTab from "./RightStickyTab";
+import TopBar from "../globalComponents/TopBar";
+import AppHeaderBar from "../globalComponents/AppHeaderBar";
+import RightStickyTab from "../globalComponents/RightStickyTab";
 import {
   Box,
   Typography,
@@ -15,7 +15,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import Footer from "./Footer";
+import Footer from "../globalComponents/Footer";
 import PregImg from "../assets/PregImage.jpg";
 import p1 from "../assets/p1.jpg";
 import p2 from "../assets/p2.jpg";

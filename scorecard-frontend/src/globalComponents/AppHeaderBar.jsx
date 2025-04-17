@@ -3,18 +3,12 @@ import { Box,Toolbar,AppBar,Button, IconButton } from '@mui/material'
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import SearchIcon from "@mui/icons-material/Search"
 import { useNavigate } from 'react-router-dom'
-<<<<<<< HEAD:scorecard-frontend/src/components/AppHeaderBar.jsx
-const AppHeaderBar = () => {
-  const navigate = useNavigate()
-
-=======
 import appLogo from "../assets/sba-logo.webp"
 const AppHeaderBar = () => {
   const navigate =useNavigate();
   const handleScorecard=()=>{
     navigate("/")
   }
->>>>>>> main:scorecard-frontend/src/globalComponents/AppHeaderBar.jsx
   return (
     <AppBar
     position="fixed"
@@ -43,13 +37,8 @@ const AppHeaderBar = () => {
 
       {/* Center - Navigation Links */}
       <Box sx={{ gap:1, display:{xs:"none",md:"flex"},flexWrap:"wrap",justifyContent:{xs:"center",md:"space-between"}}}>
-<<<<<<< HEAD:scorecard-frontend/src/components/AppHeaderBar.jsx
-        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,  "&:hover": { color: "#d4a73e" },}} onClick={()=>{navigate('/pregnancy-help')}}>PREGNANT?</Button>
-        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"} }} onClick={()=>{navigate('/')}}>SCORECARD</Button>
-=======
-        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,  "&:hover": { color: "#d4a73e" },}} >PREGNANT?</Button>
-        <Button sx={{ color: "#d4a73e" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"} }} onClick={handleScorecard}>SCORECARD</Button>
->>>>>>> main:scorecard-frontend/src/globalComponents/AppHeaderBar.jsx
+        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,  "&:hover": { color: "#d4a73e" },}} onClick={()=>{navigate("/pregnancy-help")}}>PREGNANT?</Button>
+        <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"} }} onClick={handleScorecard}>SCORECARD</Button>
         <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400" ,"&:hover":{color:"#d4a73e"}}}>NEWS</Button>
         <Button sx={{ color: "#666" ,fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400","&:hover":{color:"#d4a73e"} }}>ELECTIONS</Button>
         <Button sx={{ color: "#666",fontFamily:" Verdana, Geneva, sans-serif", fontSize: "16px",fontWeight: "400","&:hover":{color:"#d4a73e"}  }}>TAKE ACTION</Button>

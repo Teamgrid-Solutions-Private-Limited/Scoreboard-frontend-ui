@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import {
   Box,
@@ -12,8 +10,9 @@ import {
   IconButton,
 } from "@mui/material";
 import { Facebook, Twitter, Instagram, YouTube } from "@mui/icons-material";
-import logo from "../assets/image.png";
-
+import logo1 from "../assets/sba-logo.webp";
+import logo from "../assets/image.png"
+ 
 const Footer = () => {
   return (
     <>
@@ -25,7 +24,7 @@ const Footer = () => {
           color: "white",
           py: 4,
           mt: "auto",
-          width: "1520px",
+          width: "1510px"
         }}
       >
         <Container maxWidth="lg">
@@ -38,12 +37,12 @@ const Footer = () => {
               sx={{ textAlign: { xs: "center", md: "left" } }}
             >
               <img
-                src="/sba-logo.webp"
+                src={logo1}
                 alt="Susan B. Anthony Logo"
                 style={{ height: "55px" }}
               />
             </Grid>
-
+ 
             {/* Navigation Links */}
             <Grid item xs={12} md={4}>
               <Box
@@ -76,7 +75,7 @@ const Footer = () => {
                 )}
               </Box>
             </Grid>
-
+ 
             {/* Social Icons */}
             <Grid
               item
@@ -110,7 +109,7 @@ const Footer = () => {
           </Grid>
         </Container>
       </Box>
-
+ 
       {/* Bottom Strip */}
       <Box sx={{ backgroundColor: "black", color: "#638FC6", py: 2 }}>
         <Container maxWidth="lg">
@@ -133,7 +132,7 @@ const Footer = () => {
               </Link>
               </Typography>
             </Grid>
-
+ 
             {/* Right Links and Credit */}
             <Grid
               item
@@ -183,5 +182,5 @@ const Footer = () => {
     </>
   );
 };
-
+ 
 export default Footer;
