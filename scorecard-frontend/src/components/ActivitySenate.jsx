@@ -158,8 +158,14 @@ const AcitivitySenate = () => {
       <TopBar />
       <AppHeaderBar />
       {/* <Scorecard /> */}
-      <SenatorTopImg />
       <RightStickyTab/>
+      <Box
+        sx={{
+          pt: { xs: "10px", md: "180px" }, // <-- Adds space below the fixed header (adjust height as needed)
+        }}
+      >
+        <SenatorTopImg />
+      </Box>
       <Box
         width={1000}
         sx={{ pl: 32, alignItems: "center", justifyContent: "center",color :"#66625C" }}
