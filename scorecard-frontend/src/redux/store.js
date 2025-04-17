@@ -13,4 +13,5 @@ const store=configureStore({
         vote:voteReducer
     }
 });
+
 export default store;
