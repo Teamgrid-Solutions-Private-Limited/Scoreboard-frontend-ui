@@ -24,7 +24,7 @@ const Footer = () => {
           color: "white",
           py: 4,
           mt: "auto",
-          width: "1510px"
+          width: "1520px"
         }}
       >
         <Container maxWidth="lg">
