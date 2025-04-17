@@ -5,6 +5,8 @@ import AppHeaderBar from "./AppHeaderBar";
 import Footer from "./Footer";
 import SenatorTopImg from "./SenarorTopImg";
 import RightStickyTab from "./RightStickyTab";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllVotes } from "../redux/Reducer/voteSlice";
 
 const House = () => {
   const [activeTab, setActiveTab] = useState("2023-2024");

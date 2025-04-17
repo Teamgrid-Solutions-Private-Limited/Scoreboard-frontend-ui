@@ -29,7 +29,12 @@ const Footer = () => {
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             {/* Logo Column */}
-            <Grid item xs={12} md={4} sx={{ textAlign: { xs: "center", md: "left" } }}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{ textAlign: { xs: "center", md: "left" } }}
+            >
               <img
                 src="/sba-logo.webp"
                 alt="Susan B. Anthony Logo"
@@ -44,34 +49,46 @@ const Footer = () => {
                   display: "flex",
                   flexWrap: "wrap",
                   justifyContent: "center",
-                  gap: 2,
+                  gap: 1,
+                  ml: 9,
                 }}
               >
-                {["ELECTION", "ABOUT", "SCORECARD", "NEWS", "CAREERS"].map((item) => (
-                  <Button
-                    key={item}
-                    sx={{
-                      color: "white",
-                      fontFamily: "Verdana, Geneva, sans-serif",
-                      fontSize: "16px",
-                      fontWeight: 400,
-                      minWidth: "auto",
-                      textTransform: "none",
-                    }}
-                  >
-                    {item}
-                  </Button>
-                ))}
+                {["ELECTIONS", "ABOUT", "SCORECARD", "NEWS", "CAREERS"].map(
+                  (item) => (
+                    <Button
+                      key={item}
+                      sx={{
+                        color: "white",
+                        fontFamily: "proxima-nova, sans-serif",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        letterSpacing: "0.15em", // slight spacing like the image
+                        textTransform: "uppercase", // make it all caps
+                        px: 2, // horizontal padding
+                        py: 2, // vertical padding
+                      }}
+                    >
+                      {item}
+                    </Button>
+                  )
+                )}
               </Box>
             </Grid>
 
             {/* Social Icons */}
-            <Grid item xs={12} md={4} sx={{ textAlign: { xs: "center", md: "right" } }}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{ textAlign: { xs: "center", md: "end" }, ml: 6 }}
+            >
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: { xs: "center", md: "flex-end" },
                   gap: 1,
+                  mt: 1,
+                  ml: { md: "auto" },
                 }}
               >
                 <IconButton sx={{ color: "white" }} aria-label="Facebook">
@@ -98,8 +115,20 @@ const Footer = () => {
           <Grid container alignItems="center" justifyContent="space-between">
             {/* Left Text */}
             <Grid item xs={12} md={6} sx={{ mb: { xs: 1, md: 0 } }}>
-              <Typography variant="body2" sx={{ textAlign: { xs: "center", md: "left" } }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  textAlign: { xs: "center", md: "left" },
+                  fontSize: "12px",
+                }}
+              >
                 © Copyright Susan B. Anthony Pro-life America 2005
+                <Link href="#" underline="hover" color="inherit" sx={{ml:2}}>
+                Terms of Use
+              </Link>
+              <Link href="#" underline="hover" color="inherit" sx={{ml:2}}>
+                Privacy Notice
+              </Link>
               </Typography>
             </Grid>
 
@@ -114,14 +143,9 @@ const Footer = () => {
                 alignItems: "center",
                 flexWrap: "wrap",
                 gap: 2,
+                fontSize: "12px",
               }}
             >
-              <Link href="#" underline="hover" color="inherit">
-                Terms of Use
-              </Link>
-              <Link href="#" underline="hover" color="inherit">
-                Privacy Notice
-              </Link>
               <Link
                 href="#"
                 color="inherit"
@@ -137,13 +161,16 @@ const Footer = () => {
                   src={logo}
                   alt="Logo"
                   style={{
-                    height: 20,
+                    height: 15,
                     borderRadius: "50%",
                     objectFit: "cover",
                     border: "1px solid black",
                   }}
                 />
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: 500, fontSize: "12px" }}
+                >
                   MADE BY DIGITAL ALCHEMY
                 </Typography>
               </Link>
