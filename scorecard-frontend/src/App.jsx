@@ -11,7 +11,8 @@ import House from './components/House.jsx';
 function App() {
   return (
     <>
-    <BrowserRouter>
+    
+    <BrowserRouter basename="/scorecard/frontend">
     <Routes>
       <Route path="/" element={<Scorecard />}/>
       {/* <Route path="/" element={<CustomizedGrid />}/> */}
