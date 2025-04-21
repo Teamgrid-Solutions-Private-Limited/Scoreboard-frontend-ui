@@ -23,9 +23,6 @@ import { getAllHouseData } from "../redux/action-reducer/houseTermSlice";
 import House from "../components/House";
 //house column n rows
 
-
-
-
 const Scorecard = () => {
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState("");
@@ -33,7 +30,7 @@ const Scorecard = () => {
   const [senatePage, setSenatePage] = useState(0);
   const [housePage, setHousePage] = useState(0);
   const dispatch = useDispatch();
-  const { senators, loading } = useSelector((state) => state.senator)
+  const { senators } = useSelector((state) => state.senator)
   const { senatorData } = useSelector((state) => state.senatorData)
   const {houses}=useSelector((state)=>state.house)
   const {houseData}=useSelector((state)=>state.houseData)

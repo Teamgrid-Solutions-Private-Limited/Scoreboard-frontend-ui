@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { API_URL } from '../api/Api';
-
 // Create a vote with file upload
 export const createVote = createAsyncThunk(
   'votes/createVote',

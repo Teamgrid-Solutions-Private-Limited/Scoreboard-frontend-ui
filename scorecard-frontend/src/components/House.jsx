@@ -5,7 +5,7 @@ import {
   Tabs,
   Tab,
   Paper,
-  Divider,
+  
 } from "@mui/material";
 import TopBar from "../globalComponents/TopBar";
 import AppHeaderBar from "../globalComponents/AppHeaderBar";
@@ -161,7 +161,6 @@ const House = () => {
             {/* <Typography variant="caption" color="text.secondary">
               {new Date(vote.date).toLocaleDateString()}
             </Typography> */}
-
 
             <Typography
               sx={{
