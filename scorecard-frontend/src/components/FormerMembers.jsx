@@ -279,7 +279,7 @@ const FormerMembers = () => {
 
             <Box sx={{ display: "flex", }} >
               <Button
-              
+              onClick={()=>navigate('/')}
                 endIcon={<span style={{ fontSize: "16px" }}>{">>"}</span>}
                 sx={{
                   bgcolor: "#337ab7",
