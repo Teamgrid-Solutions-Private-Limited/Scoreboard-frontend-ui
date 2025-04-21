@@ -15,7 +15,8 @@ import ShowSenatorById from './senator/ShowSenatorById.jsx';
 function App() {
   return (
     <>
-    <BrowserRouter>
+    
+    <BrowserRouter basename="/scorecard/frontend">
     <Routes>
       <Route path="/" element={<Scorecard />}/>
       <Route path="/senate" element={<SenateScorecard />}/>
