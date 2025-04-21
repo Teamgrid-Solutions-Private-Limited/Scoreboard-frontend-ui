@@ -14,7 +14,7 @@ import Footer from "../globalComponents/Footer";
 import SenatorTopImg from "../globalComponents/SenatorTopImg";
 import RightStickyTab from "../globalComponents/RightStickyTab";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVotes } from "../redux/Reducer/voteSlice";
+import { getAllVotes } from "../redux/action-reducer/voteSlice";
 import AppHeaderBar from "../globalComponents/AppHeaderBar";
 
 const SenateScorecard = () => {

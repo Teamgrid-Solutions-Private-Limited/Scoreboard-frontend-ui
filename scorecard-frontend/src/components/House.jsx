@@ -162,7 +162,6 @@ const House = () => {
               {new Date(vote.date).toLocaleDateString()}
             </Typography> */}
 
-
             <Typography
               sx={{
                 fontSize: "14px",

@@ -3,12 +3,13 @@ import axios from 'axios';
 import { API_URL } from '../api/Api';
 
 
+// Get all terms
 export const getAllTerms = createAsyncThunk(
     'terms/getAllTerms',
     async (_, { rejectWithValue }) => {
       try {
         const response = await axios.get(`${API_URL}/term/terms/viewAll/`);
-        console.log(response.data)
+        
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data);
@@ -16,9 +17,8 @@ export const getAllTerms = createAsyncThunk(
     }
   );
 
-  //slice
-
-  const termSlice = createSlice({
+// Slice
+const termSlice = createSlice({
     name: 'terms',
     initialState: {
       terms: [],
@@ -35,7 +35,6 @@ export const getAllTerms = createAsyncThunk(
       },
     },
     extraReducers: (builder) => {
-  
       // Get All Terms
       builder.addCase(getAllTerms.pending, (state) => {
         state.loading = true;
@@ -49,9 +48,11 @@ export const getAllTerms = createAsyncThunk(
         state.loading = false;
         state.error = action.payload;
       });
+  
+
     },
-});
-
-export const { clearTermState } = termSlice.actions;
-
-export default termSlice.reducer;
+  });
+  
+  export const { clearTermState } = termSlice.actions;
+  
+  export default termSlice.reducer;

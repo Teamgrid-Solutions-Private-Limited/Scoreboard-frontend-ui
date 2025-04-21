@@ -11,7 +11,7 @@ const CustomizedDataGrid = ({ type, rows, loading }) => {
         if (lowerParty === "democrat") return "#1e73be";
         return "gray";
     };
-
+    
     const formatDistrict = (district) => {
         if (!district) return "";
       

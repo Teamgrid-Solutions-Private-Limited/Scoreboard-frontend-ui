@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { API_URL } from "../api/Api"
 
+//get allSenatorData
 export const getAllSenatorData = createAsyncThunk(
     'senatorData/getAllSenatorData',
     async (_, { rejectWithValue }) => {
@@ -14,6 +15,23 @@ export const getAllSenatorData = createAsyncThunk(
       }
     }
   );
+
+  //get SenatorDataById
+  
+export const getSenatorDataBySenetorId = createAsyncThunk(
+  'senatorData/getSenatorDataBySenetorId',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_URL}/senatorData/senator-data/viewbysenator/${id}`);
+      // console.log(response.data.info)
+      return response.data.info;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
   
 // Initial state
 const initialState = {
@@ -46,6 +64,19 @@ const senatorDataSlice = createSlice({
         state.senatorData = action.payload;
       })
       .addCase(getAllSenatorData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //get Senator By senatorId
+      .addCase(getSenatorDataBySenetorId.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSenatorDataBySenetorId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentSenator = action.payload;
+      })
+      .addCase(getSenatorDataBySenetorId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

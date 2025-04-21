@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box, Typography, Stack, Card, Tab, Tabs, Avatar,
     Divider, Table, TableCell, TableHead, TableRow, TableBody, Button
@@ -9,17 +9,36 @@ import SenatorTopImg from '../globalComponents/SenatorTopImg';
 import RightStickyTab from '../globalComponents/RightStickyTab';
 import CloseIcon from '@mui/icons-material/Close';
 import Footer from '../globalComponents/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getSenatorById } from '../redux/action-reducer/senatorSlice';
+import { getSenatorDataBySenetorId } from '../redux/action-reducer/senatorTermSlice';
 
 const ShowSenatorById = () => {
     const [tab, setTab] = useState("2023-2029");
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { senator } = useSelector((state) => state.senator)
+    const { currentSenator } = useSelector((state) => state.senatorData)
 
+
+    useEffect(() => {
+        dispatch(getSenatorById(id))
+        dispatch(getSenatorDataBySenetorId(id))
+    }, [dispatch])
+
+    useEffect(()=>{
+        console.log("senatorbyid",senator)
+        console.log("senatordatabyid",currentSenator)
+
+    },[senator,currentSenator])
     const handleTabChange = (_, newValue) => {
         setTab(newValue);
     };
     const formatDate = (dateString) => {
         const [year, month, day] = dateString.split("-");
         return `${month}/${day}/${year}`;
-      };
+    };
 
     const votes = [
         {
@@ -42,7 +61,7 @@ const ShowSenatorById = () => {
         },
     ];
 
-    const senatorData = {
+    const senatorsData = {
         "2023-2029": {
             name: "Sen. Alex Padilla",
             state: "California",
@@ -63,11 +82,11 @@ const ShowSenatorById = () => {
         }
     };
 
-    const selectedSenator = senatorData[tab];
+    const selectedSenator = senatorsData[tab];
 
     return (
         <>
-            <Box sx={{ mx: 31.7 , pb:1.5}}>
+            <Box sx={{ mx: 31.7, pb: 1.5 }}>
                 <TopBar />
                 <AppHeaderBar />
                 <RightStickyTab />
@@ -102,7 +121,7 @@ const ShowSenatorById = () => {
                                     fontWeight: 700,
                                 }}
                             >
-                                {Object.entries(senatorData).map(([term]) => (
+                                {Object.entries(senatorsData).map(([term]) => (
                                     <Tab
                                         key={term}
                                         label={term}
@@ -171,7 +190,7 @@ const ShowSenatorById = () => {
                                     <Box
                                         component="img"
                                         src={selectedSenator.imageUrl} // or use local import
-                                        alt={senatorData.name}
+                                        alt={senatorsData.name}
                                         sx={{
                                             width: 175,
                                             height: 175,
@@ -311,18 +330,18 @@ const ShowSenatorById = () => {
                                                         border: "1px solid #ccc",
                                                         padding: "44px 6px",
                                                         fontSize: 14,
-                                                        fontWeight:"700",
-                                                        color:"#333",
-                                                        width:"75px",
-                                                        textAlign:"center",
-                                                        
+                                                        fontWeight: "700",
+                                                        color: "#333",
+                                                        width: "75px",
+                                                        textAlign: "center",
+
 
                                                     }}
                                                 >
                                                     {formatDate(vote.date)}
-                                                    <Typography sx={{fontSize:".6rem",fontWeight:"400",color:"#333" ,}}>
-                                                      188<sup>th</sup> Congress
-                                                      </Typography>
+                                                    <Typography sx={{ fontSize: ".6rem", fontWeight: "400", color: "#333", }}>
+                                                        188<sup>th</sup> Congress
+                                                    </Typography>
                                                 </TableCell>
                                                 <TableCell sx={{ border: "1px solid #ccc", p: 1 }}>
                                                     <Typography
@@ -332,11 +351,11 @@ const ShowSenatorById = () => {
                                                             fontFamily: "Helvetica Neue, Helvetica, Arial,,sans-serif",
                                                             fontWeight: "700",
                                                             fontSize: " 1.4em",
-                                                            color:"#66625c"
+                                                            color: "#66625c"
                                                         }}
                                                     >
                                                         {vote.title}
-                                                   
+
                                                     </Typography>
                                                     <Typography variant="body2" sx={{ mb: 0.5 }}>
                                                         {vote.description}
@@ -345,14 +364,14 @@ const ShowSenatorById = () => {
                                                         <Button
                                                             variant="contained"
                                                             size="small"
-                                                            sx={{ fontSize: "0.7rem", textTransform: "none",bgcolor:"#4DA6FF" }}
+                                                            sx={{ fontSize: "0.7rem", textTransform: "none", bgcolor: "#4DA6FF" }}
                                                         >
                                                             ROLL CALL
                                                         </Button>
                                                         <Button
                                                             variant="contained"
                                                             size="small"
-                                                            sx={{ fontSize: "0.7rem", textTransform: "none",bgcolor:"#4DA6FF" }}
+                                                            sx={{ fontSize: "0.7rem", textTransform: "none", bgcolor: "#4DA6FF" }}
                                                         >
                                                             READ MORE
                                                         </Button>
@@ -376,19 +395,19 @@ const ShowSenatorById = () => {
                             </Box>
 
                             {/* TRACK ACTIVITY */}
-                          
+
                             <Box sx={{ mt: "90px" }}>
                                 <Typography sx={{
                                     my: 1, fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", color: " #66625c", fontSize: "54px",
                                     lineHeight: "64px"
                                 }}>Tracked Activity: Bills Cosponsored & Letters Cosigned</Typography>
                                 <Typography sx={{
-                                    margin:" 0 0 30px 0",
+                                    margin: " 0 0 30px 0",
                                     fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
                                     fontSize: "14px",
                                     fontWeight: 400,
-                                    color:"#66625c"
-                                
+                                    color: "#66625c"
+
                                 }}>As of 02/01/2023</Typography>
                                 <Table sx={{ borderCollapse: "collapse", width: "100%" }}>
                                     <TableHead>
@@ -407,7 +426,7 @@ const ShowSenatorById = () => {
                                                     borderRight: "1px solid #ccc",
                                                     padding: "4px 8px", // control padding to reduce height
                                                     fontSize: "14px",
-                                                     width:"75px"
+                                                    width: "75px"
 
                                                 }}
                                             >
@@ -451,16 +470,16 @@ const ShowSenatorById = () => {
                                                         border: "1px solid #ccc",
                                                         padding: "7px 4px",
                                                         fontSize: 14,
-                                                        fontWeight:"700",
-                                                        color:"#333",
-                                                        width:"20px",
-                                                        textAlign:"center"
+                                                        fontWeight: "700",
+                                                        color: "#333",
+                                                        width: "20px",
+                                                        textAlign: "center"
                                                     }}
                                                 >
                                                     {/* {formatDate(vote.date)} */}
-                                                    <Typography sx={{fontSize:".6rem",fontWeight:"400",color:"#333" ,p:"40px  9px "}}>
-                                                      188<sup>th</sup> Congress
-                                                      </Typography>
+                                                    <Typography sx={{ fontSize: ".6rem", fontWeight: "400", color: "#333", p: "40px  9px " }}>
+                                                        188<sup>th</sup> Congress
+                                                    </Typography>
                                                 </TableCell>
                                                 <TableCell sx={{ border: "1px solid #ccc", p: 1 }}>
                                                     <Typography
@@ -470,11 +489,11 @@ const ShowSenatorById = () => {
                                                             fontFamily: "Helvetica Neue, Helvetica, Arial,,sans-serif",
                                                             fontWeight: "700",
                                                             fontSize: " 1.4em",
-                                                            color:"#66625c"
+                                                            color: "#66625c"
                                                         }}
                                                     >
                                                         {vote.title}
-                                                   
+
                                                     </Typography>
                                                     <Typography variant="body2" sx={{ mb: 0.5 }}>
                                                         {vote.description}
@@ -483,14 +502,14 @@ const ShowSenatorById = () => {
                                                         <Button
                                                             variant="contained"
                                                             size="small"
-                                                            sx={{ fontSize: "0.7rem", textTransform: "none",bgcolor:"#4DA6FF" }}
+                                                            sx={{ fontSize: "0.7rem", textTransform: "none", bgcolor: "#4DA6FF" }}
                                                         >
                                                             ROLL CALL
                                                         </Button>
                                                         <Button
                                                             variant="contained"
                                                             size="small"
-                                                            sx={{ fontSize: "0.7rem", textTransform: "none",bgcolor:"#4DA6FF" }}
+                                                            sx={{ fontSize: "0.7rem", textTransform: "none", bgcolor: "#4DA6FF" }}
                                                         >
                                                             READ MORE
                                                         </Button>
@@ -518,7 +537,7 @@ const ShowSenatorById = () => {
                     </Stack>
                 </Box >
             </Box >
-            <Footer/>
+            <Footer />
         </>
     );
 };
