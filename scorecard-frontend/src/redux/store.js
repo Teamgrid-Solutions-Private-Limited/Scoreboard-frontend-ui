@@ -15,4 +15,5 @@ const store=configureStore({
         activity:ActivityReducer
     }
 });
+
 export default store;
