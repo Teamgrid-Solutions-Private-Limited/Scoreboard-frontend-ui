@@ -12,6 +12,7 @@ import Representative from "./components/Representative.jsx";
 import Pregnancy from "./components/PregnancyHelp.jsx";
 import ShowSenatorById from './senator/ShowSenatorById.jsx';
 
+
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
       {/* <Route path="/" element={<CustomizedGrid />}/> */}
       {/* <Route path="/" element={<TopBar />}/> */}
       <Route path="/senator/:id" element={<ShowSenatorById />}/>
+      <Route path="/representative/:id" element={<Representative/>}/>
 
     </Routes>
     </BrowserRouter>

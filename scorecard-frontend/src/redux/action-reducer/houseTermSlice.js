@@ -16,6 +16,18 @@ export const getAllHouseData = createAsyncThunk(
     }
   );
 
+  export const getHouseDataById = createAsyncThunk(
+    'houseData/getHouseDataById',
+    async (id, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${API_URL}/houseData/house-data/viewID/${id}`);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
 
   const initialState={
     houseData: [],
@@ -49,7 +61,20 @@ const houseDataSlice = createSlice({
         .addCase(getAllHouseData.rejected, (state, action) => {
           state.loading = false;
           state.error = action.payload;
-        });
+        })
+        // Get Senator Data by ID
+        .addCase(getHouseDataById.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(getHouseDataById.fulfilled, (state, action) => {
+          state.loading = false;
+          state.currentHouse = action.payload;
+        })
+        .addCase(getHouseDataById.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
     },
 });
 
