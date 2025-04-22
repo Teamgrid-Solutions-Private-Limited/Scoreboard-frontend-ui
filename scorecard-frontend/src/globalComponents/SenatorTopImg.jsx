@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Typography, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ScorecardImg from "../assets/scorecard-header-1.jpg";
+import { FaAngleDown } from "react-icons/fa6";
 
 const SenatorTopImg = () => {
   const [votesAnchorEl, setVotesAnchorEl] = useState(null);
@@ -13,20 +14,16 @@ const SenatorTopImg = () => {
     setVotesAnchorEl(event.currentTarget);
   };
 
-  const handleVotesLeave = (event) => {
-    if (votesAnchorEl && !votesAnchorEl.contains(event.relatedTarget)) {
-      setVotesAnchorEl(null);
-    }
+  const handleVotesLeave = () => {
+    setVotesAnchorEl(null);
   };
 
   const handleActivityEnter = (event) => {
     setActivityAnchorEl(event.currentTarget);
   };
 
-  const handleActivityLeave = (event) => {
-    if (activityAnchorEl && !activityAnchorEl.contains(event.relatedTarget)) {
-      setActivityAnchorEl(null);
-    }
+  const handleActivityLeave = () => {
+    setActivityAnchorEl(null);
   };
 
   const handleNavigate = (path, closeMenu) => {
@@ -123,30 +120,54 @@ const SenatorTopImg = () => {
                 },
               }}
             >
-              VOTES WE TRACK ▼
+              VOTES WE TRACK <FaAngleDown />
+
             </Typography>
             <Menu
               anchorEl={votesAnchorEl}
               open={Boolean(votesAnchorEl)}
               onClose={handleVotesLeave}
-              MenuListProps={{ onMouseLeave: handleVotesLeave }}
+              disableScrollLock={true}
               sx={{
+                pointerEvents: "none",
                 "& .MuiPaper-root": {
                   backgroundColor: "#d90000",
                   color: "white",
-                  width: "190px",
+                  width: "210px",
+                  pointerEvents: "auto",
+                  padding: 0,
+                },
+                "& .MuiList-root": {
+                  padding: 0,
                 },
               }}
             >
               <MenuItem
                 onClick={() => handleNavigate("/senate", () => setVotesAnchorEl(null))}
-                sx={{ bgcolor: "#d90000", "&:hover": { backgroundColor: "#9f0000" } }}
+                sx={{
+                  bgcolor: "#d90000",
+                  borderBottom: "1px solid #fff",
+                  "&:hover": { backgroundColor: "#9f0000" },
+                  width: "100%",
+                  margin: 0,
+                  padding: "12px 16px",
+                  display: "block",
+                  boxSizing: "border-box",
+                }}
               >
                 Senate
               </MenuItem>
               <MenuItem
                 onClick={() => handleNavigate("/house", () => setVotesAnchorEl(null))}
-                sx={{ bgcolor: "#d90000", "&:hover": { backgroundColor: "#7f0000" } }}
+                sx={{
+                  bgcolor: "#d90000",
+                  "&:hover": { backgroundColor: "#7f0000" },
+                  width: "100%",
+                  margin: 0,
+                  padding: "12px 16px",
+                  display: "block",
+                  boxSizing: "border-box",
+                }}
               >
                 House
               </MenuItem>
@@ -175,30 +196,54 @@ const SenatorTopImg = () => {
                 },
               }}
             >
-              ACTIVITY WE TRACK ▼
+              ACTIVITY WE TRACK <FaAngleDown />
+
             </Typography>
             <Menu
               anchorEl={activityAnchorEl}
               open={Boolean(activityAnchorEl)}
               onClose={handleActivityLeave}
-              MenuListProps={{ onMouseLeave: handleActivityLeave }}
+              disableScrollLock={true}
               sx={{
+                pointerEvents: "none",
                 "& .MuiPaper-root": {
                   backgroundColor: "#d90000",
                   color: "white",
-                  width: "190px",
+                  width: "210px",
+                  pointerEvents: "auto",
+                  padding: 0,
+                },
+                "& .MuiList-root": {
+                  padding: 0,
                 },
               }}
             >
               <MenuItem
                 onClick={() => handleNavigate("/activity-senate", () => setActivityAnchorEl(null))}
-                sx={{ bgcolor: "#d90000", "&:hover": { backgroundColor: "#7f0000" } }}
+                sx={{
+                  bgcolor: "#d90000",
+                  borderBottom: "1px solid #fff",
+                  "&:hover": { backgroundColor: "#7f0000" },
+                  width: "100%",
+                  margin: 0,
+                  padding: "12px 16px",
+                  display: "block",
+                  boxSizing: "border-box",
+                }}
               >
                 Senate
               </MenuItem>
               <MenuItem
                 onClick={() => handleNavigate("/activity-house", () => setActivityAnchorEl(null))}
-                sx={{ bgcolor: "#d90000", "&:hover": { backgroundColor: "#7f0000" } }}
+                sx={{
+                  bgcolor: "#d90000",
+                  "&:hover": { backgroundColor: "#7f0000" },
+                  width: "100%",
+                  margin: 0,
+                  padding: "12px 16px",
+                  display: "block",
+                  boxSizing: "border-box",
+                }}
               >
                 House
               </MenuItem>

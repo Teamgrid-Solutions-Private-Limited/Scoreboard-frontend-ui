@@ -24,7 +24,7 @@ import { getAllHouseData } from "../redux/action-reducer/houseTermSlice";
 import House from "../components/House";
 //house column n rows
 
-const Scorecard = () => {
+const FormerMembers = () => {
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState("");
   const [houseSearch, setHouseSearch] = useState("")
@@ -56,10 +56,7 @@ const Scorecard = () => {
         const match = senatorData.find(
           (data) => {
             const isMatch = data.senateId === senator._id;
-            console.log(
-              `Checking match:`,
-            );
-            // `Match? ${isMatch}`
+            
             return isMatch;
           }
         );
@@ -70,7 +67,7 @@ const Scorecard = () => {
         };
       });
 
-      console.log("Merged Senators:", merged);
+    //   console.log("Merged Senators:", merged);
       setMergedSenators(merged);
     }
 
@@ -83,7 +80,7 @@ const Scorecard = () => {
         const match=houseData.find(
           (data)=>{
             const isMatched=data.houseId===house._id
-            console.log("matching counts");
+            
             return isMatched
         })
           return {
@@ -91,18 +88,22 @@ const Scorecard = () => {
             rating:match?match.rating:"N/A"
           }
       })
-      console.log("Merged House",merged)
+    //   console.log("Merged House",merged)
       return setMergedHouses(merged)
     }
 
   },[houses,houseData])
 
   const filteredRows = mergedSenators.filter((senator) =>
-    senator.name.toLowerCase().includes(search.toLowerCase())
+    senator.name.toLowerCase().includes(search.toLowerCase()) &&
+  senator.status==="Former" 
   );
+  console.log("fliteredRows",filteredRows)
 
   const houseFilteredRows =mergedHouses.filter((row) =>
-    row.name.toLowerCase().includes(houseSearch.toLowerCase()))
+    row.name.toLowerCase().includes(houseSearch.toLowerCase()) &&
+  row.status === 'Former'
+)
   // const paginatedSenateRows = filteredRows.slice(senatePage * pageSize, (senatePage + 1) * pageSize);
   // const paginatedHouseRows = houseFilteredRows.slice(housePage * pageSize, (housePage + 1) * pageSize);
   return (
@@ -278,7 +279,7 @@ const Scorecard = () => {
 
             <Box sx={{ display: "flex", }} >
               <Button
-              onClick={()=>navigate('former-members')}
+              onClick={()=>navigate('/')}
                 endIcon={<span style={{ fontSize: "16px" }}>{">>"}</span>}
                 sx={{
                   bgcolor: "#337ab7",
@@ -288,7 +289,7 @@ const Scorecard = () => {
                   fontSize: "14px",
                   lineHeight: " 1.22857143",
                   textTransform: "none",
-                }}>  View Scorecards for Former Members</Button>
+                }}>  View Scorecards for Current Members</Button>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "center", width: "100%", mb: "30px !important" }}>
               <Button
@@ -314,4 +315,4 @@ const Scorecard = () => {
   );
 };
 
-export default Scorecard;
+export default FormerMembers;

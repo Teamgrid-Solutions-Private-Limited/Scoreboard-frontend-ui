@@ -11,6 +11,7 @@ import ActivityHouse from "./components/ActivityHouse.jsx";
 import Representative from "./components/Representative.jsx";
 import Pregnancy from "./components/PregnancyHelp.jsx";
 import ShowSenatorById from './senator/ShowSenatorById.jsx';
+import FormerMembers from "./components/FormerMembers.jsx";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       {/* <Route path="/" element={<CustomizedGrid />}/> */}
       {/* <Route path="/" element={<TopBar />}/> */}
       <Route path="/senator/:id" element={<ShowSenatorById />}/>
+      <Route path="/former-members" element={<FormerMembers/>}/>
       <Route path="/representative/:id" element={<Representative/>}/>
 
     </Routes>
