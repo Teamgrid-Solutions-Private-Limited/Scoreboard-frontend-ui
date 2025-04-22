@@ -4,141 +4,133 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom"; // <-- Make sure this is imported
 
 const CustomizedDataGrid = ({ type, rows, loading }) => {
-  const getBorderColor = (party) => {
-    if (!party) return "gray";
-    const lowerParty = party.toLowerCase();
-    if (lowerParty === "republican") return "#dd3333";
-    if (lowerParty === "democrat") return "#1e73be";
-    return "gray";
-  };
+    const getBorderColor = (party) => {
+        if (!party) return "gray";
+        const lowerParty = party.toLowerCase();
+        if (lowerParty === "republican") return "#dd3333";
+        if (lowerParty === "democrat") return "#1e73be";
+        return "gray";
+    };
+    
+    const formatDistrict = (district) => {
+        if (!district) return "";
+      
+        const [prefix, statePart] = district.split(",");
+        const stateName = statePart?.trim() || "";
+      
+        // Handle state initials logic
+        let stateInitials = "";
+        const stateWords = stateName.split(" ");
+        if (stateWords.length > 1) {
+          // Multiple words: take first letter of each
+          stateInitials = stateWords.map(word => word.charAt(0).toUpperCase()).join("");
+        } else {
+          // Single word: take first 2 letters capitalized
+          stateInitials = stateName.substring(0, 2).toUpperCase();
+        }
+      
+        // Extract district number from the prefix (e.g., "Congressional District 3")
+        const districtMatch = prefix.match(/District\s*(\d+)/i);
+        const districtNumber = districtMatch ? districtMatch[1] : "";
+      
+        return `${stateInitials}-${districtNumber}`;
+      };
+      
+      
 
-  const formatDistrict = (district) => {
-    if (!district) return "";
 
-    const [prefix, statePart] = district.split(",");
-    const stateName = statePart?.trim() || "";
+    const columns =
+        type === "senator"
+            ? [
+                {
+                    field: "name",
+                    headerName: "Senator",
+                    minWidth: 400,
+                    renderCell: (params) => (
+                        <Link to={`/senator/${params.row._id}`} sx={{ textDecoration: "none", }}>
+                            <Typography
+                                sx={{
+                                    color: getBorderColor(params.row.party),
+                                    fontWeight: "600",
+                                    fontSize: "14px",
+                                    display: 'inline-block',
+                                    py: "8px",
+                                    "&:hover": {
+                                        opacity: 0.6,
+                                    },
+                                    "&:focus": {
+                                        outline: "none",
+                                        boxShadow: "none",
+                                    },
+                                }}
+                            >
+                                {params.row.name}
+                            </Typography>
+                        </Link>
+                    ),
+                    cellClassName: "senator-name-cell",
+                },
+                { field: "state", headerName: "State", minWidth: 300 },
+                {
+                    field: "party",
+                    headerName: "Party",
+                    minWidth: 150,
+                    valueGetter: (params) =>
+                        params ? params.charAt(0).toUpperCase() + params.slice(1).toLowerCase() : "N/A",
+                },
+                {
+                    field: "rating",
+                    headerName: "Rating",
+                    minWidth: 145,
+                    renderCell: (params) => params.row.rating || "N/A",
+                },
+            ]
+            : type === "representative"
+                ? [
+                    { field: "name", headerName: "Representative", minWidth: 400 ,
+                        renderCell:(params)=>(
+                            <Link
+                            to={`/representative/${params.row._id}`}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <Typography sx={{
+                                color: getBorderColor(params.row.party),
+                                fontWeight: "600",
+                                fontSize: "14px",
+                                display: 'inline-block',
+                                py: "8px",
+                                "&:hover":{
+                                    opacity:.6
+                                }
+                            }}>
+                                {params.row.name}
+                            </Typography>
+                            </Link>
+                        )
 
-    // Handle state initials logic
-    let stateInitials = "";
-    const stateWords = stateName.split(" ");
-    if (stateWords.length > 1) {
-      // Multiple words: take first letter of each
-      stateInitials = stateWords
-        .map((word) => word.charAt(0).toUpperCase())
-        .join("");
-    } else {
-      // Single word: take first 2 letters capitalized
-      stateInitials = stateName.substring(0, 2).toUpperCase();
-    }
-
-    // Extract district number from the prefix (e.g., "Congressional District 3")
-    const districtMatch = prefix.match(/District\s*(\d+)/i);
-    const districtNumber = districtMatch ? districtMatch[1] : "";
-
-    return `${stateInitials}-${districtNumber}`;
-  };
-
-  const columns =
-    type === "senator"
-      ? [
-          {
-            field: "name",
-            headerName: "Senator",
-            minWidth: 400,
-            renderCell: (params) => (
-              <Link
-                to={`/senator/${params.row._id}`}
-                sx={{ textDecoration: "none" }}
-              >
-                <Typography
-                  sx={{
-                    color: getBorderColor(params.row.party),
-                    fontWeight: "600",
-                    fontSize: "14px",
-                    display: "inline-block",
-                    py: "8px",
-                    "&:hover": {
-                      opacity: 0.6,
                     },
-                    "&:focus": {
-                      outline: "none",
-                      boxShadow: "none",
+                    { field: "district", headerName: "District", minWidth: 300 ,
+                    valueGetter:(params)=> params?formatDistrict(params) :"N/A"
                     },
-                  }}
-                >
-                  {params.row.name}
-                </Typography>
-              </Link>
-            ),
-            cellClassName: "senator-name-cell",
-          },
-          { field: "state", headerName: "State", minWidth: 300 },
-          {
-            field: "party",
-            headerName: "Party",
-            minWidth: 150,
-            valueGetter: (params) =>
-              params
-                ? params.charAt(0).toUpperCase() + params.slice(1).toLowerCase()
-                : "N/A",
-          },
-          {
-            field: "rating",
-            headerName: "Rating",
-            minWidth: 145,
-            renderCell: (params) => params.row.rating || "N/A",
-          },
-        ]
-      : type === "representative"
-      ? [
-          {
-            field: "name",
-            headerName: "Representative",
-            minWidth: 400,
-            renderCell: (params) => (
-              <Typography
-                sx={{
-                  color: getBorderColor(params.row.party),
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  display: "inline-block",
-                  py: "8px",
-                  "&:hover": {
-                    opacity: 0.6,
-                  },
-                }}
-              >
-                {params.row.name}
-              </Typography>
-            ),
-          },
-          {
-            field: "district",
-            headerName: "District",
-            minWidth: 300,
-            valueGetter: (params) => (params ? formatDistrict(params) : "N/A"),
-          },
-          {
-            field: "party",
-            headerName: "Party",
-            minWidth: 150,
-            valueGetter: (params) =>
-              params
-                ? params.charAt(0).toUpperCase() + params.slice(1).toLowerCase()
-                : "N/A",
-          },
-          {
-            field: "rating",
-            headerName: "Rating",
-            minWidth: 145,
-            renderCell: (params) => params?.row?.rating || "N/A",
-          },
-        ]
-      : [
-          { field: "date", headerName: "Date", minWidth: 150 },
-          { field: "bill", headerName: "Bill", minWidth: 300 },
-          { field: "billsType", headerName: "Type", minWidth: 150 },
-        ];
+                    {
+                        field: "party",
+                        headerName: "Party",
+                        minWidth: 150,
+                        valueGetter: (params) =>
+                            params ? params.charAt(0).toUpperCase() + params.slice(1).toLowerCase() : "N/A",
+                    },
+                    {
+                        field: "rating",
+                        headerName: "Rating",
+                        minWidth: 145,
+                        renderCell: (params) => params?.row?.rating || "N/A",
+                    },
+                ]
+                : [
+                    { field: "date", headerName: "Date", minWidth: 150 },
+                    { field: "bill", headerName: "Bill", minWidth: 300 },
+                    { field: "billsType", headerName: "Type", minWidth: 150 },
+                ];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>

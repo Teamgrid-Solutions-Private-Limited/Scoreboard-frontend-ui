@@ -13,6 +13,7 @@ import Pregnancy from "./components/PregnancyHelp.jsx";
 import ShowSenatorById from './senator/ShowSenatorById.jsx';
 import FormerMembers from "./components/FormerMembers.jsx";
 
+
 function App() {
   return (
     <>
@@ -30,6 +31,7 @@ function App() {
       {/* <Route path="/" element={<TopBar />}/> */}
       <Route path="/senator/:id" element={<ShowSenatorById />}/>
       <Route path="/former-members" element={<FormerMembers/>}/>
+      <Route path="/representative/:id" element={<Representative/>}/>
 
     </Routes>
     </BrowserRouter>
