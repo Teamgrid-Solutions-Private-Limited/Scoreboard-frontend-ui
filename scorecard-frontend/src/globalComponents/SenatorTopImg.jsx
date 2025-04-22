@@ -13,20 +13,16 @@ const SenatorTopImg = () => {
     setVotesAnchorEl(event.currentTarget);
   };
 
-  const handleVotesLeave = (event) => {
-    if (votesAnchorEl && !votesAnchorEl.contains(event.relatedTarget)) {
-      setVotesAnchorEl(null);
-    }
+  const handleVotesLeave = () => {
+    setVotesAnchorEl(null);
   };
 
   const handleActivityEnter = (event) => {
     setActivityAnchorEl(event.currentTarget);
   };
 
-  const handleActivityLeave = (event) => {
-    if (activityAnchorEl && !activityAnchorEl.contains(event.relatedTarget)) {
-      setActivityAnchorEl(null);
-    }
+  const handleActivityLeave = () => {
+    setActivityAnchorEl(null);
   };
 
   const handleNavigate = (path, closeMenu) => {
@@ -129,12 +125,13 @@ const SenatorTopImg = () => {
               anchorEl={votesAnchorEl}
               open={Boolean(votesAnchorEl)}
               onClose={handleVotesLeave}
-              MenuListProps={{ onMouseLeave: handleVotesLeave }}
               sx={{
+                pointerEvents: "none", 
                 "& .MuiPaper-root": {
                   backgroundColor: "#d90000",
                   color: "white",
-                  width: "190px",
+                  width: "210px",
+                  pointerEvents: "auto", 
                 },
               }}
             >
@@ -181,12 +178,13 @@ const SenatorTopImg = () => {
               anchorEl={activityAnchorEl}
               open={Boolean(activityAnchorEl)}
               onClose={handleActivityLeave}
-              MenuListProps={{ onMouseLeave: handleActivityLeave }}
               sx={{
+                pointerEvents: "none", 
                 "& .MuiPaper-root": {
                   backgroundColor: "#d90000",
                   color: "white",
-                  width: "190px",
+                  width: "210px",
+                  pointerEvents: "auto",
                 },
               }}
             >
