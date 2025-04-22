@@ -28,6 +28,20 @@ export const getAllHouseData = createAsyncThunk(
     }
   );
 
+  export const getHouseDataByHouseId = createAsyncThunk(
+    'houseData/getHouseDataByHouseId',
+    async (id, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${API_URL}/houseData/house-data/viewbyhouse/${id}`);
+        console.log("house tERM",response.data.info)
+        return response.data.info;
+      } catch (error) {
+        console.log("house ERROR",error.response.data)
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
 
   const initialState={
     houseData: [],
@@ -72,6 +86,18 @@ const houseDataSlice = createSlice({
           state.currentHouse = action.payload;
         })
         .addCase(getHouseDataById.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
+        .addCase(getHouseDataByHouseId.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(getHouseDataByHouseId.fulfilled, (state, action) => {
+          state.loading = false;
+          state.currentHouse = action.payload;
+        })
+        .addCase(getHouseDataByHouseId.rejected, (state, action) => {
           state.loading = false;
           state.error = action.payload;
         })

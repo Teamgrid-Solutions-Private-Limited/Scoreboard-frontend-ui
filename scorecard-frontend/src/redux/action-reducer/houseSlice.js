@@ -16,6 +16,20 @@ export const getAllHouses=createAsyncThunk(
     }
 );
 
+// Get house by ID
+export const getHouseById = createAsyncThunk(
+    "house/getHouseById",
+    async (id, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${API_URL}/house/house/viewId/${id}`);
+        console.log("data",response.data);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
  //Initial State
  const initialState={
     houses:[],
@@ -51,6 +65,20 @@ export const getAllHouses=createAsyncThunk(
             state.loading=false;
             state.error=action.payload
         })
+        // Get house by ID
+    builder
+    .addCase(getHouseById.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(getHouseById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.house = action.payload;
+    })
+    .addCase(getHouseById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
 
     }
  })
