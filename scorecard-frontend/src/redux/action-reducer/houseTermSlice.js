@@ -33,7 +33,7 @@ export const getAllHouseData = createAsyncThunk(
     async (id, { rejectWithValue }) => {
       try {
         const response = await axios.get(`${API_URL}/houseData/house-data/viewbyhouse/${id}`);
-        console.log("house tERM",response.data.info)
+        // console.log("house tERM",response.data.info)
         return response.data.info;
       } catch (error) {
         console.log("house ERROR",error.response.data)

@@ -22,7 +22,7 @@ export const getHouseById = createAsyncThunk(
     async (id, { rejectWithValue }) => {
       try {
         const response = await axios.get(`${API_URL}/house/house/viewId/${id}`);
-        console.log("data",response.data);
+        // console.log("data",response.data);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data);

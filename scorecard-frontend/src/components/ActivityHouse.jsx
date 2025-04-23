@@ -59,7 +59,11 @@ const ActivityHouse = () => {
       <RightStickyTab />
       <Box
         sx={{
-          pt: { xs: "10px", md: "180px" }, // Adds space below the fixed header
+          pt: { xs: "10px", md: "180px" },
+          ml:-1,
+          mb:-1
+
+          // Adds space below the fixed header
         }}
       >
         <SenatorTopImg />

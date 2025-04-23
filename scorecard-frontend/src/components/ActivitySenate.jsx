@@ -73,7 +73,7 @@ const AcitivitySenate = () => {
       <TopBar />
       <AppHeaderBar />
       <RightStickyTab />
-      <Box sx={{ pt: { xs: "10px", md: "180px" } }}>
+      <Box sx={{ pt: { xs: "10px", md: "180px" } , ml:-1 , mb: -2}}>
         <SenatorTopImg />
       </Box>
 
@@ -85,7 +85,9 @@ const AcitivitySenate = () => {
             alignItems="center"
             height="300px"
           >
-            <CircularProgress />
+           <Typography variant="body2" color="text.secondary">
+                       No votes found for this session.
+                     </Typography>
           </Box>
         ) : (
           <>
@@ -112,22 +114,35 @@ const AcitivitySenate = () => {
                     key={sessionRange}
                     label={sessionRange}
                     value={sessionRange}
-                    sx={{
-                      backgroundColor:
-                        activeTab === sessionRange ? "#90CAF9" : "white",
-                      color: "black",
-                      fontWeight:
-                        activeTab === sessionRange ? "bold" : "normal",
-                      minWidth: 100,
-                      padding: "12px 16px",
-                      "&.Mui-selected": {
-                        backgroundColor: "#90CAF9",
-                        fontWeight: "bold",
-                      },
-                      "&:focus": {
-                        outline: "none",
-                      },
-                    }}
+                     sx={{
+                  backgroundColor: activeTab === sessionRange ? "#90CAF9" : "white",
+                  color: "black",
+                  borderRadius: 0,
+                  fontWeight: "700",
+
+                  minWidth: 100,
+                  margin: 0,
+                  display: "block",
+                  // padding: "1rem 2rem",
+                  marginRight: ".2rem",
+                  fontSize: "14px",
+                  lineHeight: "1.42857143",
+                  fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                  boxSizing: "border-box",
+                  maxWidth: "100%",
+                  padding: "18px 20px",
+                  "&.Mui-selected": {
+                    backgroundColor: "#90CAF9",
+                    color: "#333333",
+                    fontWeight: "bold",
+                  },
+                  "&:not(:last-child)": {
+                    borderRight: "none",
+                  },
+                  "&:focus":{
+                    outline:"none"
+                  }
+                }}
                   />
                 ))}
               </Tabs>
@@ -154,9 +169,9 @@ const AcitivitySenate = () => {
                   >
                     {vote.title}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary">
+                  {/* <Typography variant="body2" color="textSecondary">
                     {formatDate(vote.date)}
-                  </Typography>
+                  </Typography> */}
                   <Typography
                     variant="body1"
                     sx={{

@@ -78,7 +78,10 @@ const SenateScorecard = () => {
       <RightStickyTab />
       <Box
         sx={{
-          pt: { xs: "10px", md: "180px" }, // <-- Adds space below the fixed header (adjust height as needed)
+          pt: { xs: "10px", md: "180px" },
+          ml: -1,
+          mb: -2,
+          
         }}
       >
         <SenatorTopImg />
@@ -129,17 +132,27 @@ const SenateScorecard = () => {
                     borderRadius: 0,
                     minWidth: 100,
                     margin: 0,
-                    padding: "12px 16px",
+                    order: "1",
+                    display: "block",
+                    // padding: "1rem 2rem",
+                    marginRight: ".2rem",
+                    fontSize: "14px",
+                    lineHeight: "1.42857143",
+                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    boxSizing: "border-box",
+                    maxWidth: "100%",
+                    padding: "18px 20px",
                     "&.Mui-selected": {
                       backgroundColor: "#90CAF9",
+                      color: "#333333",
                       fontWeight: "bold",
                     },
                     "&:not(:last-child)": {
-                      borderRight: "none", // Remove right border between tabs
+                      borderRight: "none",
                     },
                     "&:focus": {
-                      outline: "none",
-                    },
+                      outline: "none", // <== Remove focus outline
+                  },
                   }}
                 />
               ))}

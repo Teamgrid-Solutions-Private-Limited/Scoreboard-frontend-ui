@@ -53,7 +53,10 @@ const House = () => {
       <AppHeaderBar />
       <RightStickyTab />
       <Box sx={{
-        pt: { xs: "10px", md: '180px' }, // <-- Adds space below the fixed header (adjust height as needed)
+        pt: { xs: "10px", md: '180px' }, 
+        ml: -1,
+        mb: -1
+
         // mx: 4,
         // pb: 8,
         // width: "100%"
