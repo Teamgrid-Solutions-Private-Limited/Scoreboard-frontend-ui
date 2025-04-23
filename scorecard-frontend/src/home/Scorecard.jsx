@@ -47,55 +47,68 @@ const Scorecard = () => {
     dispatch(getAllHouseData())
   }, [dispatch])
 
+  // useEffect(() => {
+  //   if (senatorData && senators) {
+  //     // console.log("senators", senators);
+  //     // console.log("senatorData", senatorData)
+  //     console.log("Matching senators with senatorData...");
+  //     const merged = senators.map((senator) => {
+  //       const match = senatorData.find(
+  //         (data) => {
+  //           const isMatch = data.senateId === senator._id;
+  //           console.log(
+  //             `Checking match:`,
+  //           );
+  //           // `Match? ${isMatch}`
+  //           return isMatch;
+  //         }
+  //       );
+
+  //       return {
+  //         ...senator,
+  //         rating: match ? match.rating : "N/A",
+  //       };
+  //     });
+
+  //     console.log("Merged Senators:", merged);
+  //     setMergedSenators(merged);
+  //   }
+
+  // }, [senators, senatorData]);
   useEffect(() => {
     if (senatorData && senators) {
-      // console.log("senators", senators);
-      // console.log("senatorData", senatorData)
-      console.log("Matching senators with senatorData...");
-      const merged = senators.map((senator) => {
-        const match = senatorData.find(
-          (data) => {
-            const isMatch = data.senateId === senator._id;
-            console.log(
-              `Checking match:`,
-            );
-            // `Match? ${isMatch}`
-            return isMatch;
-          }
-        );
+      const merged = senators
+        .filter((senator) => senator.status === "Active") //  Only active senators
+        .map((senator) => {
+          const match = senatorData.find((data) => data.senateId === senator._id);
+          return {
+            ...senator,
+            rating: match ? match.rating : "N/A",
+          };
+        });
+         console.log("Merged Senators:", merged);
 
-        return {
-          ...senator,
-          rating: match ? match.rating : "N/A",
-        };
-      });
-
-      console.log("Merged Senators:", merged);
       setMergedSenators(merged);
     }
-
   }, [senators, senatorData]);
+  
 
-  useEffect(()=>{
-    if(houses&&houseData){
-      console.log("checking for matched house and houseData by id")
-      const merged=houses.map((house)=>{
-        const match=houseData.find(
-          (data)=>{
-            const isMatched=data.houseId===house._id
-            console.log("matching counts");
-            return isMatched
-        })
+  useEffect(() => {
+    if (houses && houseData) {
+      const merged = houses
+        .filter((house) => house.status === "Active") //  Only active houses
+        .map((house) => {
+          const match = houseData.find((data) => data.houseId === house._id);
           return {
             ...house,
-            rating:match?match.rating:"N/A"
-          }
-      })
-      console.log("Merged House",merged)
-      return setMergedHouses(merged)
+            rating: match ? match.rating : "N/A",
+          };
+        });
+  console.log("Merged Houses:", merged);
+      setMergedHouses(merged);
     }
-
-  },[houses,houseData])
+  }, [houses, houseData]);
+  
 
   const filteredRows = mergedSenators.filter((senator) =>
     senator.name.toLowerCase().includes(search.toLowerCase())
@@ -300,8 +313,17 @@ const Scorecard = () => {
                   color: "#8aae6b",
                   backgroundColor: "transparent",
                   borderRadius: "2em",
-                  border: " 2px solid #8aae6b",
-                  lineHeight: " 16px"
+                  border: " 2px solid #8aae6b ",
+                  lineHeight: " 16px",
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover":{
+                    backgroundColor: "#8aae6b",
+                    color: "#fff",
+                    border:" 2px solid #8aae6b",
+                  },
+                  "& .MuiButton-endIcon": {
+                    transition: "transform 0.3s ease-in-out",
+                    }
                 }}>Give Now </Button>
 
             </Box>
