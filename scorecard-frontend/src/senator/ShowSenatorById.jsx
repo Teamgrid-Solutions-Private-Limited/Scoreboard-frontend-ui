@@ -1,4 +1,4 @@
-import React, { useEffect, useState,  } from 'react';
+import React, { useEffect, useState, } from 'react';
 import {
     Box, Typography, Stack, Card, Tab, Tabs,
     Divider, Table, TableCell, TableHead, TableRow, TableBody, Button
@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { jsPDF } from "jspdf";
 
 const ShowSenatorById = () => {
-    const [activeTab, setActiveTab] = useState("");
+    const [activeTab, setActiveTab] = useState(null);
     const [sortedTerms, setSortedTerms] = useState([]); // New state for sorted terms
     const navigate = useNavigate()
     const { id } = useParams();
@@ -30,12 +30,12 @@ const ShowSenatorById = () => {
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
     };
 
-const generatePDF = (text, title = "ReadMore") => {
-  const doc = new jsPDF();
-  doc.setFontSize(12);
-  doc.text(text, 10, 10, { maxWidth: 180 });
-  doc.save(`${title}.pdf`);
-};
+    const generatePDF = (text, title = "ReadMore") => {
+        const doc = new jsPDF();
+        doc.setFontSize(12);
+        doc.text(text, 10, 10, { maxWidth: 180 });
+        doc.save(`${title}.pdf`);
+    };
 
     useEffect(() => {
         if (id) {
@@ -50,24 +50,26 @@ const generatePDF = (text, title = "ReadMore") => {
 
     }, [senator, currentSenator])
 
+   
     useEffect(() => {
         if (currentSenator && currentSenator.length > 0) {
             const termsWithValidIds = currentSenator.filter(term => term.termId && term.termId.name);
-
+    
             const sorted = [...termsWithValidIds].sort((a, b) => {
                 const startYearA = parseInt(a.termId.name.split("-")[0], 10);
                 const startYearB = parseInt(b.termId.name.split("-")[0], 10);
                 return startYearB - startYearA; // latest year first
             });
-
+    
             setSortedTerms(sorted);
-
-            // Set the latest term (first in sorted list) as default tab
-            if (sorted.length > 0 && !activeTab) {
+    
+            // Fix: Always set first term as default if not already selected
+            if (sorted.length > 0 && (!activeTab || !sorted.find(t => t.termId._id === activeTab))) {
                 setActiveTab(sorted[0].termId._id);
             }
         }
-    }, [currentSenator, activeTab]);
+    }, [currentSenator]);
+    
 
     const handleTabChange = (_, newValue) => {
         setActiveTab(newValue);
@@ -105,7 +107,14 @@ const generatePDF = (text, title = "ReadMore") => {
                 <AppHeaderBar />
                 <RightStickyTab />
                 <Box component="main" sx={{ overflowX: "hidden" }}>
-                    <SenatorTopImg />
+                <Box sx={{
+                        pt: { xs: "10px", md: '180px' },
+                        display: "flex",
+                        width: "100%",
+                    }}>
+                        <SenatorTopImg />
+                    </Box>
+
                     <Box sx={{ p: 4, textAlign: 'center' }}>
                         <Typography variant="h4">No valid terms found for this senator</Typography>
                     </Box>
@@ -402,7 +411,7 @@ const generatePDF = (text, title = "ReadMore") => {
                                                         </Typography>
                                                         <Box mt={0.5} display="flex" gap={1}>
                                                             <Button
-                                                              onClick={() => window.open(vote?.voteId?.rollCall, "_blank")}
+                                                                onClick={() => window.open(vote?.voteId?.rollCall, "_blank")}
                                                                 // onClick={()=>navigate(vote?.voteId?.rollCall)}
                                                                 variant="contained"
                                                                 size="small"
@@ -411,11 +420,11 @@ const generatePDF = (text, title = "ReadMore") => {
                                                                 ROLL CALL
                                                             </Button>
                                                             <Button
-                                                              onClick={() =>{
-                                                                 const getText=(vote?.voteId?.readMore || "NO CONTENT AVAILABLE")
-                                                                 generatePDF(getText)
-                                                        }
-                                                    }
+                                                                onClick={() => {
+                                                                    const getText = (vote?.voteId?.readMore || "NO CONTENT AVAILABLE")
+                                                                    generatePDF(getText)
+                                                                }
+                                                                }
 
                                                                 variant="contained"
                                                                 size="small"
@@ -523,11 +532,23 @@ const generatePDF = (text, title = "ReadMore") => {
                                                             textAlign: "center"
                                                         }}
                                                     >
-                                                        {activity?.activityId?.date ? formatDate(activity?.activityId?.date) : 'N/A'}
+                                                        {activity?.activityId?.date ? (
+                                                            <>
+                                                                {selectedTerm.votesScore && selectedTerm.votesScore.length > 0 && selectedTerm.votesScore[0].voteId?.congress && (
+                                                                    <Typography sx={{ fontSize: ".6rem", fontWeight: "400" }}>
+                                                                        {selectedTerm.votesScore[0].voteId.congress}
+                                                                        <sup>th</sup>
+                                                                    </Typography>
+                                                                )}
+                                                                  <Typography sx={{ fontSize: ".6rem", fontWeight: "400" }}> Congress</Typography>
+                                                            </>
+                                                        ) : 'N/A'}
+
+                                                        {/* {selectedTerm.votesScore.map((vote, index) => (
                                                         <Typography sx={{ fontSize: ".6rem", fontWeight: "400" }}>
-                                                        {activity?.voteId?.congress || "N/A"}
-                                                        <sup>th</sup> Congress
+                                                        <sup>th</sup> 
                                                         </Typography>
+                                                         ))}Congress */}
                                                     </TableCell>
                                                     <TableCell sx={{ border: "1px solid #ccc", p: 1 }}>
                                                         <Typography
@@ -538,18 +559,18 @@ const generatePDF = (text, title = "ReadMore") => {
                                                                 color: "#66625c"
                                                             }}
                                                         >
-                                                         {activity?.activityId?.title || 'No title available'}
+                                                            {activity?.activityId?.title || 'No title available'}
                                                         </Typography>
                                                         <Typography variant="body2" sx={{ mb: 0.5 }}>
                                                             {activity?.activityId?.shortDesc || 'No description available'}
                                                         </Typography>
                                                         <Box mt={0.5} display="flex" gap={1}>
                                                             <Button
-                                                             onClick={() =>{
-                                                                const getText=(activity?.activityId?.shortDesc || "NO CONTENT AVAILABLE")
-                                                                generatePDF(getText)
-                                                       }
-                                                   }
+                                                                onClick={() => {
+                                                                    const getText = (activity?.activityId?.shortDesc || "NO CONTENT AVAILABLE")
+                                                                    generatePDF(getText)
+                                                                }
+                                                                }
                                                                 variant="contained"
                                                                 size="small"
                                                                 sx={{ fontSize: "0.7rem", textTransform: "none", bgcolor: "#4DA6FF" }}
@@ -567,8 +588,8 @@ const generatePDF = (text, title = "ReadMore") => {
                                                             p: "13px 5px"
                                                         }}
                                                     >
-                                                      {activity.score === 'Yes' ? (
-                                                         <span>✓</span>
+                                                        {activity.score === 'Yes' ? (
+                                                            <span>✓</span>
                                                         ) : (
                                                             <CloseIcon sx={{ color: "red", fontSize: 36 }} />
 
