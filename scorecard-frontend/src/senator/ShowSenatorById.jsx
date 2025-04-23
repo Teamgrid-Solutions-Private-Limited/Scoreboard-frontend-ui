@@ -102,6 +102,7 @@ const ShowSenatorById = () => {
 
     if (validTerms.length === 0) {
         return (
+            <Box>
             <Box sx={{ mx: 31.7, pb: 1.5 }}>
                 <TopBar />
                 <AppHeaderBar />
@@ -119,7 +120,9 @@ const ShowSenatorById = () => {
                         <Typography variant="h4">No valid terms found for this senator</Typography>
                     </Box>
                 </Box>
-                <Footer />
+            </Box>
+            <Footer />
+
             </Box>
         );
     }
