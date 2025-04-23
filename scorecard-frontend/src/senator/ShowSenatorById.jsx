@@ -400,7 +400,7 @@ const ShowSenatorById = () => {
                                                     </TableCell>
                                                     <TableCell sx={{ border: "1px solid #ccc", p: 1 }}>
                                                         <Typography
-                                                            variant="subtitle1"
+                                                            variant="h3"
                                                             sx={{
                                                                 fontWeight: "700",
                                                                 fontSize: "1.4em",

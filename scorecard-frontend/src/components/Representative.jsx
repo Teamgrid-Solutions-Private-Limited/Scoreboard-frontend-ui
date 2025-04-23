@@ -62,6 +62,11 @@ function Representative() {
   }, [dispatch, id]);
 
   useEffect(() => {
+    console.log("House :", house);
+    console.log("Current House :", currentHouse);
+  }, [house, currentHouse]);
+
+  useEffect(() => {
     if (currentHouse && currentHouse.length > 0) {
       // Filter out terms without termId and sort by Congress (newest first)
       const sorted = [...currentHouse]
@@ -76,7 +81,7 @@ function Representative() {
       setSortedTerms(sorted);
 
       // Set the first term as active tab if not set
-      if (sorted.length > 0 && !activeTab) {
+      if (sorted.length > 0 && (!activeTab || !sorted.find(t => t.termId._id === activeTab))) {
         setActiveTab(sorted[0].termId._id);
       }
     }
@@ -98,11 +103,41 @@ function Representative() {
     return <div>No term data available for this representative</div>;
   }
 
+  // Filter out terms without termId
+  const validTerms = currentHouse.filter(term => term.termId?._id);
+
+  if (validTerms.length === 0) {
+    return (
+      <Box>
+        <Box sx={{ mx: 31.7, pb: 1.5 }}>
+          <TopBar />
+          <AppHeaderBar />
+          <RightStickyTab />
+          <Box component="main" sx={{ overflowX: "hidden" }}>
+            <Box sx={{
+              pt: { xs: "10px", md: '180px' },
+              display: "flex",
+              width: "100%",
+            }}>
+              <SenatorTopImg />
+            </Box>
+
+            <Box sx={{ p: 4, textAlign: 'center' }}>
+              <Typography variant="h4">No valid terms found for this Representative</Typography>
+            </Box>
+          </Box>
+        </Box>
+        <Footer />
+
+      </Box>
+    );
+  }
+
   return (
     <Box>
       <TopBar />
       <AppHeaderBar />
-      <RightStickyTab/>
+      <RightStickyTab />
       <Box
         sx={{
           pt: { xs: "10px", md: "180px" },
@@ -130,8 +165,8 @@ function Representative() {
                 label={
                   term.votesScore?.[0]?.voteId?.congress
                     ? `${getOrdinal(
-                        Number(term.votesScore[0].voteId.congress)
-                      )} Congress`
+                      Number(term.votesScore[0].voteId.congress)
+                    )} Congress`
                     : term.termId.name
                 }
                 value={term.termId._id}
@@ -162,7 +197,7 @@ function Representative() {
           </Tabs>
           <Divider sx={{ borderBottomWidth: "2", color: "black" }} />
         </Paper>
-         
+
 
         {/* Header */}
         <Typography variant="h4" fontSize={54}>
@@ -185,90 +220,99 @@ function Representative() {
 
         {/* Profile Info */}
         <Grid sx={{ display: "flex", justifyContent: "start", alignItems: "center", mt: 4 }}>
-  <Box sx={{ mr: 4 }}>
-    <Box
-      sx={{
-        width: 190,
-        height: 190,
-        borderRadius: "50%",
-        backgroundColor: "#1976d2",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Box
-        sx={{
-          width: 180,
-          height: 180,
-          borderRadius: "50%",
-          backgroundColor: "#fff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {house.photo ? (
+          <Box sx={{ mr: 4 }}>
+            <Box
+              sx={{
+                width: 190,
+                height: 190,
+                borderRadius: "50%",
+                backgroundColor: "#1976d2",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  width: 180,
+                  height: 180,
+                  borderRadius: "50%",
+                  backgroundColor: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {house.photo ? (
+                  <Box
+                    component="img"
+                    src={house.photo}
+                    alt="Profile"
+                    sx={{
+                      width: 170,
+                      height: 170,
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <Typography>No Image</Typography>
+                )}
+              </Box>
+            </Box>
+          </Box>
+
+          <Box sx={{ mr: 4 }}>
+            <Typography variant="h4" fontSize={36}>
+              {house.name}
+            </Typography>
+            <Typography variant="h5" fontSize={14} sx={{ mt: 1 }}>
+              {house.district} ({house.party})
+            </Typography>
+          </Box>
+
           <Box
-            component="img"
-            src={house.photo}
-            alt="Profile"
             sx={{
-              width: 170,
-              height: 170,
-              borderRadius: "50%",
-              objectFit: "cover",
+              height: 130,
+              width: 140,
+              ml: "auto",
+              border: "2px solid black",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
             }}
-          />
-        ) : (
-          <Typography>No Image</Typography>
-        )}
-      </Box>
-    </Box>
-  </Box>
-
-  <Box sx={{ mr: 4 }}>
-    <Typography variant="h4" fontSize={36}>
-      {house.name}
-    </Typography>
-    <Typography variant="h5" fontSize={14} sx={{ mt: 1 }}>
-      {house.district} ({house.party})
-    </Typography>
-  </Box>
-
-  <Box
-    sx={{
-      height: 130,
-      width: 140,
-      ml: "auto",
-      border: "2px solid black",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      textAlign: "center",
-    }}
-  >
-    <Typography fontSize={14}>SBA Rating:</Typography>
-    <Typography
-      variant="h4"
-      fontSize={70}
-      sx={{
-        fontWeight: "bold",
-        lineHeight: 1,
-        fontFamily: '"freight-text-pro", serif',
-      }}
-    >
-      {selectedTerm.rating || "N/A"}
-    </Typography>
-  </Box>
-</Grid>
+          >
+            <Typography fontSize={14}>SBA Rating:</Typography>
+            <Typography
+              variant="h4"
+              fontSize={70}
+              sx={{
+                fontWeight: "bold",
+                lineHeight: 1,
+                fontFamily: '"freight-text-pro", serif',
+              }}
+            >
+              {selectedTerm.rating || "N/A"}
+            </Typography>
+          </Box>
+        </Grid>
 
 
         {/* Summary Section */}
         <Box sx={{ mt: 4 }}>
           <Box
-            sx={{ fontSize: 14 }}
+            sx={{
+              fontSize: "14px !important",
+              color: "#333 !important",
+              pt: "4px",
+              flex: 1, // Let summary take the rest of the space
+              minWidth: 0,
+              "& p": {
+                margin: .4, // This is key to remove vertical spacing
+              },
+            }}
             dangerouslySetInnerHTML={{
               __html: selectedTerm.summary || "<p>No summary available</p>",
             }}
@@ -319,7 +363,14 @@ function Representative() {
                         : "N/A"}
                     </TableCell>
                     <TableCell sx={{ border: "1px solid #ccc", p: 1 }}>
-                      <Typography fontWeight="bold">
+                      <Typography 
+                       variant="h3"
+                       sx={{
+                           fontWeight: "700",
+                           fontSize: "1.4em",
+                           color: "#66625c"
+                       }}
+                      >
                         {vote?.voteId?.title || "No title"}
                       </Typography>
                       <Typography variant="body2">
@@ -418,7 +469,14 @@ function Representative() {
                           : "N/A"}
                       </TableCell>
                       <TableCell sx={{ border: "1px solid #ccc", p: 1 }}>
-                        <Typography fontWeight="bold">
+                        <Typography 
+                         variant="h3"
+                         sx={{
+                             fontWeight: "700",
+                             fontSize: "1.4em",
+                             color: "#66625c"
+                         }}
+                        >
                           {activity?.activityId?.title || "No title"}
                         </Typography>
                         <Typography variant="body2">
@@ -432,7 +490,7 @@ function Representative() {
                             onClick={() =>
                               generatePDF(
                                 activity?.activityId?.shortDesc ||
-                                  "No content available",
+                                "No content available",
                                 "Activity Details"
                               )
                             }
