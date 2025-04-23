@@ -176,7 +176,6 @@ const SenateScorecard = () => {
               sx={{
                 width: "100%",
                 mb: 3,
-                p: 3,
                 backgroundColor: "#ffffff",
                 borderRadius: 2,
               }}
