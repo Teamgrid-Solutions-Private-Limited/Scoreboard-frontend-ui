@@ -300,8 +300,17 @@ const Scorecard = () => {
                   color: "#8aae6b",
                   backgroundColor: "transparent",
                   borderRadius: "2em",
-                  border: " 2px solid #8aae6b",
-                  lineHeight: " 16px"
+                  border: " 2px solid #8aae6b ",
+                  lineHeight: " 16px",
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover":{
+                    backgroundColor: "#8aae6b",
+                    color: "#fff",
+                    border:" 2px solid #8aae6b",
+                  },
+                  "& .MuiButton-endIcon": {
+                    transition: "transform 0.3s ease-in-out",
+                    }
                 }}>Give Now </Button>
 
             </Box>

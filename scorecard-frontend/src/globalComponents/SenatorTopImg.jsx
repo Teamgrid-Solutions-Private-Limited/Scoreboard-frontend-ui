@@ -3,6 +3,7 @@ import { Box, Typography, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ScorecardImg from "../assets/scorecard-header-1.jpg";
 import { FaAngleDown } from "react-icons/fa6";
+import { FaTimes } from "react-icons/fa";
 
 const SenatorTopImg = () => {
   const [votesAnchorEl, setVotesAnchorEl] = useState(null);
@@ -120,8 +121,7 @@ const SenatorTopImg = () => {
                 },
               }}
             >
-              VOTES WE TRACK <FaAngleDown />
-
+              VOTES WE TRACK {Boolean(votesAnchorEl) ? <FaTimes /> : <FaAngleDown />}
             </Typography>
             <Menu
               anchorEl={votesAnchorEl}
@@ -196,8 +196,7 @@ const SenatorTopImg = () => {
                 },
               }}
             >
-              ACTIVITY WE TRACK <FaAngleDown />
-
+              ACTIVITY WE TRACK {Boolean(activityAnchorEl) ? <FaTimes /> : <FaAngleDown />}
             </Typography>
             <Menu
               anchorEl={activityAnchorEl}

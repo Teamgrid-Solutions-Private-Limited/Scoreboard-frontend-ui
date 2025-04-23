@@ -108,7 +108,7 @@ const TopBar = () => {
                     >
                         About <KeyboardArrowDownIcon sx={{ fontSize: "18px", ml: 0.5 }} />
                     </Typography>
-                    <Menu
+                    {/* <Menu
                         anchorEl={anchorEl}
                         open={open}
                         onClose={handleMouseLeave}
@@ -118,7 +118,7 @@ const TopBar = () => {
                         <MenuItem onClick={handleMouseLeave}>Our Team</MenuItem>
                         <MenuItem onClick={handleMouseLeave}>Mission</MenuItem>
                         <MenuItem onClick={handleMouseLeave}>Contact Us</MenuItem>
-                    </Menu>
+                    </Menu> */}
                 </Box>
                 <Typography sx={{
                     color: "white",
