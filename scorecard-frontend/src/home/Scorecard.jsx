@@ -86,7 +86,8 @@ const Scorecard = () => {
             rating: match ? match.rating : "N/A",
           };
         });
-  
+         console.log("Merged Senators:", merged);
+
       setMergedSenators(merged);
     }
   }, [senators, senatorData]);
@@ -103,7 +104,7 @@ const Scorecard = () => {
             rating: match ? match.rating : "N/A",
           };
         });
-  
+  console.log("Merged Houses:", merged);
       setMergedHouses(merged);
     }
   }, [houses, houseData]);
