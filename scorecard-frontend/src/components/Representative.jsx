@@ -230,8 +230,8 @@ function Representative() {
           <Box sx={{ mr: 4 }}>
             <Box
               sx={{
-                width: 190,
-                height: 190,
+                width: 200,
+                height: 200,
                 borderRadius: "50%",
                 backgroundColor: `${getBorderColor(house.party)}`,
                 display: "flex",
@@ -241,8 +241,8 @@ function Representative() {
             >
               <Box
                 sx={{
-                  width: 180,
-                  height: 180,
+                  width: 190,
+                  height: 190,
                   borderRadius: "50%",
                   backgroundColor: "#fff",
                   display: "flex",
@@ -256,8 +256,8 @@ function Representative() {
                     src={house.photo}
                     alt="Profile"
                     sx={{
-                      width: 170,
-                      height: 170,
+                      width: 180,
+                      height: 180,
                       borderRadius: "50%",
                       objectFit: "cover",
                     }}
