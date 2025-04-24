@@ -29,7 +29,13 @@ const ShowSenatorById = () => {
         const v = n % 100;
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
     };
-
+    const getBorderColor = (party) => {
+        if (!party) return "gray";
+        const lowerParty = party.toLowerCase();
+        if (lowerParty === "republican") return "#dd3333";
+        if (lowerParty === "democrat") return "#1e73be";
+        return "gray";
+    };
     const generatePDF = (text, title = "ReadMore") => {
         const doc = new jsPDF();
         doc.setFontSize(12);
@@ -50,26 +56,26 @@ const ShowSenatorById = () => {
 
     }, [senator, currentSenator])
 
-   
+
     useEffect(() => {
         if (currentSenator && currentSenator.length > 0) {
             const termsWithValidIds = currentSenator.filter(term => term.termId && term.termId.name);
-    
+
             const sorted = [...termsWithValidIds].sort((a, b) => {
                 const startYearA = parseInt(a.termId.name.split("-")[0], 10);
                 const startYearB = parseInt(b.termId.name.split("-")[0], 10);
                 return startYearB - startYearA; // latest year first
             });
-    
+
             setSortedTerms(sorted);
-    
+
             // Fix: Always set first term as default if not already selected
             if (sorted.length > 0 && (!activeTab || !sorted.find(t => t.termId._id === activeTab))) {
                 setActiveTab(sorted[0].termId._id);
             }
         }
     }, [currentSenator]);
-    
+
 
     const handleTabChange = (_, newValue) => {
         setActiveTab(newValue);
@@ -103,25 +109,25 @@ const ShowSenatorById = () => {
     if (validTerms.length === 0) {
         return (
             <Box>
-            <Box sx={{ mx: 31.7, pb: 1.5 }}>
-                <TopBar />
-                <AppHeaderBar />
-                <RightStickyTab />
-                <Box component="main" sx={{ overflowX: "hidden" }}>
-                <Box sx={{
-                        pt: { xs: "10px", md: '180px' },
-                        display: "flex",
-                        width: "100%",
-                    }}>
-                        <SenatorTopImg />
-                    </Box>
+                <Box sx={{ mx: 31.7, pb: 1.5 }}>
+                    <TopBar />
+                    <AppHeaderBar />
+                    <RightStickyTab />
+                    <Box component="main" sx={{ overflowX: "hidden" }}>
+                        <Box sx={{
+                            pt: { xs: "10px", md: '180px' },
+                            display: "flex",
+                            width: "100%",
+                        }}>
+                            <SenatorTopImg />
+                        </Box>
 
-                    <Box sx={{ p: 4, textAlign: 'center' }}>
-                        <Typography variant="h4">No valid terms found for this senator</Typography>
+                        <Box sx={{ p: 4, textAlign: 'center' }}>
+                            <Typography variant="h4">No valid terms found for this senator</Typography>
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
-            <Footer />
+                <Footer />
 
             </Box>
         );
@@ -220,7 +226,7 @@ const ShowSenatorById = () => {
                                             height: 185,
                                             borderRadius: "50%",
                                             border: "5px solid white",
-                                            boxShadow: "0 0 0 4px #1976d2",
+                                            boxShadow: `0 0 0 5px  ${getBorderColor(senator.party)}`,
                                             objectFit: "contain", // shows full image (zoomed out)
                                             backgroundColor: "#fff", // optional: fills empty space
                                         }}
@@ -392,11 +398,11 @@ const ShowSenatorById = () => {
                                                             textAlign: "center",
                                                         }}
                                                     >
-                                                        {vote?.voteId?.date ? formatDate(vote?.voteId?.date) : 'N/A'}
+                                                        {/* {vote?.voteId?.date ? formatDate(vote?.voteId?.date) : 'N/A'} */}
                                                         <Typography sx={{ fontSize: ".6rem", fontWeight: "400" }}>
-                                                            {vote?.voteId?.congress}<sup>th</sup>Congress
+                                                            {vote?.voteId?.congress}<sup>th</sup>
                                                         </Typography>
-
+                                                        <Typography sx={{ fontSize: ".6rem", fontWeight: "400" }}>Congress</Typography> 
                                                     </TableCell>
                                                     <TableCell sx={{ border: "1px solid #ccc", p: 1 }}>
                                                         <Typography
@@ -539,11 +545,11 @@ const ShowSenatorById = () => {
                                                             <>
                                                                 {selectedTerm.votesScore && selectedTerm.votesScore.length > 0 && selectedTerm.votesScore[0].voteId?.congress && (
                                                                     <Typography sx={{ fontSize: ".6rem", fontWeight: "400" }}>
-                                                                        {selectedTerm.votesScore[0].voteId.congress}
+                                                                        {activity?.activityId?.congress}
                                                                         <sup>th</sup>
                                                                     </Typography>
                                                                 )}
-                                                                  <Typography sx={{ fontSize: ".6rem", fontWeight: "400" }}> Congress</Typography>
+                                                                <Typography sx={{ fontSize: ".6rem", fontWeight: "400" }}> Congress</Typography>
                                                             </>
                                                         ) : 'N/A'}
 

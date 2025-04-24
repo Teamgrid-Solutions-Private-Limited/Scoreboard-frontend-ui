@@ -42,6 +42,13 @@ function Representative() {
     doc.save(`${title}.pdf`);
   };
 
+  const getBorderColor = (party) => {
+    if (!party) return "gray";
+    const lowerParty = party.toLowerCase();
+    if (lowerParty === "republican") return "#dd3333";
+    if (lowerParty === "democrat") return "#1e73be";
+    return "gray";
+};
   // Format date
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -226,7 +233,7 @@ function Representative() {
                 width: 190,
                 height: 190,
                 borderRadius: "50%",
-                backgroundColor: "#1976d2",
+                backgroundColor: `${getBorderColor(house.party)}`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

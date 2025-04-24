@@ -45,7 +45,7 @@ const SenatorTopImg = () => {
     >
       <Box
         sx={{
-          width: "98%",
+          width: "100%",
           maxWidth: "1000px",
           display: "flex",
           flexDirection: "column",
